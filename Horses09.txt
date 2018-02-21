@@ -1,0 +1,300 @@
+    Record Name . . . . . : posterous.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    posterous.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    www.poringa.net
+    ----------------------------------------
+    Record Name . . . . . : www.poringa.net
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    www.poringa.net
+    ----------------------------------------
+    No records of type AAAA
+
+
+    torrentz.com
+    ----------------------------------------
+    Record Name . . . . . : torrentz.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    torrentz.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    grooveshark.com
+    ----------------------------------------
+    Record Name . . . . . : grooveshark.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    grooveshark.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    doutico.com
+    ----------------------------------------
+    Record Name . . . . . : doutico.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    doutico.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    www.foxdeportes.com
+    ----------------------------------------
+    Record Name . . . . . : www.foxdeportes.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    www.foxdeportes.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    ml-in.facebook.com
+    ----------------------------------------
+    Record Name . . . . . : ml-in.facebook.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    ml-in.facebook.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    ja-jp.facebook.com
+    ----------------------------------------
+    Record Name . . . . . : ja-jp.facebook.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    ja-jp.facebook.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    images.us1.badoo.com
+    ----------------------------------------
+    Record Name . . . . . : images.us1.badoo.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    images.us1.badoo.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    i308.photobucket.com
+    ----------------------------------------
+    Record Name . . . . . : i308.photobucket.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    i308.photobucket.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    www.television.en.cr
+    ----------------------------------------
+    Record Name . . . . . : www.television.en.cr
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    www.television.en.cr
+    ----------------------------------------
+    No records of type AAAA
+
+
+    p04.nos-avg.cz
+    ----------------------------------------
+    Record Name . . . . . : p04.nos-avg.cz
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 84319
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 185.189.92.232
+
+
+    zonelabs.com
+    ----------------------------------------
+    Record Name . . . . . : zonelabs.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    zonelabs.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    it-it.facebook.com
+    ----------------------------------------
+    Record Name . . . . . : it-it.facebook.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    it-it.facebook.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    www.estacion506cr.com
+    ----------------------------------------
+    Record Name . . . . . : www.estacion506cr.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    www.estacion506cr.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    m.facebook.com
+    ----------------------------------------
+    Record Name . . . . . : m.facebook.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    m.facebook.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    www.planetsuzy.org
+    ----------------------------------------
+    Record Name . . . . . : www.planetsuzy.org
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    www.planetsuzy.org
+    ----------------------------------------
+    No records of type AAAA
+
+
+    delicious.com
+    ----------------------------------------
+    Record Name . . . . . : delicious.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    delicious.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    i219.photobucket.com
+    ----------------------------------------
+    Record Name . . . . . : i219.photobucket.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    i219.photobucket.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+    shavar.prod.mozaws.net
+    ----------------------------------------
+    No records of type AAAA
+
+
+    video.msn.com
+    ----------------------------------------
+    Record Name . . . . . : video.msn.com
+    Record Type . . . . . : 1
+    Time To Live  . . . . : 86400
+    Data Length . . . . . : 4
+    Section . . . . . . . : Answer
+    A (Host) Record . . . : 192.168.0.90
+
+
+    video.msn.com
+    ----------------------------------------
+    No records of type AAAA
+
+
+
+C:\Windows\system32>
