@@ -1,0 +1,23 @@
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli::__construct(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/sail/public_html/sail/proyecto/conexion/conexion.php on line 2
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/sail/public_html/sail/proyecto/conexion/conexion.php on line 3
+[18-Feb-2018 02:29:28 UTC] PHP Notice:  Undefined index: nivel in /home/sail/public_html/sail/proyecto/extend/header.php on line 44
+[18-Feb-2018 02:29:28 UTC] PHP Notice:  Undefined index: foto in /home/sail/public_html/sail/proyecto/extend/menu_asesor.php on line 11
+[18-Feb-2018 02:29:28 UTC] PHP Notice:  Undefined index: nombre in /home/sail/public_html/sail/proyecto/extend/menu_asesor.php on line 12
+[18-Feb-2018 02:29:28 UTC] PHP Notice:  Undefined index: correo in /home/sail/public_html/sail/proyecto/extend/menu_asesor.php on line 13
+[18-Feb-2018 02:29:28 UTC] PHP Notice:  Undefined index: nivel in /home/sail/public_html/sail/proyecto/extend/permiso.php on line 2
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/sail/public_html/sail/proyecto/usuario/index.php on line 75
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, null given in /home/sail/public_html/sail/proyecto/usuario/index.php on line 76
+[18-Feb-2018 02:29:28 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home/sail/public_html/sail/proyecto/usuario/index.php:96
+Stack trace:
+#0 {main}
+  thrown in /home/sail/public_html/sail/proyecto/usuario/index.php on line 96
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli::__construct(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/sail/public_html/sail/proyecto/conexion/conexion.php on line 2
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli::set_charset(): Couldn't fetch mysqli in /home/sail/public_html/sail/proyecto/conexion/conexion.php on line 3
+[18-Feb-2018 02:29:28 UTC] PHP Notice:  Undefined index: nick in /home/sail/public_html/sail/proyecto/usuario/bloqueo.php on line 3
+[18-Feb-2018 02:29:28 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/sail/public_html/sail/proyecto/usuario/bloqueo.php on line 4
+[21-Feb-2018 04:41:22 UTC] PHP Notice:  Undefined index: nivel in /home/sail/public_html/sail/proyecto/extend/header.php on line 44
+[21-Feb-2018 04:41:22 UTC] PHP Notice:  Undefined index: foto in /home/sail/public_html/sail/proyecto/extend/menu_asesor.php on line 11
+[21-Feb-2018 04:41:22 UTC] PHP Notice:  Undefined index: nombre in /home/sail/public_html/sail/proyecto/extend/menu_asesor.php on line 12
+[21-Feb-2018 04:41:22 UTC] PHP Notice:  Undefined index: correo in /home/sail/public_html/sail/proyecto/extend/menu_asesor.php on line 13
+[21-Feb-2018 04:41:22 UTC] PHP Notice:  Undefined index: nivel in /home/sail/public_html/sail/proyecto/extend/permiso.php on line 2
+[21-Feb-2018 04:41:22 UTC] PHP Notice:  Undefined index: nick in /home/sail/public_html/sail/proyecto/usuario/bloqueo.php on line 3
