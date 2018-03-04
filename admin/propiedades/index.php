@@ -2,11 +2,11 @@
 if (isset($_GET['ope'])) {
   $operacion = $con->real_escape_string(htmlentities($_GET['ope']));
   $sel = $con->prepare("SELECT propiedad, consecutivo,nombre_cliente,calle_num,fraccionamiento,estado,municipio,precio,
-    forma_pago,asesor,tipo_inmueble,operacion,mapa FROM inventario WHERE estatus = 'ACTIVO' AND operacion = ? ");
+    forma_pago,asesor,tipo_inmueble,operacion,mapa, marcado FROM inventario WHERE estatus = 'ACTIVO' AND operacion = ? ");
   $sel->bind_param("s", $operacion);
 }else {
   $sel = $con->prepare("SELECT propiedad, consecutivo,nombre_cliente,calle_num,fraccionamiento,estado,municipio,precio,
-    forma_pago,asesor,tipo_inmueble,operacion,mapa FROM inventario WHERE estatus = 'ACTIVO' ");
+    forma_pago,asesor,tipo_inmueble,operacion,mapa, marcado FROM inventario WHERE estatus = 'ACTIVO' ");
 }
 ?>
 
@@ -30,13 +30,18 @@ if (isset($_GET['ope'])) {
       <div class="card-content">
         <form action="excel.php" method="post" target="_blank" id="exportar">
             <span class="card-title">Propiedades<button class="btn-floating green botonExcel" type="button"
-               name="button"><i class="material-icons">grid_on</i></button></span>
+               name="button"><i class="material-icons">grid_on</i></button>
+               <a href="mapa_completo.php" class="btn btn-floating red" target="-_blank">
+                 <i class="material-icons">map</i></a>
+             </span>
             <input type="hidden" name="datos" id ="datos">
+
         </form>
         <table class="excel" border="1">
           <thead>
             <tr class="cabecera">
               <th class="borrar">Vista</th>
+              <th></th>
               <th>Num</th>
               <th>Cliente</th>
               <th>Propiedad</th>
@@ -55,7 +60,14 @@ if (isset($_GET['ope'])) {
             <tr>
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
                 value="<?php echo $f['propiedad']?>" class="btn modal-trigger btn-floating"><i class="material-icons">
-              visibility</i></button></td>
+              visibility</i><?php echo $f['marcado']?></button></td>
+              <td>
+                <?php if ($f['marcado']== ''): ?>
+                  <a href="marcado.php?id=<?php echo $f['propiedad']?>&marcado=SI"><i class="small grey-text material-icons">grade</i></a>
+                <?php else: ?>
+                  <a href="marcado.php?id=<?php echo $f['propiedad']?>&marcado="><i class="small green-text material-icons">grade</i></a>
+                <?php endif; ?>
+              </td>
               <td><?php echo $f['consecutivo'] ?></td>
               <td><?php echo $f['nombre_cliente'] ?></td>
               <td><?php echo $f['calle_num'].' '.$f['fraccionamiento'].' '.$f['estado'].' ,'.$f['municipio'] ?></td>
@@ -114,9 +126,9 @@ if (isset($_GET['ope'])) {
 
 </script>
 <script>
-$('.botonExcel').click(function () {
+  $('.botonExcel').click(function () {
   $('.borrar').remove();
-  $('#datos').val($("<div>").append($('.excel').eq(0).clone()).html());
+  $('#datos').val( $("<div>").append($('.excel').eq(0).clone()).html());
   $('#exportar').submit();
   setInterval(function(){location.reload();},3000);
 });

@@ -19,7 +19,7 @@ if ($f =$res->fetch_assoc()) {
    <title>modal</title>
  </head>
  <body>
-<h5 align="right"><b><?php echo "$". number_format($f['precio'], 2); ?></b></h5>
+<h5 align="right"><b><?php echo "¢". number_format($f['precio'], 2); ?></b></h5>
  <table class="striped" width="100%" >
    <tr>
      <td colspan="4" class="center" ><b>Datos generales</b></td>
