@@ -1,6 +1,7 @@
 <?php
 include '../conexion/conexion.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+  $compania = $con->real_escape_string(htmlentities($_POST['compania']));
   $nick = $con->real_escape_string(htmlentities($_POST['nick']));
   $pass1 = $con->real_escape_string(htmlentities($_POST['pass1']));
   $nivel = $con->real_escape_string(htmlentities($_POST['nivel']));
@@ -60,7 +61,7 @@ if($archivo !=''){
   $ruta = "foto_perfil/perfil.png";
 }
 $pass1 = sha1($pass1);
-$ins = $con->query("INSERT INTO usuario VALUES ('','$nick','$pass1','$nombre', '$correo', '$nivel',1,'$ruta') ");
+$ins = $con->query("INSERT INTO usuario VALUES ($compania, '','$nick','$pass1','$nombre', '$correo', '$nivel',1,'$ruta') ");
 if ($ins) {
   header('location:../extend/alerta.php?msj=El usuario ha sido registrado&c=us&p=in&t=success');
 }

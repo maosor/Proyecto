@@ -41,10 +41,10 @@ if (!isset($_SESSION['nick'])){
  <body class="grey lighten-3">
 <main>
 <?php
-if($_SESSION['nivel'] == 'ADMINISTRADOR'){
+//if($_SESSION['nivel'] == 'ADMINISTRADOR'){
     include '../extend/menu_admin.php';
-}
-else {
-    include '../extend/menu_asesor.php';
-}
+//}
+//else {
+//    include '../extend/menu_asesor.php';
+//}
  ?>

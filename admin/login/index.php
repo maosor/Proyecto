@@ -20,11 +20,12 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   if ($user == null && $pass == null) {
     header('location:../extend/alerta.php?msj=El formato no es correcto&c=salir&p=salir&t=error');
   }else {
-    $sel = $con->query("SELECT nick, nombre, nivel, correo, foto, pass FROM usuario WHERE nick = '$usuario' AND pass = '$pass2'
+    $sel = $con->query("SELECT nick, nombre, nivel, correo, foto, pass, id_compania FROM usuario WHERE nick = '$usuario' AND pass = '$pass2'
        AND bloqueo = 1 ");
        $row = mysqli_num_rows($sel);
        if ($row == 1) {
          if ($var = $sel->fetch_assoc()) {
+            $compania = $var['id_compania'];
             $nick = $var['nick'];
             $contra = $var['pass'];
             $nivel = $var['nivel'];
@@ -33,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
             $nombre = $var['nombre'];
          }
          if ($nick == $usuario && $contra == $pass2 && $nivel == 'ADMINISTRADOR') {
+            $_SESSION ['compania'] = $compania;
             $_SESSION ['nick'] = $nick;
             $_SESSION ['nombre'] = $nombre;
             $_SESSION ['nivel'] = $nivel;
@@ -41,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
             header('location:../extend/alerta.php?msj=Bienvenido&c=home&p=home&t=success');
            }
          elseif ($nick == $usuario && $contra == $pass2 && $nivel == 'ASESOR') {
+            $_SESSION ['compania'] = $compania;
             $_SESSION ['nick'] = $nick;
             $_SESSION ['nombre'] = $nombre;
             $_SESSION ['nivel'] = $nivel;

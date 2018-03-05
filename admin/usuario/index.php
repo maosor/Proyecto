@@ -8,6 +8,7 @@
          <div class="card-content">
            <span class="card-title">Insertar usuarios</span>
            <form class="form" action="ins_usuarios.php" method="post" enctype="multipart/form-data">
+             <input type="hidden" name="compania" value="<?php echo $_SESSION['compania'] ?>">
              <div class="input-field">
                <input type="text" name="nick" required autofocus title="DEBE TENER ENTRE 8 Y 12 CARACTERES, SOLO LETRAS" pattern="[A-Za-z]{8,15}"
                id="nick" onblur="may (this.value, this.id)">

@@ -32,6 +32,9 @@
       case 'prop':
         $carpeta = '../propiedades/';
         break;
+      case 'com':
+        $carpeta = '../compania/';
+        break;
       }
     switch ($p) {
       case 'in':
@@ -79,7 +82,7 @@
     <script>
     swal({
     title: '<?php echo $titulo ?>',
-    text: "<?php echo $mensage  ?>",
+    text: "<?php echo $mensage ?>",
     type: '<?php echo $t ?>',
     confirmButtonColor: '#3085d6',
     confirmButtonText: 'Ok'
