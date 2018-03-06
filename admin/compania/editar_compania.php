@@ -16,7 +16,7 @@ if ($f =$res->fetch_assoc()) {
           <form class="form" action="up_compania.php" method="post" autocomplete=off >
           <input type="hidden" name="id" value="<?php echo $id?>">
             <div class="input-field">
-              <input type="text" name="compania"  title="Solo letras" pattern="[A-Z/s ]+"
+              <input type="text" name="compania"  title="Solo letras" pattern="[\p{Latin}/s ]+"
               value="<?php echo $f['compania']?>" id="compania" onblur="may(this.value, this.id)">
               <label for="compania">Nombre</label>
             </div>

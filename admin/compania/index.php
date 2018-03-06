@@ -7,7 +7,7 @@
         <span class="card-title">Mantenimiento de compañias</span>
         <form class="form" action="ins_compania.php" method="post" autocomplete=off >
           <div class="input-field">
-            <input type="text" name="compania"  title="Solo letras" pattern="[A-Z/s ]+"  id="compania" onblur="may(this.value, this.id)"  >
+            <input type="text" name="compania"  title="Solo letras" pattern="[\p{Latin}/s ]+"  id="compania" onblur="may(this.value, this.id)"  >
             <label for="nombre">Nombre compañia</label>
           </div>
           <button type="submit" class="btn" >Guardar</button>

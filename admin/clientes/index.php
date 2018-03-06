@@ -7,7 +7,7 @@
         <span class="card-title">Alta de clientes</span>
         <form class="form" action="ins_clientes.php" method="post" autocomplete=off >
           <div class="input-field">
-            <input type="text" name="nombre"  title="Solo letras" pattern="[A-Z/s ]+"  id="nombre" onblur="may(this.value, this.id)"  >
+            <input type="text" name="nombre"  title="Solo letras" pattern="[\p{Latin}/s ]+"  id="nombre" onblur="may(this.value, this.id)"  >
             <label for="nombre">Nombre</label>
           </div>
           <div class="input-field">
@@ -67,7 +67,7 @@ $row = mysqli_num_rows($res);
                <th>Telefono</th>
                <th>Correo</th>
                <th>Asesor</th>
-               <th>Nuevo</th>
+               <!-- <th>Nuevo</th> -->
                <th></th>
                <th></th>
 
@@ -80,7 +80,7 @@ $row = mysqli_num_rows($res);
               <td><?php echo $f['telefono']?></td>
               <td><?php echo $f['correo']?></td>
               <td><?php echo $f['asesor']?></td>
-              <td> <a href="../propiedades/alta_propiedades.php?id=<?php echo $f['id']?>&nombre=<?php echo $f['nombre']?>" class="btn-floating green"> <i class="material-icons">add</i></a>
+              <!-- <td> <a href="../propiedades/alta_propiedades.php?id=<?php echo $f['id']?>&nombre=<?php echo $f['nombre']?>" class="btn-floating green"> <i class="material-icons">add</i></a> -->
               </td>
               <td> <a href="editar_cliente.php?id=<?php echo $f['id']?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
               </td>

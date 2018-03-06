@@ -11,10 +11,6 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   $up->bind_param('ssssi', $nombre, $direccion, $telefono, $correo, $id);
 
     if ($up -> execute()) {
-      $up_inv = $con->prepare("UPDATE inventario SET nombre_cliente=? WHERE id_cliente=? ");
-      $up_inv -> bind_param('si', $nombre, $id);
-      $up_inv -> execute();
-      $up_inv ->close();
     header('location:../extend/alerta.php?msj=Cliente actualizado&c=cli&p=in&t=success');
   }else {
     header('location:../extend/alerta.php?msj=El cliente no pudo se actualizado&c=clie&p=in&t=error');

@@ -96,7 +96,7 @@
              </thead>
              <?php while ($f = $sel -> fetch_assoc()){ ?>
                <tr>
-                 <td class="truncate"><?php echo $f['nick'] ?></td>
+                 <td ><?php echo $f['nick'] ?></td>
                  <td class="hide-on-med-and-down"><?php echo $f['nombre'] ?></td>
                  <td class="hide-on-med-and-down"><?php echo $f['correo'] ?></td>
                  <td>
@@ -125,7 +125,7 @@
                  <td>
                    <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',
                      type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
-                   }).then((result) => { location.href='eliminar_usuario.php?id=<?php echo $f['id']?>';})"><i class="material-icons">clear</i></a>
+                   }).then((result) => {if (result.value) { location.href='eliminar_usuario.php?id=<?php echo $f['id']?>';}})"><i class="material-icons">clear</i></a>
                  </td>
                  <td></td>
                </tr>

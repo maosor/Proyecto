@@ -10,7 +10,7 @@ $info = pathinfo($nombrearchivo);
 if($archivo !=''){
   $extension = $info['extension'];
   if ($extension == "png" || $extension == "PNG" || $extension == "jpg" || $extension == "JPG"){
-    unlink('../usuarios/'.$foto);
+    unlink('../usuario/'.$foto);
     $rand = rand(000,999);
     move_uploaded_file($archivo, '../usuario/foto_perfil/'.$nick.$rand.'.'.$extension);
     $ruta = $ruta."/".$nick.$rand.'.'.$extension;
