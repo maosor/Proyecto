@@ -17,8 +17,7 @@ $sel_compania->fetch();
          $sel= $con->prepare("SELECT id, compania FROM compania ");
          $sel -> execute();
          $sel -> bind_result($id, $compania);
-         $row = mysqli_num_rows($res);
-          ?>
+         ?>
          <?php while ($sel->fetch()) { ?>
          <option value="<?php echo $id?>" ><?php echo  $compania?></option>
          <?php } ?>

@@ -3,8 +3,8 @@ $id = htmlentities($_GET['id']);
 $sel = $con->prepare("SELECT compania FROM compania WHERE id = ?");
 $sel -> bind_param('i', $id);
 $sel -> execute();
-$res = $sel -> get_result();
-if ($f =$res->fetch_assoc()) {
+$sel ->bind_result($compania);
+if ($sel->fetch()) {
 
 }
   ?>
@@ -17,7 +17,7 @@ if ($f =$res->fetch_assoc()) {
           <input type="hidden" name="id" value="<?php echo $id?>">
             <div class="input-field">
               <input type="text" name="compania"  title="Solo letras" pattern="[\p{Latin}/s ]+"
-              value="<?php echo $f['compania']?>" id="compania" onblur="may(this.value, this.id)">
+              value="<?php echo $compania ?>" id="compania" onblur="may(this.value, this.id)">
               <label for="compania">Nombre</label>
             </div>
             <button type="submit" class="btn" >Guardar</button>

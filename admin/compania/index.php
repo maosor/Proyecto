@@ -34,8 +34,9 @@
 <?php
 $sel= $con->prepare("SELECT id, compania FROM compania ");
 $sel -> execute();
-$res = $sel -> get_result();
-$row = mysqli_num_rows($res);
+$sel -> bind_result($id, $compania);
+$sel -> store_result();
+$row = $sel->num_rows;
  ?>
  <div class="row">
    <div class="col s12 ">
@@ -50,15 +51,15 @@ $row = mysqli_num_rows($res);
                <th></th>
              </tr>
            </thead>
-           <?php while ($f = $res->fetch_assoc()) { ?>
+           <?php while ($sel->fetch()) { ?>
             <tr>
-              <td><?php echo $f['compania']?></td>
-              <td> <a href="editar_compania.php?id=<?php echo $f['id']?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
+              <td><?php echo $compania?></td>
+              <td> <a href="editar_compania.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
               </td>
               <td>
                 <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',
                   type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
-                }).then((result) => { if (result.value){location.href='eliminar_compania.php?id=<?php echo $f['id']?>';}})"><i class="material-icons">clear</i></a>
+                }).then((result) => { if (result.value){location.href='eliminar_compania.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a>
               </td>
             </tr>
           <?php }
