@@ -45,20 +45,19 @@ $sel_compania->fetch();
     <?php } ?>
     <li><a href="../clientes"><i class="material-icons">contact_phone</i>CLIENTES</li></a>
     <li><div class="divider"></div></li>
-    <!-- <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>PROPIEDADES
+    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>INVENTARIO
     <i class="material-icons right">arrow_drop_down</i></a></li>
     <li><div class="divider"></div></li>
-    <li><a href="../inicio/slider.php"><i class="material-icons">web</i>SLIDER</li></a>
-    <li><div class="divider"></div></li>-->
+    <!-- <li><a href="../inicio/slider.php"><i class="material-icons">web</i>SLIDER</li></a>
+    <li><div class="divider"></div></li> -->
     <li><a href="../login/salir.php"><i class="material-icons">power_setting_new</i>SALIR</li></a>
     <li><div class="divider"></div></li>
   </ul>
 
   <ul id="dropdown1" class="dropdown-content">
-    <li><a href="../propiedades/index.php">GENERAL</a></li>
-    <li><a href="../propiedades/index.php?ope=VENTA">VENTA</a></li>
-    <li><a href="../propiedades/index.php?ope=RENTA">RENTA</a></li>
-    <li><a href="../propiedades/index.php?ope=TRASPASO">TRASPASO</a></li>
-    <li><a href="../propiedades/index.php?ope=OCUPADO">OCUPADO</a></li>
-    <li><a href="../propiedades/cancelados.php">CANCELADOS</a></li>
+    <li><a href="../inventario/index.php">GENERAL</a></li>
+    <li><a href="../inventario/index.php?tip=papeles">PAPELES</a></li>
+    <li><a href="../inventario/index.php?tip=suministros">SUMINISTROS</a></li>
+    <li><a href="../inventario/index.php?tip=repuestos">REPUESTOS</a></li>
+    <li><a href="../inventario/index.php?tip=otros">OTROS</a></li>
    </ul>
