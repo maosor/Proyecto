@@ -27,10 +27,7 @@ if (isset($_GET['tip'])) {
     <div class="card">
       <div class="card-content">
         <form action="excel.php" method="post" target="_blank" id="exportar">
-            <span class="card-title">Inventario<button class="btn-floating green botonExcel" type="button"
-               name="button"><i class="material-icons">grid_on</i></button>
-               <a href="mapa_completo.php" class="btn btn-floating red" target="_blank">
-                 <i class="material-icons">map</i></a>
+            <span class="card-title">Inventario
              </span>
             <input type="hidden" name="datos" id ="datos">
 
@@ -86,11 +83,11 @@ if (isset($_GET['tip'])) {
               <td><?php echo $existencia?></td>
               <td><?php echo "¢".number_format($precio_unitario,2); ?></td>
               <td><?php echo $proveedor ?></td>
-              <td class="borrar"><a href="pdf.php?id=<?php echo $id?>" target="_blank" class="btn-floating green"><i
+              <td class="borrar"><a href="pdf.php?id=<?php echo $id?>" target="_blank" class="btn-floating orange"><i
                 class="material-icons">picture_as_pdf</i></a></td>
-              <td class="borrar"><a href="alta_inventario.php" target="_blank" class="btn-floating orange"><i
+              <td class="borrar"><a href="alta_inventario.php" class="btn-floating green"><i
                 class="material-icons">add</i></a></td>
-              <td class="borrar"><a href="editar_propiedad.php?id=<?php echo $id?>" target="_blank" class="btn-floating blue"><i
+              <td class="borrar"><a href="alta_inventario.php?id=<?php echo $id?>" class="btn-floating blue"><i
                 class="material-icons">loop</i></a></td>
               <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea cancelar la propiedad?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Cancelarlo!'

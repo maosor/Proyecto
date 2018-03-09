@@ -29,8 +29,8 @@
       case 'cli':
         $carpeta = '../clientes/';
         break;
-      case 'prop':
-        $carpeta = '../propiedades/';
+      case 'inv':
+        $carpeta = '../inventario/';
         break;
       case 'com':
         $carpeta = '../compania/';
