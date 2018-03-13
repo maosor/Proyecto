@@ -11,6 +11,20 @@ if (isset($_GET['id']))
   $existencia, $minimo, $maximo, $proveedor, $ultima_entrada, $ultima_salida);
   $sel_prop->fetch();
   $accion = 'Actualizar';
+  switch ($tipo) {
+    case '1':
+      $tipo_desc = 'PAPELES';
+      break;
+    case '2':
+      $tipo_desc = 'SUMINISTROS';
+      break;
+    case '3':
+      $tipo_desc = 'REPUESTOS';
+      break;
+    case '4':
+      $tipo_desc = 'OTROS';
+      break;
+  }
 }
 else {
   $codigo = ''; $descripcion = ''; $precio_unitario= '';
@@ -40,7 +54,11 @@ else {
     <div class="card">
       <div class="card-content">
         <h5 align="center"><b>DATOS ARTICULO</b></h5>
-        <form  action="ins_inventario.php" method="post" autocomplete="off" >
+        <?php if ($accion == 'Actualizar'): ?>
+          <form  action="up_inventario.php" method="post" autocomplete="off">
+        <?php else: ?>
+          <!-- <form  action="ins_inventario.php" method="post" autocomplete="off"> -->
+         <?php endif; ?>
           <div class="row">
             <div class="col s3">
               <div class = "input-field">
@@ -64,7 +82,11 @@ else {
             </div>
             <div class="col s4">
               <select id="tipo" name="tipo" required value = "1">
-                <option value="0" selected disabled>SELECCIONE UN TIPO</option>
+                <?php if ($accion == 'Actualizar'): ?>
+                    <option value="<?php echo $tipo ?>" selected disabled><?php echo $tipo_desc ?></option>
+                  <?php else: ?>
+                    <option value="0" selected disabled>SELECCIONE UN TIPO</option>
+                 <?php endif; ?>
                   <option value="1">PAPELES</option>
                   <option value="2">SUMINISTROS</option>
                   <option value="3">REPUESTOS</option>

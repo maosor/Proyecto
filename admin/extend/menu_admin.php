@@ -56,8 +56,8 @@ $sel_compania->fetch();
 
   <ul id="dropdown1" class="dropdown-content">
     <li><a href="../inventario/index.php">GENERAL</a></li>
-    <li><a href="../inventario/index.php?tip=papeles">PAPELES</a></li>
-    <li><a href="../inventario/index.php?tip=suministros">SUMINISTROS</a></li>
-    <li><a href="../inventario/index.php?tip=repuestos">REPUESTOS</a></li>
-    <li><a href="../inventario/index.php?tip=otros">OTROS</a></li>
+    <li><a href="../inventario/index.php?tip=1">PAPELES</a></li>
+    <li><a href="../inventario/index.php?tip=2">SUMINISTROS</a></li>
+    <li><a href="../inventario/index.php?tip=3">REPUESTOS</a></li>
+    <li><a href="../inventario/index.php?tip=4">OTROS</a></li>
    </ul>
