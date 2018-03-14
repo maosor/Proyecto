@@ -1,5 +1,6 @@
 <?php include '../extend/header.php';
 include '../conexion/conexion.php';
+include '../extend/funciones.php';
 if (isset($_GET['id']))
 {
   $id = $con->real_escape_string(htmlentities($_GET['id']));
@@ -11,20 +12,7 @@ if (isset($_GET['id']))
   $existencia, $minimo, $maximo, $proveedor, $ultima_entrada, $ultima_salida);
   $sel_prop->fetch();
   $accion = 'Actualizar';
-  switch ($tipo) {
-    case '1':
-      $tipo_desc = 'PAPELES';
-      break;
-    case '2':
-      $tipo_desc = 'SUMINISTROS';
-      break;
-    case '3':
-      $tipo_desc = 'REPUESTOS';
-      break;
-    case '4':
-      $tipo_desc = 'OTROS';
-      break;
-  }
+  $tipo_desc = tipo_desc($tipo);
 }
 else {
   $codigo = ''; $descripcion = ''; $precio_unitario= '';
@@ -57,7 +45,7 @@ else {
         <?php if ($accion == 'Actualizar'): ?>
           <form  action="up_inventario.php" method="post" autocomplete="off">
         <?php else: ?>
-          <!-- <form  action="ins_inventario.php" method="post" autocomplete="off"> -->
+          <form  action="ins_inventario.php" method="post" autocomplete="off">
          <?php endif; ?>
           <div class="row">
             <div class="col s3">
@@ -83,7 +71,7 @@ else {
             <div class="col s4">
               <select id="tipo" name="tipo" required value = "1">
                 <?php if ($accion == 'Actualizar'): ?>
-                    <option value="<?php echo $tipo ?>" selected disabled><?php echo $tipo_desc ?></option>
+                    <option value="<?php echo $tipo ?>" selected><?php echo $tipo_desc ?></option>
                   <?php else: ?>
                     <option value="0" selected disabled>SELECCIONE UN TIPO</option>
                  <?php endif; ?>
