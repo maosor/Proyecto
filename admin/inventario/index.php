@@ -80,9 +80,9 @@ if (isset($_GET['tip'])) {
               <td><?php echo $proveedor ?></td>
               <td class="borrar"><a href="alta_inventario.php?id=<?php echo $id?>" class="btn-floating blue"><i
                 class="material-icons">loop</i></a></td>
-              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea cancelar la propiedad?',
-                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Cancelarlo!'
-              }).then((result) => { if (result.value){location.href='cancelar_propiedad.php?id=<?php echo $id?>&accion=CANCELADO';}})"><i class="material-icons">clear</i></a></td>
+              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
+                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
+              }).then((result) => { if (result.value){location.href='eliminar_inventario.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>
 
             </tr>
           <?php }

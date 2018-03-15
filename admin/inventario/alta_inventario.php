@@ -44,6 +44,7 @@ else {
         <h5 align="center"><b>DATOS ARTICULO</b></h5>
         <?php if ($accion == 'Actualizar'): ?>
           <form  action="up_inventario.php" method="post" autocomplete="off">
+            <input type="hidden" name="id" value="<?php echo $id ?>">
         <?php else: ?>
           <form  action="ins_inventario.php" method="post" autocomplete="off">
          <?php endif; ?>
