@@ -1,10 +1,14 @@
 <?php include '../extend/header.php';
+$compania = $_SESSION ['compania'];
 if (isset($_GET['tip'])) {
   $tipo = $con->real_escape_string(htmlentities($_GET['tip']));
-  $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario, proveedor FROM inventario WHERE tipo = ?");
-  $sel->bind_param("s", $tipo);
+  $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario,
+    proveedor FROM inventario WHERE tipo = ? AND id_compania =? ");
+  $sel->bind_param("si", $tipo,$compania);
 }else {
-  $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario, proveedor FROM inventario ");
+  $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario,
+    proveedor FROM inventario WHERE id_compania =? ");
+    $sel->bind_param("s", $compania);
 }
 ?>
 
@@ -30,8 +34,7 @@ if (isset($_GET['tip'])) {
 
             <span class="card-title">Inventario
               </span>
-              <a href="alta_inventario.php" class="btn-floating green"><i
-                class="material-icons">add</i></a>
+
             <input type="hidden" name="datos" id ="datos">
 
         </form>
@@ -46,14 +49,16 @@ if (isset($_GET['tip'])) {
               <th>Existencia</th>
               <th>Precio</th>
               <th>Proveedor</th>
-              <th colspan="5">Acciones </th>
+              <th colspan="2">Acciones </th>
+              <th><a href="alta_inventario.php" class="btn-floating green right"><i
+                class="material-icons">add</i></a></th>
             </tr>
           </thead>
           <?php
           $sel->execute();
           $sel->bind_result($id, $codigo, $descripcion, $tipo, $existencia, $precio_unitario, $proveedor);
           while ($sel->fetch()) {?>
-            <tr>
+            <tr class="grey lighten-3">
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
                 value="<?php echo $id ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
               visibility</i></button></td>
@@ -83,7 +88,17 @@ if (isset($_GET['tip'])) {
               <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
               }).then((result) => { if (result.value){location.href='eliminar_inventario.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>
-
+              <td class="borrar"><a id="<?php echo $id?>" class="expand btn-floating grey"><i
+                class="material-icons">expand_more</i></a></td>
+                <input  type="hidden" name="id" value="<?php echo $id?>">
+            </tr>
+            <tr id="detalle_<?php echo $id?>" style="display:none;">
+              <td colspan="14">
+              <div class="row">
+                <div id = "res_detalle_<?php echo $id?>" class="col s12"/>
+                </div>
+              </div>
+              </td>
             </tr>
           <?php }
           $sel->close();
@@ -130,6 +145,6 @@ if (isset($_GET['tip'])) {
 });
 
 </script>
-
+<script src="../js/detalle.js"></script>
 </body>
 </html>

@@ -86,8 +86,8 @@ else {
           <div class="row">
             <div class="col s4">
               <div class = "input-field">
-                <input type="number" name="existencia" id="existencia"  value="<?php echo $existencia ?>">
-                <label for="existencia">Existencia</label>
+                <input type="number" name="precio_unitario" id="precio_unitario" value="<?php echo $precio_unitario ?>">
+                <label for="precio_unitario">Precio Unitario</label>
               </div>
             </div>
             <div class="col s4">
@@ -100,26 +100,6 @@ else {
               <div class = "input-field">
                 <input type="number" name="maximo" id="maximo" value="<?php echo $maximo ?>">
                 <label for="maximo">Existencia Máxima</label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s4">
-              <div class = "input-field">
-                <input type="number" name="precio_unitario" id="precio_unitario" value="<?php echo $precio_unitario ?>">
-                <label for="precio_unitario">Precio Unitario</label>
-              </div>
-            </div>
-            <div class="col s4">
-              <div class = "input-field">
-                <input type="date" class="datepicker" name="ultima_entrada" id="ultima_entrada" value="<?php echo $ultima_entrada?>">
-                <label for="ultima_entrada">Fecha Ultima Entrada</label>
-              </div>
-            </div>
-            <div class="col s4">
-              <div class = "input-field">
-                <input type="date" class="datepicker" name="ultima_salida" id="ultima_salida" value="<?php echo $ultima_salida ?>">
-                <label for="ultima_salida">Fecha Ultima Salida</label>
               </div>
             </div>
           </div>

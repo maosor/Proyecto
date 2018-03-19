@@ -36,42 +36,45 @@ $sel->fetch();
             </div>
             </div>
           <div class="row">
-            <div class="col s8">
-              <b>Proveedor: </b>
-              <?php echo $proveedor ?>
-              </div>
             <div class="col s4">
               <b>Tipo: </b>
               <?php echo tipo_desc($tipo) ?>
             </div>
+            <div class="col s8">
+              <b>Proveedor: </b>
+              <?php echo $proveedor ?>
+              </div>
           </div>
           <div class="row">
-            <div class="col s4">
-                <b>Existencia: </b>
-                <?php echo $existencia ?>
-              </div>
-            <div class="col s4">
+                <div class="col s6">
                 <b>Existencia Mínima: </b>
                 <?php echo $minimo ?>
               </div>
-            <div class="col s4">
+            <div class="col s6">
                 <b>Existencia Máxima: </b>
                 <?php echo $maximo ?>
               </div>
           </div>
           <div class="row">
+            <div class="col s6">
+                <b>Existencia: </b>
+                <?php echo $existencia ?>
+            </div>
             <div class="col s4">
-              <b>Precio Unitario: </b>
+              <b>Precio: </b>
                 <?php echo $precio_unitario ?>
               </div>
-            <div class="col s4">
+            </div>
+          <div class="row">
+            <div class="col s6">
               <b>Ultima Entrada: </b>
                 <?php echo $ultima_entrada?>
               </div>
-            <div class="col s4">
+            <div class="col s6">
               <b>Ultima Salida: </b>
                 <?php echo $ultima_salida ?>
               </div>
+            </div>
           </div>
       </div>
     </div>

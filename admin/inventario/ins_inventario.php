@@ -7,9 +7,10 @@ eval($variable);
 }
 $id= '';
 $compania = $_SESSION['compania'];
+$existencia = 0.00;
 $ins = $con->prepare("INSERT INTO inventario VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ");
-$ins->bind_param("sissdidddsss", $compania, $id, $codigo, $descripcion, $precio_unitario, $tipo,
- $existencia, $minimo, $maximo, $proveedor, $ultima_entrada, $ultima_salida );
+$ins->bind_param("iissdidddsss", $compania, $id, $codigo, $descripcion, $precio_unitario, $tipo,
+$existencia, $minimo, $maximo, $proveedor, date('y-m-d'), date('y-m-d'));
 
 if ($ins->execute()) {
   header('location:../extend/alerta.php?msj=Guardo Artículo&c=inv&p=in&t=success');
@@ -18,6 +19,6 @@ if ($ins->execute()) {
 }
 $con->close();
 }else {
-  header('location:../extend/alerta.php?msj=Utiliza el formulario&c=cli&p=in&t=error');
+  header('location:../extend/alerta.php?msj=Utiliza el formulario&c=inv&p=in&t=error');
 }
  ?>

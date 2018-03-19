@@ -17,4 +17,16 @@ function tipo_desc($tipo)
   }
   return $tipo_desc;
 }
+function tipo_trans($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $tipo_trans = 'ENTRADA';
+      break;
+    case '2':
+      $tipo_trans = 'SALIDA';
+      break;
+  }
+  return $tipo_trans;
+}
  ?>
