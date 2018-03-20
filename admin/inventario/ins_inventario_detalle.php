@@ -1,5 +1,6 @@
 <?php
 include '../conexion/conexion.php';
+include '../extend/funciones.php';
 if ($_SERVER['REQUEST_METHOD']== 'POST'){
 foreach ($_POST as $campo => $valor) {
 $variable = "$".$campo."='".htmlentities($valor)."';";
@@ -18,11 +19,9 @@ if($sel->fetch())
 
   }else {
     $saldo = ($entrada - $salida)-$cantidad;
-
   }
 }
-
-$sel->close();
+  $sel->close();
 $id= '';
 $con-> begin_transaction();
 $ins = $con->prepare("INSERT INTO inventario_detalle VALUES(?,?,?,?,?,?,?,?,?) ");
@@ -38,12 +37,13 @@ $ins->bind_param("iiissidds", $compania, $id, $id_articulo, $documento, $descrip
     if($up -> execute())
     {
       $up ->close();
-      header('location:../extend/alerta.php?msj=Guardo el detalle del Artículo'.$saldo. $id_articulo.$compania.'&c=inv&p=in&t=success');
+      header('location:../extend/alerta.php?msj=Guardo el detalle del Artículo&c=inv&p=in&t=success');
     }
   }else {
     header('location:../extend/alerta.php?msj=No guardo el detalle del Artículo&c=inv&p=in&t=error');
   }
   $con->commit();
+  $ins->close();
 $con->close();
 }else {
   header('location:../extend/alerta.php?msj=Utiliza el formulario&c=inv&p=in&t=error');

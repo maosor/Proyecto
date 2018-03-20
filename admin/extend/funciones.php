@@ -29,4 +29,24 @@ function tipo_trans($tipo)
   }
   return $tipo_trans;
 }
+function get_saldo($cantidad,$tipo, $id_articulo, $compania)
+{
+  include '../conexion/conexion.php';
+  $sel = $con->prepare("SELECT sum(IF(tipo = 1, cantidad, 0)) as entrada, SUM(IF(tipo = 2, cantidad, 0)) as salida
+  FROM inventario_detalle WHERE id_articulo = ? AND id_compania = ? ");
+  $sel->bind_param('ii', $id_articulo, $compania);
+  $sel->execute();
+  $sel->bind_result($entrada, $salida);
+  if($sel->fetch())
+  {
+    if($tipo = 1){
+      $saldo = ($entrada - $salida)+$cantidad;
+
+    }else {
+      $saldo = ($entrada - $salida)-$cantidad;
+    }
+  }
+  $sel->close();
+  return $saldo;
+}
  ?>
