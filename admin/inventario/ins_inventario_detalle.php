@@ -14,7 +14,7 @@ $sel->execute();
 $sel->bind_result($entrada, $salida);
 if($sel->fetch())
 {
-  if($tipo = 1){
+  if($tipo == 1){
     $saldo = ($entrada - $salida)+$cantidad;
 
   }else {
@@ -28,7 +28,7 @@ $ins = $con->prepare("INSERT INTO inventario_detalle VALUES(?,?,?,?,?,?,?,?,?) "
 $ins->bind_param("iiissidds", $compania, $id, $id_articulo, $documento, $descripcion,
  $tipo, $cantidad, $saldo, $fecha);
   if ($ins->execute()) {
-    if($tipo = 1){
+    if($tipo == 1){
       $up = $con->prepare("UPDATE inventario SET existencia=?, ultima_entrada=? WHERE id=? AND id_compania =? ");
     }else {
       $up = $con->prepare("UPDATE inventario SET existencia=?, ultima_salida=? WHERE id=? AND id_compania =? ");

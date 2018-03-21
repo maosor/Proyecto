@@ -13,7 +13,8 @@ if ($sel_detalle->num_rows > 0) {
 ?>
        <table border="1">
          <tr class="grey lighten-2">
-          <th>Fecha</th>
+           <th></th>
+           <th>Fecha</th>
            <th>Documento</th>
            <th>Descrición</th>
            <th>tipo</th>
@@ -27,6 +28,8 @@ if ($sel_detalle->num_rows > 0) {
          while ($sel_detalle->fetch()) {
           ?>
           <tr>
+            <td><a href="" data-target="modal1" class="small teal-text material-icons " onclick="enviar(this.value)"><i
+              class="small material-icons">visibility</i></a></td>
             <td><?php echo $fecha_detalle?></td>
             <td><?php echo $documento?></td>
             <td><?php echo $descripcion_detalle?></td>
@@ -37,7 +40,7 @@ if ($sel_detalle->num_rows > 0) {
               class="small material-icons">loop</i></a></td>
             <td class="borrar"><a href="#" class="small material-icons" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
-              }).then((result) => { if (result.value){location.href='eliminar_inventario_detalle.php?id=<?php echo $id?>';}})"><i class="small red-text material-icons">clear</i></a></td>
+              }).then((result) => { if (result.value){location.href='eliminar_inventario_detalle.php?id=<?php echo $det?>';}})"><i class="small red-text material-icons">clear</i></a></td>
 
           </tr>
         <?php }
@@ -59,6 +62,29 @@ if ($sel_detalle->num_rows > 0) {
   $sel_detalle->close();
   $con -> close();
  ?>
+ <div id="modal1" class="modal">
+   <div class="modal-content">
+     <h4>Informacion</h4>
+     <div class="res_modal">
+
+     </div>
+   </div>
+   <div class="modal-footer">
+     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">CERRAR</a>
+   </div>
+ </div>
+ <?php include '../extend/scripts.php'; ?>
  <script>
+   $('.modal').modal();
+   function enviar(valor) {
+       $.get('modal.php', {
+         id:valor,
+         beforeSend: function () {
+           $('.res_modal').html('Espere un momento por favor');
+          }
+        }, function (respuesta) {
+             $('.res_modal').html(respuesta);
+       });
+     }
 
  </script>

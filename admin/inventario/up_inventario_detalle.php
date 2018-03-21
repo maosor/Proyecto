@@ -14,21 +14,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $sel->bind_result($entrada, $salida);
   if($sel->fetch())
   {
-    if($tipo = 1){
-      $saldo = ($entrada - $salida)+$cantidad;
+    if ($last_tipo == $tipo)
+    {
+      if($tipo == 1){
+        $saldo = (($entrada-$last_cantidad) - $salida)+$cantidad;
 
-    }else {
-      $saldo = ($entrada - $salida)-$cantidad;
+      }else {
+        $saldo = ($entrada - ($salida-$last_cantidad))-$cantidad;
+      }
+    }
+    else {
+      if($tipo == 1){
+        $saldo = (($entrada+$last_cantidad) - $salida)+$cantidad;
+
+      }else {
+        $saldo = ($entrada - ($salida+$last_cantidad))-$cantidad;
+      }
     }
   }
-    $sel->close();
+   $sel->close();
 $con-> begin_transaction();
     $up = $con->prepare("UPDATE inventario_detalle SET id_compania=?,id=?,id_articulo=?,documento=?,descripcion=?,
       tipo=?,cantidad=?,saldo=?,fecha=? WHERE id=?");
   $up->bind_param("iiiisiddsi", $compania, $id, $id_articulo, $documento, $descripcion,
    $tipo, $cantidad, $saldo, $fecha,$id);
   if ($up->execute()) {
-    if($tipo = 1){
+    if($tipo == 1){
       $up_inv = $con->prepare("UPDATE inventario SET existencia=?, ultima_entrada=? WHERE id=? AND id_compania =? ");
     }else {
       $up_inv = $con->prepare("UPDATE inventario SET existencia=?, ultima_salida=? WHERE id=? AND id_compania =? ");
@@ -38,7 +49,7 @@ $con-> begin_transaction();
     {
       $up_inv ->close();
     header('location:../extend/alerta.php?msj=Edito el detalle del articulo&c=inv&p=in&t=success');
-  }
+    }
   }else{
     header('location:../extend/alerta.php?msj=No edito el detalle del articulo&c=inv&p=in&t=error');
   }

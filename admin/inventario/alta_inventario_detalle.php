@@ -50,6 +50,8 @@ $sel_inv->close();
         <?php if ($accion == 'Actualizar'): ?>
           <form  action="up_inventario_detalle.php" method="post" autocomplete="off">
           <input type="hidden" name="id" value="<?php echo $id ?>">
+          <input type="hidden" name="last_cantidad" value="<?php echo $cantidad ?>">
+          <input type="hidden" name="last_tipo" value="<?php echo $tipo ?>">
         <?php else: ?>
           <form  action="ins_inventario_detalle.php" method="post" autocomplete="off">
          <?php endif; ?>
