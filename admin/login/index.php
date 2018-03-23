@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
             $_SESSION ['nivel'] = $nivel;
             $_SESSION ['correo'] = $correo;
             $_SESSION ['foto'] = $foto;
-            header('location:../extend/alerta.php?msj=Bienvenido&c=home&p=home&t=success');
+            header('location:../inicio/index.php');
            }
          elseif ($nick == $usuario && $contra == $pass2 && $nivel == 'ASESOR') {
             $_SESSION ['compania'] = $compania;
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
             $_SESSION ['nivel'] = $nivel;
             $_SESSION ['correo'] = $correo;
             $_SESSION ['foto'] = $foto;
-            header('location:../extend/alerta.php?msj=Bienvenido&c=home&p=home&t=success');
+            header('location:../inicio/index.php');
            }
            else {
              header('location:../extend/alerta.php?msj=No tienes el permiso para entrar&c=salir&p=salir&t=error');

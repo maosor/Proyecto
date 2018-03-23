@@ -7,8 +7,8 @@
             </div>
             <div class="card-tabs">
               <ul class="tabs tabs-fixed-width">
-                <li class="tab"><a class="active" href="#datos">Datos</a></li>
-                <li class="tab"><a href="#pass">Contraseña</a></li>
+                <li class="tab"><a class="active" href="#datos">Datos Personales</a></li>
+                <li class="tab"><a href="#pass">Cambiar Contraseña</a></li>
               </ul>
             </div>
             <div class="card-content grey lighten-4">
@@ -23,7 +23,7 @@
                     <input type="email" name="correo" title="Correo eletrónico" value="<?php echo $_SESSION['correo']?>" id="correo">
                     <label for="correo">Correo electrónico</label>
                   </div>
-                     <button type="submit" class="btn black" name="button">Editar<i class="material-icons">send</i></button>
+                     <button type="submit" class="btn black" name="button">Guardar <i class="material-icons">send</i></button>
                 </form>
               </div>
               <div id="pass">
@@ -37,7 +37,7 @@
                     <input type="password"  title="CONTRASEÑA CON NUMEROS, LETRAS MAYUSCULAS, MINUSCULAS" pattern="[A-Za-z0-9]{8,15}"
                     id="pass2" required>
                     <label for="pass">Verificar Contraseña:</label>
-                     <button type="submit" class="btn black" id="btn_guardar" name="button">Editar<i class="material-icons">send</i></button>
+                     <button type="submit" class="btn black" id="btn_guardar" name="button">Guardar <i class="material-icons">send</i></button>
                 </form>
               </div>
             </div>

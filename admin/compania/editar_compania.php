@@ -21,6 +21,7 @@ if ($sel->fetch()) {
               <label for="compania">Nombre</label>
             </div>
             <button type="submit" class="btn" >Guardar</button>
+            <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
           </form>
         </div>
       </div>

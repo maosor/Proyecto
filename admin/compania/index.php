@@ -10,7 +10,7 @@
             <input type="text" name="compania"  title="Solo letras" pattern="[\p{Latin}/s ]+"  id="compania" onblur="may(this.value, this.id)"  >
             <label for="nombre">Nombre compañia</label>
           </div>
-          <button type="submit" class="btn" >Guardar</button>
+          <button type="submit" class="btn" >Guardar nuevo</button>
         </form>
       </div>
     </div>
@@ -57,7 +57,7 @@ $row = $sel->num_rows;
               <td> <a href="editar_compania.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
               </td>
               <td>
-                <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',
+                <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la compañia?',text: 'Al eliminarlo no podrá recuperarlo!',
                   type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
                 }).then((result) => { if (result.value){location.href='eliminar_compania.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a>
               </td>
