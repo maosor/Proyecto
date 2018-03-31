@@ -7,7 +7,7 @@
         <span class="card-title">Mantenimiento de clientes</span>
         <form class="form" action="ins_clientes.php" method="post" autocomplete=off >
           <div class="input-field">
-            <input type="hidden" name="compania" value="<?php echo $_SESSION['compania']?>"> 
+            <input type="hidden" name="compania" value="<?php echo $_SESSION['compania']?>">
             <input type="text" name="nombre"  title="Solo letras" pattern="[\p{Latin}/s]"  id="nombre" onblur="may(this.value, this.id)"  >
             <label for="nombre">Nombre</label>
           </div>
@@ -23,7 +23,7 @@
             <input type="email" name="correo"   id="correo"   >
             <label for="email">Correo</label>
           </div>
-          <button type="submit" class="btn" >Guardar</button>
+          <button type="submit" class="btn" >Guardar Nuevo</button>
         </form>
       </div>
     </div>

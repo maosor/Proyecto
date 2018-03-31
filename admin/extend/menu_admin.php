@@ -48,6 +48,9 @@ $sel_compania->fetch();
     <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>INVENTARIO
     <i class="material-icons right">arrow_drop_down</i></a></li>
     <li><div class="divider"></div></li>
+    <li><a class="dropdown-button" href="#!" data-activates="ddprint"><i class="material-icons">settings</i>PARAMETROS
+    <i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><div class="divider"></div></li>
     <!-- <li><a href="../inicio/slider.php"><i class="material-icons">web</i>SLIDER</li></a>
     <li><div class="divider"></div></li> -->
     <li><a href="../login/salir.php"><i class="material-icons">power_setting_new</i>SALIR</li></a>
@@ -55,9 +58,17 @@ $sel_compania->fetch();
   </ul>
 
   <ul id="dropdown1" class="dropdown-content">
-    <li><a href="../inventario/index.php">GENERAL</a></li>
+    <li><a href="../inventario/index.php">GENERALES</a></li>
     <li><a href="../inventario/index.php?tip=1">PAPELES</a></li>
     <li><a href="../inventario/index.php?tip=2">SUMINISTROS</a></li>
     <li><a href="../inventario/index.php?tip=3">REPUESTOS</a></li>
     <li><a href="../inventario/index.php?tip=4">OTROS</a></li>
    </ul>
+   <ul id="ddprint" class="dropdown-content">
+     <li><a href="#">GENERAL</a></li>
+     <li><a href="../maquinas/index.php">MAQUINAS</a></li>
+     <li><a href="#">OPERACIONES</a></li>
+     <li><a href="#">TIPOS DE TINTA</a></li>
+     <li><a href="#">AGENCIAS</a></li>
+
+    </ul>

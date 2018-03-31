@@ -2,50 +2,42 @@
 include '../conexion/conexion.php';
 $id = htmlentities($_POST['id']);
 $compania = $_SESSION ['compania'];
-$sel_detalle = $con->prepare("SELECT id, fecha, documento, descripcion, tipo, cantidad, saldo FROM inventario_detalle
-WHERE id_articulo = ? AND id_compania = ? ");
-$sel_detalle -> bind_param("ii", $id,$compania);
+if (isset($_POST['i'])&&isset($_POST['f']))
+{
+  $finicio = htmlentities($_POST['i']);
+  $ffin = htmlentities($_POST['f']);
+}
+else {
+  $finicio = '2017-01-01';
+  $ffin = Date("y-m-d");
+}
+if (isset($_POST['n']))
+{
+  $num_registros = htmlentities($_POST['n']);
+}
+else {
+  $num_registros = 5;
+}
+if (!isset($_POST['t'])|| htmlentities($_POST['t'])==0)
+{
+  $sel_detalle = $con->prepare("SELECT id, fecha, documento, descripcion, tipo, cantidad, saldo FROM inventario_detalle
+  WHERE id_articulo = ? AND id_compania = ? AND (fecha BETWEEN ? AND ?)
+  ORDER BY fecha DESC LIMIT ? ");
+  $sel_detalle -> bind_param("iissi", $id,$compania, $finicio, $ffin, $num_registros);
+}
+else {
+  $tipo = htmlentities($_POST['t']);
+  $sel_detalle = $con->prepare("SELECT id, fecha, documento, descripcion, tipo, cantidad, saldo FROM inventario_detalle
+  WHERE id_articulo = ? AND id_compania = ? (fecha BETWEEN ? AND ?) AND tipo = ?
+  ORDER BY fecha DESC LIMIT ? ");
+  $sel_detalle -> bind_param("iissii", $id,$compania, $finicio, $ffin, $tipo, $num_registros);
+}
 $sel_detalle->execute();
 $sel_detalle -> store_result();
 if ($sel_detalle->num_rows > 0) {
   $sel_detalle->bind_result($det, $fecha_detalle, $documento, $descripcion_detalle, $tipo_detalle, $cantidad, $saldo);
 
 ?>
-      <nav class="brown lighten-4" >
-        <div class="nav-wrapper black-text">
-          <div class="row">
-            <div class="col s3">
-              <div class="input-field">
-                <i class="material-icons prefix">date_range</i>
-                <input type="date" class = "datepicker" id="inicio" autocomplete="off"  >
-                <label for="inicio">Fecha Inicio</label>
-              </div>
-            </div>
-            <div class="col s3">
-              <div class="input-field">
-                <i class="material-icons prefix">date_range</i>
-                <input type="date" class = "datepicker" id="fin" autocomplete="off"  >
-                <label for="fin">Fecha Final</label>
-              </div>
-            </div>
-            <div class="col s3">
-              <select id="tipo" name="tipo" required value = "1">
-                <option value="0" selected disabled>SELECCIONE UN TIPO</option>
-                <option value="1">ENTRADA</option>
-                <option value="2">SALIDA</option>
-              </select>
-            </div>
-            <div class="col s3">
-              <div class="input-field">
-                <i class="material-icons prefix">exposure</i>
-                <input type="number" id="cantidad" autocomplete="off"  >
-                <label for="cantidad">Cantidad Items</label>
-              </div>
-            </div>
-            <i class="material-icons" >close</i>
-          </div>
-        </div>
-      </nav>
        <table id= "tbdetalle_<?php echo $id?>" border="1">
          <tr class="grey lighten-2">
            <th></th>
@@ -65,7 +57,7 @@ if ($sel_detalle->num_rows > 0) {
           <tr>
             <td><a href="" data-target="modal2" onclick="enviar_detalle(<?php echo $det ?>)"
                class="small teal-text text-lighten-1 material-icons modal-trigger" ><i class="small material-icons">visibility</i></a></td>
-            <td><?php echo $fecha_detalle?></td>
+            <td class="clfecha"><?php echo $fecha_detalle?></td>
             <td><?php echo $documento?></td>
             <td><?php echo $descripcion_detalle?></td>
             <td><?php echo $tipo_detalle?></td>
@@ -107,7 +99,7 @@ if ($sel_detalle->num_rows > 0) {
    <div class="modal-footer">
      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">CERRAR</a>
    </div>
- </div>
+ </div> == <?php echo $num_registros?>
  <?php include '../extend/scripts.php'; ?>
  <script>
    $('.modal').modal();
@@ -122,4 +114,4 @@ if ($sel_detalle->num_rows > 0) {
        });
      }
 
- </script>
+  </script>

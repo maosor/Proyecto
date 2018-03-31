@@ -10,7 +10,7 @@
             <input type="text" name="compania"  title="Solo letras" pattern="[\p{Latin}/s ]+"  id="compania" onblur="may(this.value, this.id)"  >
             <label for="nombre">Nombre compañia</label>
           </div>
-          <button type="submit" class="btn" >Guardar nuevo</button>
+          <button type="submit" class="btn" >Guardar nueva</button>
         </form>
       </div>
     </div>

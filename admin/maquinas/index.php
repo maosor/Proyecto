@@ -1,15 +1,8 @@
 <?php include '../extend/header.php';
 $compania = $_SESSION ['compania'];
-if (isset($_GET['tip'])) {
-  $tipo = $con->real_escape_string(htmlentities($_GET['tip']));
-  $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario,
-    proveedor FROM inventario WHERE tipo = ? AND id_compania =? ");
-  $sel->bind_param("si", $tipo,$compania);
-}else {
-  $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario,
-    proveedor FROM inventario WHERE id_compania =? ");
-    $sel->bind_param("s", $compania);
-}
+$sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maximo_alto,
+    maximo_ancho, minimo_alto, minimo_ancho FROM maquina WHERE id_compania =? ");
+  $sel->bind_param("i", $compania);
 ?>
 
 <br>
@@ -32,7 +25,7 @@ if (isset($_GET['tip'])) {
       <div class="card-content">
         <form action="excel.php" method="post" target="_blank" id="exportar">
 
-            <span class="card-title">Inventario
+            <span class="card-title">MAquinas
               </span>
 
             <input type="hidden" name="datos" id ="datos">
@@ -44,11 +37,11 @@ if (isset($_GET['tip'])) {
               <th class="borrar">Vista</th>
               <th>Id</th>
               <th>Código</th>
-              <th>Descrición</th>
+              <th>Nombre Maquina</th>
               <th>Tipo</th>
-              <th>Existencia</th>
-              <th>Precio</th>
-              <th>Proveedor</th>
+              <th>Operarios</th>
+              <th>Máximo</th>
+              <th>Mínimo</th>
               <th colspan="2">Acciones </th>
               <th><a href="alta_inventario.php" class="btn-floating green right"><i
                 class="material-icons">add</i></a></th>
@@ -56,7 +49,7 @@ if (isset($_GET['tip'])) {
           </thead>
           <?php
           $sel->execute();
-          $sel->bind_result($id, $codigo, $descripcion, $tipo, $existencia, $precio_unitario, $proveedor);
+          $sel->bind_result($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho);
           while ($sel->fetch()) {?>
             <tr class="grey lighten-3">
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
@@ -64,25 +57,19 @@ if (isset($_GET['tip'])) {
               visibility</i></button></td>
               <td><?php echo $id ?></td>
               <td><?php echo $codigo ?></td>
-              <td><?php echo $descripcion?></td>
+              <td><?php echo $nombre_maquina?></td>
               <td><?php
                 switch ($tipo) {
                   case 1:
-                   echo 'Papeles';
+                   echo 'Litografia';
                     break;
                   case 2:
-                   echo 'Suminitros';
-                    break;
-                  case 3:
-                   echo 'Repuestos';
-                    break;
-                  case 4:
-                   echo 'Otros';
+                   echo 'Tipografia';
                     break;
                }?></td>
-              <td><?php echo $existencia?></td>
-              <td><?php echo "¢".number_format($precio_unitario,2); ?></td>
-              <td><?php echo $proveedor ?></td>
+              <td><?php echo $operarios?></td>
+              <td><?php echo $maximo_alto?>X<?php echo $maximo_ancho?></td>
+              <td><?php echo $minimo_alto?>X<?php echo $minimo_ancho?></td>
               <td class="borrar"><a href="alta_inventario.php?id=<?php echo $id?>" class="btn-floating blue"><i
                 class="material-icons">loop</i></a></td>
               <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
