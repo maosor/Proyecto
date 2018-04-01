@@ -28,7 +28,7 @@ if (!isset($_POST['t'])|| htmlentities($_POST['t'])==0)
 else {
   $tipo = htmlentities($_POST['t']);
   $sel_detalle = $con->prepare("SELECT id, fecha, documento, descripcion, tipo, cantidad, saldo FROM inventario_detalle
-  WHERE id_articulo = ? AND id_compania = ? (fecha BETWEEN ? AND ?) AND tipo = ?
+  WHERE id_articulo = ? AND id_compania = ? AND (fecha BETWEEN ? AND ?) AND tipo = ?
   ORDER BY fecha DESC LIMIT ? ");
   $sel_detalle -> bind_param("iissii", $id,$compania, $finicio, $ffin, $tipo, $num_registros);
 }
@@ -99,8 +99,8 @@ if ($sel_detalle->num_rows > 0) {
    <div class="modal-footer">
      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">CERRAR</a>
    </div>
- </div> == <?php echo $num_registros?>
- <?php include '../extend/scripts.php'; ?>
+ </div>
+ <?php //include '../extend/scripts.php'; ?>
  <script>
    $('.modal').modal();
    function enviar_detalle(valor) {

@@ -126,7 +126,6 @@ if (isset($_GET['tip'])) {
                           <label for="cantidad">Cantidad Items</label>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </nav>
@@ -171,7 +170,6 @@ if (isset($_GET['tip'])) {
             $('.res_modal').html(respuesta);
       });
     }
-
 </script>
 <script>
   $('.botonExcel').click(function () {

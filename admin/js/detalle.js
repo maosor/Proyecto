@@ -17,47 +17,24 @@ $('.expand').click(function() {
         $('#res_detalle_'+bid).html(respuesta);
   });
 });
-
-$('.cantidad').change(function() {
-var bid =  $(this).attr('id').replace("cant_", ""); ;;
-var cant = $(this).val();
-$.post('ajax_detalle.php',{
-  id:bid,
-  n:cant,
-  beforeSend: function () {
-    $('#res_detalle_'+bid).html('Espere un momento por favor');
-         }
- }, function (respuesta) {
-      $('#res_detalle_'+bid).html(respuesta);
-});
-});
-
-$('.tipo').change(function() {
-var bid =  $(this).attr('id').replace("tipo_", "");
-var tip = $(this).val();
-$.post('ajax_detalle.php',{
-  id:bid,
-  t:tip,
-  beforeSend: function () {
-    $('#res_detalle_'+bid).html('Espere un momento por favor');
-         }
- }, function (respuesta) {
-      $('#res_detalle_'+bid).html(respuesta);
-});
-});
-$('.datepicker').change(function() {
-var bid =  $(this).attr('id').replace("inicio_", "").replace("fin_", "");
+$('.cantidad,.datepicker,.tipo').change(function() {
+var objid=$(this).attr('id');
+var bid = objid.match(/\d/g);
+bid = bid.join("");
 var inicio = $('#inicio_'+bid).val();
 var fin = $('#fin_'+bid).val();
+var tip = $('#tipo_'+bid).val();
+var cant = $('#cant_'+bid).val();
 $.post('ajax_detalle.php',{
   id:bid,
   i:inicio,
   f:fin,
+  t:tip,
+  n:cant,
   beforeSend: function () {
-    $('#res_detalle_'+bid).html('Espere un momento por favor');
+        $('#res_detalle_'+bid).html('Espere un momento por favor');
          }
  }, function (respuesta) {
       $('#res_detalle_'+bid).html(respuesta);
 });
-
 });
