@@ -30,4 +30,8 @@
         close: 'Aceptar',
         closeOnSelect: false // Close upon selecting a date,
       });
+      $('.tooltipped').tooltip({
+        position:'top',
+        html: true
+      });
       </script>

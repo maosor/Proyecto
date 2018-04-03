@@ -60,7 +60,8 @@ if (isset($_GET['tip'])) {
           while ($sel->fetch()) {?>
             <tr class="grey lighten-3">
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
-                value="<?php echo $id ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
+                value="<?php echo $id ?>" class="btn modal-trigger btn-floating tooltipped"
+                data-position="top" data-tooltip="Vista completa del articulo #<?php echo $id ?>"><i class="material-icons">
               visibility</i></button></td>
               <td><?php echo $id ?></td>
               <td><?php echo $codigo ?></td>
@@ -83,12 +84,15 @@ if (isset($_GET['tip'])) {
               <td><?php echo $existencia?></td>
               <td><?php echo "¢".number_format($precio_unitario,2); ?></td>
               <td><?php echo $proveedor ?></td>
-              <td class="borrar"><a href="alta_inventario.php?id=<?php echo $id?>" class="btn-floating blue"><i
+              <td class="borrar"><a href="alta_inventario.php?id=<?php echo $id?>" class="btn-floating blue tooltipped"
+              data-position="top" data-tooltip="Editar el articulo #<?php echo $id ?>"><i
                 class="material-icons">loop</i></a></td>
-              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
+              <td class="borrar"><a href="#" class="btn-floating red tooltipped"
+              data-position="top" data-tooltip="Eliminar el articulo #<?php echo $id ?>" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
               }).then((result) => { if (result.value){location.href='eliminar_inventario.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>
-              <td class="borrar"><a id="<?php echo $id?>" class="expand btn-floating grey"><i
+              <td class="borrar"><a id="<?php echo $id?>" class="expand btn-floating grey tooltipped"
+              data-position="top" data-tooltip="Mostrar detalle del articulo #<?php echo $id ?>"><i
                 class="material-icons">expand_more</i></a></td>
                 <input  type="hidden" name="id"  value="<?php echo $id?>">
             </tr>

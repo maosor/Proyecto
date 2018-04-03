@@ -35,6 +35,9 @@
       case 'com':
         $carpeta = '../compania/';
         break;
+      case 'maq':
+        $carpeta = '../maquinas/';
+        break;
       }
     switch ($p) {
       case 'in':

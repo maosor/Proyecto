@@ -29,6 +29,18 @@ function tipo_trans($tipo)
   }
   return $tipo_trans;
 }
+function tipo_maq($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $tipo_trans = 'LITOGRAFIA';
+      break;
+    case '2':
+      $tipo_trans = 'TIPOGRAFIA';
+      break;
+  }
+  return $tipo_trans;
+}
 function get_saldo($cantidad,$tipo, $id_articulo, $compania)
 {
   include '../conexion/conexion.php';
