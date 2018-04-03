@@ -104,7 +104,12 @@ else {
             </div>
           </div>
         <center>
+          <?php if ($accion == 'Actualizar'): ?>
         <button type="submit" class="btn">Guardar</button>
+        <?php else: ?>
+          <button type="submit" class="btn">Guardar nuevo</button>
+        <?php endif; ?>
+        <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
         </center>
         </form>
       </div>

@@ -8,9 +8,9 @@ $ins = $con->prepare("INSERT INTO compania VALUES (?,?) ");
 $ins -> bind_param('is', $id, $compania);
 if ($ins -> execute()) {
 
-  header('location:../extend/alerta.php?msj=Compania registrada&c=com&p=in&t=success');
+  header('location:../extend/alerta.php?msj=Compañía registrada&c=com&p=in&t=success');
 }else {
-  header('location:../extend/alerta.php?msj=La compania no pudo se registrada&c=com&p=in&t=error');
+  header('location:../extend/alerta.php?msj=La compañía no pudo ser registrada&c=com&p=in&t=error');
 }
 $ins ->close();
 $con->close();

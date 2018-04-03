@@ -57,8 +57,8 @@ $row = $sel->num_rows;
               <td> <a href="editar_compania.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
               </td>
               <td>
-                <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la compañia?',text: 'Al eliminarlo no podrá recuperarlo!',
-                  type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
+                <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la compañía?',text: 'Al eliminarla no podrá recuperarla!',
+                  type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarla'
                 }).then((result) => { if (result.value){location.href='eliminar_compania.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a>
               </td>
             </tr>

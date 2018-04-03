@@ -37,10 +37,10 @@ $ins->bind_param("iiissidds", $compania, $id, $id_articulo, $documento, $descrip
     if($up -> execute())
     {
       $up ->close();
-      header('location:../extend/alerta.php?msj=Guardo el detalle del Artículo&c=inv&p=in&t=success');
+      header('location:../extend/alerta.php?msj=Guardó el detalle del Artículo&c=inv&p=in&t=success');
     }
   }else {
-    header('location:../extend/alerta.php?msj=No guardo el detalle del Artículo&c=inv&p=in&t=error');
+    header('location:../extend/alerta.php?msj=No guardó el detalle del Artículo&c=inv&p=in&t=error');
   }
   $con->commit();
   $ins->close();

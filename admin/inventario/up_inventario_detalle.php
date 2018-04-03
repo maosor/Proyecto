@@ -48,10 +48,10 @@ $con-> begin_transaction();
     if($up_inv -> execute())
     {
       $up_inv ->close();
-    header('location:../extend/alerta.php?msj=Edito el detalle del articulo&c=inv&p=in&t=success');
+    header('location:../extend/alerta.php?msj=Editó el detalle del artículo&c=inv&p=in&t=success');
     }
   }else{
-    header('location:../extend/alerta.php?msj=No edito el detalle del articulo&c=inv&p=in&t=error');
+    header('location:../extend/alerta.php?msj=No editó el detalle del artículo&c=inv&p=in&t=error');
   }
   $con->commit();
   $up->close();

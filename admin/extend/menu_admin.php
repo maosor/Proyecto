@@ -65,10 +65,10 @@ $sel_compania->fetch();
     <li><a href="../inventario/index.php?tip=4">OTROS</a></li>
    </ul>
    <ul id="ddprint" class="dropdown-content">
-     <li><a href="#">GENERAL</a></li>
+     <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">GENERAL</a></li>
      <li><a href="../maquinas/index.php">MAQUINAS</a></li>
-     <li><a href="#">OPERACIONES</a></li>
-     <li><a href="#">TIPOS DE TINTA</a></li>
-     <li><a href="#">AGENCIAS</a></li>
+     <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">OPERACIONES</a></li>
+     <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">TIPOS DE TINTA</a></li>
+     <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">AGENCIAS</a></li>
 
     </ul>

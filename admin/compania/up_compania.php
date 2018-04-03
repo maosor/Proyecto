@@ -8,9 +8,9 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   $up->bind_param('si', $nombre, $id);
 
     if ($up -> execute()) {
-    header('location:../extend/alerta.php?msj=Compania actualizada&c=com&p=in&t=success');
+    header('location:../extend/alerta.php?msj=Compañía actualizada&c=com&p=in&t=success');
   }else {
-    header('location:../extend/alerta.php?msj=La compania no pudo se actualizada&c=com&p=in&t=error');
+    header('location:../extend/alerta.php?msj=La compañía no pudo ser actualizada&c=com&p=in&t=error');
   }
 $ins->close();
 $con->close();

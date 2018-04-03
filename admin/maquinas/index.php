@@ -72,9 +72,9 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
               <td><?php echo $minimo_alto?>X<?php echo $minimo_ancho?></td>
               <td class="borrar"><a href="alta_maquinas.php?id=<?php echo $id?>" class="btn-floating blue"><i
                 class="material-icons">loop</i></a></td>
-              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
-                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
-              }).then((result) => { if (result.value){location.href='eliminar_inventario.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>
+              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la máquina?',
+                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarla!'
+              }).then((result) => { if (result.value){location.href='eliminar_maquina.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>
             </tr>
           <?php }
           $sel->close();

@@ -10,9 +10,9 @@ if ($del_det -> execute()) {
   $del -> bind_param('ii', $id, $compania);
   $del -> execute();
   $del ->close();
-  header('location:../extend/alerta.php?msj=Articulo eliminado&c=inv&p=in&t=success');
+  header('location:../extend/alerta.php?msj=Artículo eliminado&c=inv&p=in&t=success');
 }else {
-  header('location:../extend/alerta.php?msj=El articulo no eliminado&c=inv&p=in&t=error');
+  header('location:../extend/alerta.php?msj=El artículo no eliminado&c=inv&p=in&t=error');
 }
 $con->commit();
 $con ->close();

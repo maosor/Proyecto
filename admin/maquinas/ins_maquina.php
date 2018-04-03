@@ -13,9 +13,9 @@ $operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_masca
  $cod_plan_metal, $cod_plan_carton_gde, $cod_plan_carton_peq);
 
 if ($ins->execute()) {
-  header('location:../extend/alerta.php?msj=Guardo Maquina&c=maq&p=in&t=success');
+  header('location:../extend/alerta.php?msj=Guardó máquina&c=maq&p=in&t=success');
 }else {
-  header('location:../extend/alerta.php?msj=No guardo la Maquina&c=maq&p=in&t=error');
+  header('location:../extend/alerta.php?msj=No guardó la máquina&c=maq&p=in&t=error');
 }
 $con->close();
 }else {
