@@ -7,16 +7,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
   $nivel = $con->real_escape_string(htmlentities($_POST['nivel']));
   $nombre = $con->real_escape_string(htmlentities($_POST['nombre']));
   $correo = $con->real_escape_string(htmlentities($_POST['correo']));
-if (empty($nick) || empty($pass1) ||empty($nivel) ||empty($nombre)){
-  header('location:../extend/alerta.php?msj=Hay un campo sin especificar&c=us&p=in&t=error');
+if (empty($nick) || empty($pass1) ||empty($nombre)){
+  header('location:../extend/alerta.php?msj=Hay un campo sin específicar&c=us&p=in&t=error');
   exit;
 }
 if (!ctype_alpha($nick)){
   header('location:../extend/alerta.php?msj=El nick no contiene solo letras&c=us&p=in&t=error');
   exit;
 }
-if (!ctype_alpha($nivel)){
-  header('location:../extend/alerta.php?msj=El nivel no contiene solo letras&c=us&p=in&t=error');
+if (!ctype_digit($nivel)){
+  header('location:../extend/alerta.php?msj=El nivel no contiene solo números&c=us&p=in&t=error');
   exit;
 }
 $caracteres = "ABCDEFGHIJKLÑMNOPQRSTUVWXYZ ";
@@ -39,7 +39,7 @@ if ($contra < 8 || $contra>15){
 }
 if(!empty($correo)){
   if(!filter_var($correo, FILTER_VALIDATE_EMAIL)){
-    header('location:../extend/alerta.php?msj=El Email no es valido&c=us&p=in&t=error');
+    header('location:../extend/alerta.php?msj=El Email no es válido&c=us&p=in&t=error');
     exit;
   }
 }

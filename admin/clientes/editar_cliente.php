@@ -1,9 +1,9 @@
   <?php include '../extend/header.php';
 $id = htmlentities($_GET['id']);
-$sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo FROM clientes WHERE id = ?");
+$sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo, contacto FROM clientes WHERE id = ?");
 $sel -> bind_param('i', $id);
 $sel -> execute();
-$sel ->bind_result($id, $nombre, $direccion, $telefono, $correo);
+$sel ->bind_result($id, $nombre, $direccion, $telefono, $correo,$contacto);
 if ($sel->fetch()) {
 
 }
@@ -30,6 +30,10 @@ if ($sel->fetch()) {
             <div class="input-field">
               <input type="email" name="correo" value="<?php echo $correo?>" id="correo">
               <label for="email">Correo</label>
+            </div>
+            <div class="input-field">
+              <input type="text" name="contacto" value="<?php echo $contacto?>"  title="Solo letras" pattern="[\p{Latin}/s]" id="contacto" onblur="may(this.value, this.id)">
+              <label for="contacto">Contacto</label>
             </div>
             <button type="submit" class="btn" >Guardar</button>
           </form>

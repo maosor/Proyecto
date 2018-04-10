@@ -23,6 +23,10 @@
             <input type="email" name="correo"   id="correo"   >
             <label for="email">Correo</label>
           </div>
+          <div class="input-field">
+            <input type="text" name="contacto" title="Solo letras" pattern="[\p{Latin}/s]" id="contacto" onblur="may(this.value, this.id)"  >
+            <label for="contacto">Contacto</label>
+          </div>
           <button type="submit" class="btn" >Guardar Nuevo</button>
         </form>
       </div>
@@ -45,14 +49,15 @@
 </div>
 
 <?php
-if ($_SESSION['nivel']== 'ADMINISTRADOR') {
-  $sel= $con->prepare("SELECT id, nombre, direccion, telefono, correo, asesor FROM clientes ");
+$compania = $_SESSION['compania'];
+if ($_SESSION['nivel']== 0) {
+  $sel= $con->prepare("SELECT id, nombre, direccion, telefono, correo, contacto FROM clientes ");
 }else {
-  $sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo, asesor FROM clientes  WHERE asesor = ? ");
-  $sel->bind_param('s', $_SESSION['nombre']);
+  $sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo, contacto FROM clientes  WHERE id_compania = ? ");
+  $sel->bind_param('i', $compania);
 }
 $sel -> execute();
-$sel ->bind_result($id, $nombre, $direccion, $telefono, $correo, $asesor);
+$sel ->bind_result($id, $nombre, $direccion, $telefono, $correo, $contacto);
 $sel -> store_result();
 $row = $sel->num_rows;
  ?>
@@ -68,7 +73,7 @@ $row = $sel->num_rows;
                <th>Dirección</th>
                <th>Telefono</th>
                <th>Correo</th>
-               <th>Asesor</th>
+               <th>Contacto</th>
                <!-- <th>Nuevo</th> -->
                <th></th>
                <th></th>
@@ -81,7 +86,7 @@ $row = $sel->num_rows;
               <td><?php echo $direccion?></td>
               <td><?php echo $telefono?></td>
               <td><?php echo $correo?></td>
-              <td><?php echo $asesor?></td>
+              <td><?php echo $contacto?></td>
               <!-- <td> <a href="../propiedades/alta_propiedades.php?id=<?php //echo $f['id']?>&nombre=<?php //echo $f['nombre']?>" class="btn-floating green"> <i class="material-icons">add</i></a> -->
               </td>
               <td> <a href="editar_cliente.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>

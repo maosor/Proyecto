@@ -6,11 +6,11 @@ $nombre = htmlentities($_POST['nombre']);
 $direccion = htmlentities($_POST['direccion']);
 $telefono = htmlentities($_POST['telefono']);
 $correo = htmlentities($_POST['correo']);
-$asesor = $_SESSION['nombre'];
+$contacto = htmlentities($_POST['contacto']);
 $id='';
 
 $ins = $con->prepare("INSERT INTO clientes VALUES (?,?,?,?,?,?,?) ");
-$ins -> bind_param('iisssss', $compania, $id, $nombre, $direccion, $telefono, $correo, $asesor);
+$ins -> bind_param('iisssss', $compania, $id, $nombre, $direccion, $telefono, $correo, $contacto);
 if ($ins -> execute()) {
   header('location:../extend/alerta.php?msj=Cliente registrado&c=cli&p=in&t=success');
 }else {

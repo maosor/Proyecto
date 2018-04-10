@@ -61,6 +61,9 @@
       case 'sl':
         $pagina = 'slider.php';
         break;
+      case 'cxu':
+          $pagina = 'alta_compania_usuario.php';
+          break;
       }
     if (isset($_GET['id'])) {
       $id = htmlentities($_GET['id']);

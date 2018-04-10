@@ -1,6 +1,7 @@
 <?php
  include '../extend/header.php';
  include '../extend/permiso.php';
+ $sel_niv = $con->query("SELECT * FROM nivel_usuario ");
  ?>
    <div class="row">
      <div class="col s12">
@@ -27,8 +28,12 @@
              </div>
              <select  name="nivel" required>
                <option value="" disabled selected>ELLIJE UN NIVEL DE USUARIO</option>
-               <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-               <option value="ASESOR">ASESOR</option>
+               <?php
+               while ($f_niv = $sel_niv -> fetch_assoc()){
+                ?>
+               <option value="<?php echo $f_niv['id'] ?>"><?php echo $f_niv['descripcion'] ?></option>
+             <?php }
+             ?>
              </select>
              <div class = "input-field">
                <input type="text" name="nombre" title="Nombre del usuario" id= "nombre" onblur="may (this.value, this.id)"
@@ -73,7 +78,7 @@
 
    </div>
    <?php
-      $sel = $con->query("SELECT  * FROM usuario ");
+      $sel = $con->query("SELECT  *, u.id uid, nu.id nuid FROM usuario u INNER JOIN nivel_usuario nu on u.nivel = nu.id ");
       $row = mysqli_num_rows($sel);
     ?>
    <div class="row">
@@ -101,11 +106,16 @@
                  <td class="hide-on-med-and-down"><?php echo $f['correo'] ?></td>
                  <td>
                  <form action="up_nivel.php" method="post">
-                   <input type="hidden" name="id" value="<?php echo $f['id'] ?>">
+                   <input type="hidden" name="id" value="<?php echo $f['uid'] ?>">
                    <select  name="nivel" required>
-                     <option value="<?php echo $f['nivel'] ?>" ><?php echo $f['nivel'] ?></option>
-                     <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                     <option value="ASESOR">ASESOR</option>
+                     <option disabled selected value="<?php echo $f['nivel'] ?>" ><?php echo $f['descripcion'] ?></option>
+                     <?php
+                      $sel_niv->data_seek(0);
+                      while ($f_niv = $sel_niv -> fetch_assoc()){
+                      ?>
+                     <option value="<?php echo $f_niv['id'] ?>"><?php echo $f_niv['descripcion'] ?></option>
+                   <?php }
+                    ?>
                    </select>
                  </td>
                  <td>
@@ -115,18 +125,21 @@
                  <td class="hide-on-small-only"><img src="<?php echo $f['foto'] ?>" width="50" class="circle"> </td>
                  <td>
                     <?php if ($f['bloqueo']==1): ?>
-                      <a href="bloqueo_manual.php?us=<?php echo $f['id']?>&bl=<?php echo $f['bloqueo'] ?>"><i
+                      <a href="bloqueo_manual.php?us=<?php echo $f['uid']?>&bl=<?php echo $f['bloqueo'] ?>"><i
                          class="material-icons green-text">lock_open</i></a>
                     <?php else: ?>
-                      <a href="bloqueo_manual.php?us=<?php echo $f['id']?>&bl=<?php echo $f['bloqueo'] ?>"><i
+                      <a href="bloqueo_manual.php?us=<?php echo $f['uid']?>&bl=<?php echo $f['bloqueo'] ?>"><i
                          class="material-icons red-text">lock_outline</i></a>
                     <?php endif; ?>
                   </td>
                  <td>
                    <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',
                      type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
-                   }).then((result) => {if (result.value) { location.href='eliminar_usuario.php?id=<?php echo $f['id']?>';}})"><i class="material-icons">clear</i></a>
+                   }).then((result) => {if (result.value) { location.href='eliminar_usuario.php?id=<?php echo $f['uid']?>';}})"><i class="material-icons">clear</i></a>
                  </td>
+                 <td><a href="alta_compania_usuario.php?u=<?php echo $f['uid']?>" class="btn-floating blue tooltipped"
+                 data-position="top" data-tooltip="Agregar compañias al usuario #<?php echo $id ?>"><i
+                   class="material-icons">business</i></a></td>
                  <td></td>
                </tr>
              <?php } ?>

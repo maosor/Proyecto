@@ -34,4 +34,10 @@
         position:'top',
         html: true
       });
+      $('#compania').change(function(){
+        var compania_activa= $(this).val();
+        $.post('../inicio/up_compania_activa.php',{
+          c:compania_activa,
+      })
+      });
       </script>

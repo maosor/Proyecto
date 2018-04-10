@@ -10,16 +10,18 @@ $sel_compania->fetch();
   <nav class="black">
     <a href="#" data-activates="menu" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
-      <select  name="compania" required>
-         <option value="<?php echo $id?>" selected><?php echo $compania ?></option>
+      <select  name="compania" id="compania" required>
+         <option value="<?php echo $id?>" disabled selected><?php echo $compania ?></option>
          <?php
          $sel_compania->close();
-         $sel= $con->prepare("SELECT id, compania FROM compania ");
+         $sel= $con->prepare("SELECT c.id cid, compania FROM usuario_compania uc inner join compania c on uc.id_compania=c.id
+         WHERE uc.id_usuario= ? ");
+         $sel -> bind_param('i', $_SESSION['id_usuario']);
          $sel -> execute();
-         $sel -> bind_result($id, $compania);
+         $sel -> bind_result($cid, $compania);
          ?>
          <?php while ($sel->fetch()) { ?>
-         <option value="<?php echo $id?>" ><?php echo  $compania?></option>
+         <option value="<?php echo $cid?>" ><?php echo  $compania?></option>
          <?php } ?>
       </select>
     </ul>
@@ -37,9 +39,11 @@ $sel_compania->fetch();
     </li>
     <li><a href="../inicio"><i class="material-icons">home</i>INICIO</li></a>
     <li><div class="divider"></div></li>
-    <?php if($_SESSION['nivel'] == 'ADMINISTRADOR'){?>
+    <?php if($_SESSION['nivel'] <= 1){?>
     <li><a href="../usuario"><i class="material-icons">contacts</i>USUARIOS</li></a>
     <li><div class="divider"></div></li>
+  <?php } ?>
+    <?php if($_SESSION['nivel'] == 0){?>
     <li><a href="../compania"><i class="material-icons">business</i>COMPAÑIA</li></a>
     <li><div class="divider"></div></li>
     <?php } ?>
