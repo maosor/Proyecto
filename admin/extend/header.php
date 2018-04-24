@@ -36,6 +36,13 @@ if (!isset($_SESSION['nick'])){
       display: inherit;
    }
  }
+ .fixed {
+  [type="checkbox"], [type="radio"] {
+    + label {
+      pointer-events: auto;
+    }
+  }
+}
  </style>
  </head>
  <body class="grey lighten-3">

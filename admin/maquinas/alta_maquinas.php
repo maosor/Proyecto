@@ -4,15 +4,15 @@ include '../extend/funciones.php';
 if (isset($_GET['id']))
 {
   $id = $con->real_escape_string(htmlentities($_GET['id']));
-  $sel_prop = $con->prepare("SELECT id, codigo, nombre_maquina, operarios, tipo,
+  $sel_maq = $con->prepare("SELECT id, codigo, nombre_maquina, operarios, tipo,
    maximo_alto, maximo_ancho, minimo_alto, minimo_ancho, cod_mascara, cod_plan_metal,
    cod_plan_carton_gde, cod_plan_carton_peq FROM maquina WHERE id = ? ");
-  $sel_prop->bind_param('i', $id);
-  $sel_prop->execute();
-  $sel_prop->bind_result( $id, $codigo, $nombre_maquina, $operarios, $tipo,
+  $sel_maq->bind_param('i', $id);
+  $sel_maq->execute();
+  $sel_maq->bind_result( $id, $codigo, $nombre_maquina, $operarios, $tipo,
   $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_mascara, $cod_plan_metal,
    $cod_plan_carton_gde, $cod_plan_carton_peq );
-  $sel_prop->fetch();
+  $sel_maq->fetch();
   $accion = 'Actualizar';
   $tipo_desc = tipo_maq($tipo);
 }
@@ -145,7 +145,12 @@ else {
             </div>
           </div>
         <center>
-        <button type="submit" class="btn">Guardar</button>
+          <?php if ($accion == 'Actualizar'): ?>
+          <button type="submit" class="btn">Guardar</button>
+          <?php else: ?>
+            <button type="submit" class="btn">Guardar nueva</button>
+          <?php endif; ?>
+          <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
         </center>
         </form>
       </div>

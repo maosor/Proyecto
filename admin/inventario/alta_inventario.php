@@ -104,7 +104,7 @@ else {
             </div>
           </div>
         <center>
-          <?php if ($accion == 'Actualizar'): ?>
+        <?php if ($accion == 'Actualizar'): ?>
         <button type="submit" class="btn">Guardar</button>
         <?php else: ?>
           <button type="submit" class="btn">Guardar nuevo</button>

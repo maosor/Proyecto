@@ -66,11 +66,11 @@ if(isset($_GET['u']))
  $('.eliminar, .agregar').click(function() {
    if($(this).attr('class').split(" ")[0] == 'eliminar')
      {
-       var accion = 'eliminar_compania_usuario.php'
+       var accion = 'eliminar_compania_usuario.php';
      }
    else if($(this).attr('class').split(" ")[0] == 'agregar'){
      {
-       var accion = 'ins_compania_usuario.php'
+       var accion = 'ins_compania_usuario.php';
      }
    }
    $.post(accion,{

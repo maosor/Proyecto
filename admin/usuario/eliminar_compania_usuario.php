@@ -1,5 +1,5 @@
 <?php
-include '../extend/header.php';
+include '../conexion/conexion.php';
 if(isset($_POST['c'])&& isset($_POST['u']))
 {
   $compania = htmlentities($_POST['c']);
