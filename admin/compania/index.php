@@ -54,7 +54,7 @@ $row = $sel->num_rows;
            <?php while ($sel->fetch()) { ?>
             <tr>
               <td><?php echo $compania?></td>
-              <td> <a href="editar_compania.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
+              <td> <a href="editar_compania.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">edit</i></a>
               </td>
               <td>
                 <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la compañía?',text: 'Al eliminarla no podrá recuperarla!',

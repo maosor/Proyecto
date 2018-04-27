@@ -64,7 +64,7 @@ if ($sel_detalle->num_rows > 0) {
             <td><?php echo $cantidad?></td>
             <td><?php echo $saldo?></td>
             <td><a href="alta_inventario_detalle.php?det=<?php echo $det?>" class="small blue-text material-icons " border = "1"><i
-              class="small material-icons">loop</i></a></td>
+              class="small material-icons">edit</i></a></td>
             <td class="borrar"><a href="#" class="small material-icons" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
               }).then((result) => { if (result.value){location.href='eliminar_inventario_detalle.php?id=<?php echo $det?>';}})"><i class="small red-text material-icons">clear</i></a></td>

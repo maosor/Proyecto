@@ -132,7 +132,7 @@
             <div class="col s3">
               <div class = "input-field">
                 <input type="number" step="0.0001" name="costoxcentesima" id="costoxcentesima" value="<?php echo $costoxcentesima ?>">
-                <label for="costoxcentesima">Costo Centésima</label>
+                <label for="costoxcentesima">Costo Unitario</label>
               </div>
             </div>
             <div class="col s3">

@@ -37,7 +37,6 @@ $sel = $con->prepare("SELECT id, codigo, descripcion, id_maquina, tipo_operacion
           <thead>
             <tr class="cabecera">
               <th class="borrar">Vista</th>
-              <th>Id</th>
               <th>Código</th>
               <th>Descripción</th>
               <th>Máquina</th>
@@ -45,7 +44,7 @@ $sel = $con->prepare("SELECT id, codigo, descripcion, id_maquina, tipo_operacion
               <th>Subtipo<br>operación</th>
               <th>Tiempo<br>parametro</th>
               <th>Carga<br>acumulada</th>
-              <th>Costo<br>Centésima</th>
+              <th>Costo<br>unitario</th>
               <th>Paso<br>Ejecución</th>
               <th colspan="1">Acciones </th>
               <th><a href="alta_operaciones.php" class="btn-floating green right"><i
@@ -62,7 +61,6 @@ $sel = $con->prepare("SELECT id, codigo, descripcion, id_maquina, tipo_operacion
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
                 value="<?php echo $id ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
               visibility</i></button></td>
-              <td><?php echo $id ?></td>
               <td><?php echo $codigo ?></td>
               <td><?php echo $descripcion?></td>
               <td><?php echo maq($id_maquina)?></td>
@@ -73,7 +71,7 @@ $sel = $con->prepare("SELECT id, codigo, descripcion, id_maquina, tipo_operacion
               <td><?php echo $costoxcentesima?></td>
               <td><?php echo $no_paso_ejecucion?></td>
               <td class="borrar"><a href="alta_operaciones.php?id=<?php echo $id?>" class="btn-floating blue"><i
-                class="material-icons">loop</i></a></td>
+                class="material-icons">edit</i></a></td>
               <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la operación?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarla!'
               }).then((result) => { if (result.value){location.href='eliminar_operacion.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>

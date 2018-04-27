@@ -51,13 +51,13 @@
 <?php
 $compania = $_SESSION['compania'];
 if ($_SESSION['nivel']== 0) {
-  $sel= $con->prepare("SELECT id, nombre, direccion, telefono, correo, contacto FROM clientes ");
+  $sel= $con->prepare("SELECT id, nombre, direccion, telefono FROM clientes ");
 }else {
-  $sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo, contacto FROM clientes  WHERE id_compania = ? ");
+  $sel = $con->prepare("SELECT id, nombre, direccion, telefono FROM clientes  WHERE id_compania = ? ");
   $sel->bind_param('i', $compania);
 }
 $sel -> execute();
-$sel ->bind_result($id, $nombre, $direccion, $telefono, $correo, $contacto);
+$sel ->bind_result($id, $nombre, $direccion, $telefono);
 $sel -> store_result();
 $row = $sel->num_rows;
  ?>
@@ -72,9 +72,6 @@ $row = $sel->num_rows;
                <th>Nombre</th>
                <th>Dirección</th>
                <th>Telefono</th>
-               <th>Correo</th>
-               <th>Contacto</th>
-               <!-- <th>Nuevo</th> -->
                <th></th>
                <th></th>
 
@@ -85,11 +82,7 @@ $row = $sel->num_rows;
               <td><?php echo $nombre?></td>
               <td><?php echo $direccion?></td>
               <td><?php echo $telefono?></td>
-              <td><?php echo $correo?></td>
-              <td><?php echo $contacto?></td>
-              <!-- <td> <a href="../propiedades/alta_propiedades.php?id=<?php //echo $f['id']?>&nombre=<?php //echo $f['nombre']?>" class="btn-floating green"> <i class="material-icons">add</i></a> -->
-              </td>
-              <td> <a href="editar_cliente.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">loop</i></a>
+              <td> <a href="editar_cliente.php?id=<?php echo $id?>" class="btn-floating blue"> <i class="material-icons">edit</i></a>
               </td>
               <td>
                 <a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar el cliente?',text: 'Al eliminarlo no podrá recuperarlo!',

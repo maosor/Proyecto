@@ -35,7 +35,10 @@ if ($sel->fetch()) {
               <input type="text" name="contacto" value="<?php echo $contacto?>"  title="Solo letras" pattern="[\p{Latin}/s]" id="contacto" onblur="may(this.value, this.id)">
               <label for="contacto">Contacto</label>
             </div>
-            <button type="submit" class="btn" >Guardar</button>
+            <center>
+              <button type="submit" class="btn" >Guardar</button>
+              <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
+            </center>
           </form>
         </div>
       </div>

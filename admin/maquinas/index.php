@@ -35,7 +35,6 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
           <thead>
             <tr class="cabecera">
               <th class="borrar">Vista</th>
-              <th>Id</th>
               <th>Código</th>
               <th>Nombre Maquina</th>
               <th>Tipo</th>
@@ -55,7 +54,6 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
                 value="<?php echo $id ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
               visibility</i></button></td>
-              <td><?php echo $id ?></td>
               <td><?php echo $codigo ?></td>
               <td><?php echo $nombre_maquina?></td>
               <td><?php
@@ -71,7 +69,7 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
               <td><?php echo $maximo_alto?>X<?php echo $maximo_ancho?></td>
               <td><?php echo $minimo_alto?>X<?php echo $minimo_ancho?></td>
               <td class="borrar"><a href="alta_maquinas.php?id=<?php echo $id?>" class="btn-floating blue"><i
-                class="material-icons">loop</i></a></td>
+                class="material-icons">edit</i></a></td>
               <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la máquina?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarla!'
               }).then((result) => { if (result.value){location.href='eliminar_maquina.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>

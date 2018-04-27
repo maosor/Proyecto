@@ -42,7 +42,6 @@ if (isset($_GET['tip'])) {
           <thead>
             <tr class="cabecera">
               <th class="borrar">Vista</th>
-              <th>Id</th>
               <th>Código</th>
               <th>Descrición</th>
               <th>Tipo</th>
@@ -63,7 +62,6 @@ if (isset($_GET['tip'])) {
                 value="<?php echo $id ?>" class="btn modal-trigger btn-floating tooltipped"
                 data-position="top" data-tooltip="Vista completa del articulo #<?php echo $id ?>"><i class="material-icons">
               visibility</i></button></td>
-              <td><?php echo $id ?></td>
               <td><?php echo $codigo ?></td>
               <td><?php echo $descripcion?></td>
               <td><?php
@@ -86,7 +84,7 @@ if (isset($_GET['tip'])) {
               <td><?php echo $proveedor ?></td>
               <td class="borrar"><a href="alta_inventario.php?id=<?php echo $id?>" class="btn-floating blue tooltipped"
               data-position="top" data-tooltip="Editar el articulo #<?php echo $id ?>"><i
-                class="material-icons">loop</i></a></td>
+                class="material-icons">edit</i></a></td>
               <td class="borrar"><a href="#" class="btn-floating red tooltipped"
               data-position="top" data-tooltip="Eliminar el articulo #<?php echo $id ?>" onclick="swal({title: '¿Esta seguro que desea eliminar el articulo?',
                 type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarlo!'
