@@ -5,22 +5,22 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title">Mantenimiento de clientes</span>
-        <form class="form" action="ins_clientes.php" method="post" autocomplete=off >
+        <form class="form" action="ins_clientes.php" method="post" autocomplete=off>
           <div class="input-field">
             <input type="hidden" name="compania" value="<?php echo $_SESSION['compania']?>">
-            <input type="text" name="nombre"  title="Solo letras" pattern="[\p{Latin}/s]"  id="nombre" onblur="may(this.value, this.id)"  >
+            <input type="text" name="nombre"  title="Solo letras" pattern="[\p{Latin}/s]"  id="nombre" onblur="may(this.value, this.id)">
             <label for="nombre">Nombre</label>
           </div>
           <div class="input-field">
-            <input type="text" name="direccion"    id="direccion" onblur="may(this.value, this.id)"  >
+            <input type="text" name="direccion" id="direccion" onblur="may(this.value, this.id)">
             <label for="direccion">Dirección</label>
           </div>
           <div class="input-field">
-            <input type="text" name="telefono"   id="telefono"  >
+            <input type="text" name="telefono" id="telefono">
             <label for="telefono">Telefono</label>
           </div>
           <div class="input-field">
-            <input type="email" name="correo"   id="correo"   >
+            <input type="email" name="correo" id="correo">
             <label for="email">Correo</label>
           </div>
           <div class="input-field">
@@ -49,23 +49,20 @@
 </div>
 
 <?php
-$compania = $_SESSION['compania'];
-if ($_SESSION['nivel']== 0) {
-  $sel= $con->prepare("SELECT id, nombre, direccion, telefono FROM clientes ");
-}else {
-  $sel = $con->prepare("SELECT id, nombre, direccion, telefono FROM clientes  WHERE id_compania = ? ");
+  $compania = $_SESSION['compania'];
+  $sel= $con->prepare("SELECT id, nombre, direccion, telefono FROM clientes WHERE id_compania = ? ");
   $sel->bind_param('i', $compania);
-}
-$sel -> execute();
-$sel ->bind_result($id, $nombre, $direccion, $telefono);
-$sel -> store_result();
-$row = $sel->num_rows;
+  $sel -> execute();
+  $sel ->bind_result($id, $nombre, $direccion, $telefono);
+  $sel -> store_result();
+  $row = $sel->num_rows;
  ?>
  <div class="row">
    <div class="col s12 ">
      <div class="card">
        <div class="card-content">
          <span class="card-title">Clientes(<?php echo $row?>)</span>
+          <span class="card-title">Clientes(<?php echo $compania?>)</span>
          <table>
            <thead>
              <tr class="cabecera">
