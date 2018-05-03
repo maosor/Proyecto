@@ -31,15 +31,18 @@ function tipo_trans($tipo)
 }
 function tipo_maq($tipo)
 {
-  switch ($tipo) {
-    case '1':
-      $tipo_trans = 'LITOGRAFIA';
-      break;
-    case '2':
-      $tipo_trans = 'TIPOGRAFIA';
-      break;
+  include '../conexion/conexion.php';
+  $compania = $_SESSION ['compania'];
+  $sel = $con->prepare("SELECT descripcion FROM maquina_tipo WHERE id = ? AND id_compania = ? ");
+  $sel->bind_param('ii', $tipo, $compania);
+  $sel->execute();
+  $sel->bind_result($descripcion);
+  if($sel->fetch()){
+    return $descripcion;
   }
-  return $tipo_trans;
+  else {
+    return '';
+  }
 }
 function get_saldo($cantidad,$tipo, $id_articulo, $compania)
 {

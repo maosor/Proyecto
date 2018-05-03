@@ -64,29 +64,15 @@ $sel->fetch();
             </div>
           </div>
           <div class="row">
-            <div class="col s4">
-              <b>Numero Operarios: </b>
+            <div class="col s3">
+              <b>Operarios: </b>
               <?php echo $operarios ?>
             </div>
-            <div class="col s4">
-              <b>Código Máscara: </b>
-              <?php echo $cod_mascara ?>
-            </div>
-            <div class="col s4">
-              <b>Código Plancha Metal: </b>
+            <div class="col s6">
+              <b>Plancha o Máscara: </b>
               <?php echo $cod_plan_metal ?>
             </div>
-          </div>
-          <div class="row">
-            <div class="col s4">
-                <b>Código Plancha Carton Gde: </b>
-                <?php echo $cod_plan_carton_gde ?>
-            </div>
-            <div class="col s4">
-              <b>Código Plancha Carton Peq: </b>
-                <?php echo $cod_plan_carton_peq ?>
-            </div>
-            <div class="col s4">
+            <div class="col s3">
               <b>Tipo: </b>
                 <?php echo tipo_maq($tipo) ?>
             </div>

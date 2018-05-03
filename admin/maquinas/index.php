@@ -1,4 +1,5 @@
 <?php include '../extend/header.php';
+include '../extend/funciones.php';
 $compania = $_SESSION ['compania'];
 $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maximo_alto,
     maximo_ancho, minimo_alto, minimo_ancho FROM maquina WHERE id_compania =? ");
@@ -56,15 +57,7 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
               visibility</i></button></td>
               <td><?php echo $codigo ?></td>
               <td><?php echo $nombre_maquina?></td>
-              <td><?php
-                switch ($tipo) {
-                  case 1:
-                   echo 'Litografia';
-                    break;
-                  case 2:
-                   echo 'Tipografia';
-                    break;
-               }?></td>
+              <td><?php echo tipo_maq($tipo)?></td>
               <td><?php echo $operarios?></td>
               <td><?php echo $maximo_alto?>X<?php echo $maximo_ancho?></td>
               <td><?php echo $minimo_alto?>X<?php echo $minimo_ancho?></td>

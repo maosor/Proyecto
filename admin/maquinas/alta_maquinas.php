@@ -5,26 +5,30 @@ if (isset($_GET['id']))
 {
   $id = $con->real_escape_string(htmlentities($_GET['id']));
   $sel_maq = $con->prepare("SELECT id, codigo, nombre_maquina, operarios, tipo,
-   maximo_alto, maximo_ancho, minimo_alto, minimo_ancho, cod_mascara, cod_plan_metal,
-   cod_plan_carton_gde, cod_plan_carton_peq FROM maquina WHERE id = ? ");
+   maximo_alto, maximo_ancho, minimo_alto, minimo_ancho, cod_plancha_o_mascara
+   FROM maquina WHERE id = ? ");
   $sel_maq->bind_param('i', $id);
   $sel_maq->execute();
   $sel_maq->bind_result( $id, $codigo, $nombre_maquina, $operarios, $tipo,
-  $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_mascara, $cod_plan_metal,
-   $cod_plan_carton_gde, $cod_plan_carton_peq );
+  $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
   $sel_maq->fetch();
   $accion = 'Actualizar';
-  $tipo_desc = tipo_maq($tipo);
+  $sel_maq -> close();
 }
 else {
   $codigo = ''; $nombre_maquina = ''; $operarios= '';
   $tipo = ''; $maximo_alto = ''; $maximo_ancho =''; $minimo_alto= '';
-  $minimo_ancho = ''; $cod_mascara = ''; $cod_plan_metal= '';
-  $cod_plan_carton_gde= ''; $cod_plan_carton_peq= '';
+  $minimo_ancho = ''; $cod_plancha_o_mascara= '';
   $accion = 'Insertar';
 }
-?>
 
+
+$compania= $_SESSION['compania'];
+$sel = $con->prepare("SELECT id, descripcion FROM maquina_tipo WHERE id_compania = ? ");
+$sel->bind_param('i', $compania);
+$sel->execute();
+$sel->bind_result($id_tip, $descripcion);
+?>
 <div class="row">
   <div class="col s12">
     <div class="card">
@@ -100,58 +104,43 @@ else {
             </div>
           </div>
           <div class="row">
-            <div class="col s4">
+            <div class="col s3">
               <div class = "input-field">
                 <input type="number" name="operarios" id="operarios" value="<?php echo $operarios ?>">
                 <label for="operarios">Numero Operarios</label>
               </div>
             </div>
-            <div class="col s4">
+            <div class="col s6">
               <div class = "input-field">
-                <input type="text" name="cod_mascara" id="cod_mascara" value="<?php echo $cod_mascara ?>">
-                <label for="cod_mascara">Codigo Mascara</label>
+                <input type="text" name="cod_plancha_o_mascara" id="cod_plancha_o_mascara" value="<?php echo $cod_plancha_o_mascara  ?>">
+                <label for="cod_plancha_o_mascara">Codigo plancha o Mascara</label>
               </div>
             </div>
-            <div class="col s4">
-              <div class = "input-field">
-                <input type="text" name="cod_plan_metal" id="cod_plan_metal" value="<?php echo $cod_plan_metal ?>">
-                <label for="cod_plan_metal">Codigo plancha Metal</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s4">
-                <div class = "input-field">
-                  <input type="text" name="cod_plan_carton_gde" id="cod_plan_carton_gde" value="<?php echo $cod_plan_carton_gde ?>">
-                  <label for="cod_plan_carton_gde">Codigo plancha Carton Gde.</label>
-                </div>
-              </div>
-              <div class="col s4">
-                <div class = "input-field">
-                  <input type="text" name="cod_plan_carton_peq" id="cod_plan_carton_peq" value="<?php echo $cod_plan_carton_peq ?>">
-                  <label for="cod_plan_carton_peq">Codigo plancha Carton Peq.</label>
-                </div>
-              </div>
-              <div class="col s4">
-                <select id="tipo" name="tipo" required value = "1">
-                  <?php if ($accion == 'Actualizar'): ?>
-                      <option value="<?php echo $tipo ?>" selected><?php echo $tipo_desc ?></option>
-                    <?php else: ?>
-                      <option value="0" selected disabled>SELECCIONE UN TIPO</option>
-                   <?php endif; ?>
-                    <option value="1">LITOGRAFIA</option>
-                    <option value="2">TIPOGRAFIA</option>
-                </select>
-              </div>
+            <div class="col s3">
+              <select id="tipo" name="tipo" required value = "1">
+                <?php if ($accion == 'Actualizar'): ?>
+                    <option value="<?php echo $tipo ?>" selected ><?php echo tipo_maq($tipo) ?></option>
+                  <?php else: ?>
+                    <option value="0" selected disabled>SELECCIONE UN TIPO</option>
+                 <?php endif; ?>
+                 <?php while ($sel->fetch()) {?>
+                  <option value="<?php echo $id_tip ?>"><?php echo $descripcion ?></option>
+                <?php }
+                $sel ->close(); ?>
+              </select>
             </div>
           </div>
-        <center>
-          <?php if ($accion == 'Actualizar'): ?>
-          <button type="submit" class="btn">Guardar</button>
-          <?php else: ?>
-            <button type="submit" class="btn">Guardar nueva</button>
-          <?php endif; ?>
-          <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
-        </center>
+          <div class="">
+            <center>
+              <?php if ($accion == 'Actualizar'): ?>
+                <button type="submit" enabled class="btn">Guardar</button>
+              <?php else: ?>
+                <button type="submit" class="btn">Guardar nueva</button>
+              <?php endif; ?>
+              <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
+            </center>
+          </div>
+
         </form>
       </div>
     </div>
@@ -159,6 +148,6 @@ else {
 </div>
 
 <?php include '../extend/scripts.php'; ?>
-<script src="../js/estados.js"></script>
+
 </body>
 </html>

@@ -7,12 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
   $compania = $_SESSION ['compania'];
   $up = $con->prepare("UPDATE maquina SET codigo=?, nombre_maquina=?, tipo=?,
-   operarios=?, maximo_alto=?, maximo_ancho=?, minimo_alto=?, minimo_ancho=?, cod_mascara=?,
-   cod_plan_metal=?, cod_plan_carton_gde=?, cod_plan_carton_peq=?
+   operarios=?, maximo_alto=?, maximo_ancho=?, minimo_alto=?, minimo_ancho=?, cod_plancha_o_mascara=?
    WHERE id=? AND id_compania=? ");
-  $up->bind_param("isiiddddssssii", $codigo, $nombre_maquina, $tipo,
-  $operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_mascara,
-   $cod_plan_metal, $cod_plan_carton_gde, $cod_plan_carton_peq, $id, $compania );
+  $up->bind_param("isiiddddsii", $codigo, $nombre_maquina, $tipo,
+  $operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara, $id, $compania );
   if ($up->execute()) {
     header('location:../extend/alerta.php?msj=Editó máquina&c=maq&p=in&t=success');
   }else{
