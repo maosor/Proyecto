@@ -61,18 +61,17 @@ if(isset($_GET['u']))
        <input  type="reset" class="btn orange" onclick="window.location='index.php'" value ="Regresar"</input>
 
    </div>
- <?php include '../extend/scripts.php' ?>
+<?php include '../extend/scripts.php' ?>
  <script>
  $('.eliminar, .agregar').click(function() {
    if($(this).attr('class').split(" ")[0] == 'eliminar')
      {
        var accion = 'eliminar_compania_usuario.php';
      }
-   else if($(this).attr('class').split(" ")[0] == 'agregar'){
+   else if($(this).attr('class').split(" ")[0] == 'agregar')
      {
        var accion = 'ins_compania_usuario.php';
      }
-   }
    $.post(accion,{
      u:$('#id_usuario').val(),
      c:$(this).attr('id'),

@@ -62,7 +62,6 @@
      <div class="card">
        <div class="card-content">
          <span class="card-title">Clientes(<?php echo $row?>)</span>
-          <span class="card-title">Clientes(<?php echo $compania?>)</span>
          <table>
            <thead>
              <tr class="cabecera">
