@@ -30,7 +30,7 @@ $res_marc= $sel_marc -> get_result();
     <meta name = "viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="admin/css/materialize.min.css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="admin/css/icons.css" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     <title>Sitio Web</title>
@@ -79,7 +79,7 @@ $sel_marc -> close();
  ?>
     </div>
     <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        src="admin/js/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
     <script src="admin/js/materialize.min.js"></script>

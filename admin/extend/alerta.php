@@ -12,7 +12,6 @@
     $c = htmlentities($_GET['c']);
     $p = htmlentities($_GET['p']);
     $t = htmlentities($_GET['t']);
-
     switch ($c) {
       case 'us':
         $carpeta = '../usuario/';
@@ -40,6 +39,9 @@
         break;
       case 'ope':
         $carpeta = '../operaciones/';
+        break;
+      case 'enu':
+        $carpeta = '../enumerados/';
         break;
       }
     switch ($p) {
@@ -71,7 +73,14 @@
     if (isset($_GET['id'])) {
       $id = htmlentities($_GET['id']);
       $dir=$carpeta.$pagina.'?id='.$id;
-    }else {
+    }
+    else if(isset($_GET['e']))
+    {
+      $e = htmlentities($_GET['e']);
+      $dir=$carpeta.$pagina.'?tipo='.$e;
+    }
+    else
+    {
       $dir = $carpeta.$pagina;
     }
 
@@ -86,7 +95,7 @@
      ?>
  <?php  ?>
     <script
-  			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  			  src="../js/jquery-3.3.1.min.js
   			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   			  crossorigin="anonymous"></script>
     <script type = "text/javascript" src="../js/sweetalert2.all.js"></script>

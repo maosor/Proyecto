@@ -1,9 +1,14 @@
 <?php include '../extend/header.php';
 include '../extend/funciones.php';
 $compania = $_SESSION ['compania'];
-$sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maximo_alto,
-    maximo_ancho, minimo_alto, minimo_ancho FROM maquina WHERE id_compania =? ");
-  $sel->bind_param("i", $compania);
+if (isset($_GET['tipo'])) {
+ $tipo = htmlentities($_GET['tipo']);
+}
+else {
+  header('location:../extend/alerta.php?msj=Debe usar el formulario&c=en&p=in&t=error');
+}
+$sel = $con->prepare("SELECT id, descripcion FROM enumerado WHERE id_compania =? and tipo=? ");
+  $sel->bind_param("ii", $compania,$tipo);
 ?>
 
 <br>
@@ -26,7 +31,7 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
       <div class="card-content">
         <form action="excel.php" method="post" target="_blank" id="exportar">
 
-            <span class="card-title">Maquinas
+            <span class="card-title"><?php echo tipo_enum($tipo)?>S
               </span>
 
             <input type="hidden" name="datos" id ="datos">
@@ -35,37 +40,23 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
         <table class="excel" border="1">
           <thead>
             <tr class="cabecera">
-              <th class="borrar">Vista</th>
-              <th>Código</th>
-              <th>Nombre Maquina</th>
-              <th>Tipo</th>
-              <th>Operarios</th>
-              <th>Máximo</th>
-              <th>Mínimo</th>
+              <th>Descripción</th>
               <th colspan="1">Acciones </th>
-              <th><a href="alta_maquinas.php" class="btn-floating green right"><i
+              <th><a href="alta_enumerado.php?tip=<?php echo $tipo?>" class="btn-floating green right"><i
                 class="material-icons">add</i></a></th>
             </tr>
           </thead>
           <?php
           $sel->execute();
-          $sel->bind_result($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho);
+          $sel->bind_result($id, $descripcion);
           while ($sel->fetch()) {?>
             <tr class="">
-              <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
-                value="<?php echo $id ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
-              visibility</i></button></td>
-              <td><?php echo $codigo ?></td>
-              <td><?php echo $nombre_maquina?></td>
-              <td><?php echo tipo_maq($tipo)?></td>
-              <td><?php echo $operarios?></td>
-              <td><?php echo $maximo_alto?>X<?php echo $maximo_ancho?></td>
-              <td><?php echo $minimo_alto?>X<?php echo $minimo_ancho?></td>
-              <td class="borrar"><a href="alta_maquinas.php?id=<?php echo $id?>" class="btn-floating blue"><i
+              <td><?php echo $descripcion?></td>
+              <td class="borrar"><a href="alta_enumerado.php?id=<?php echo $id?>" class="btn-floating blue"><i
                 class="material-icons">edit</i></a></td>
-              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la máquina?',
-                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminarla!'
-              }).then((result) => { if (result.value){location.href='eliminar_maquina.php?id=<?php echo $id?>';}})"><i class="material-icons">clear</i></a></td>
+              <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar <?php echo strtolower(tipo_enum($tipo))?>?',
+                type: 'warning',showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Si, Eliminar!'
+              }).then((result) => { if (result.value){location.href='eliminar_enumerado.php?id=<?php echo $id?>&tipo=<?php echo $tipo?>';}})"><i class="material-icons">clear</i></a></td>
             </tr>
           <?php }
           $sel->close();

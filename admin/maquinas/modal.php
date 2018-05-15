@@ -3,15 +3,12 @@ include '../conexion/conexion.php';
 include '../extend/funciones.php';
 
 $id = $con->real_escape_string(htmlentities($_GET['id']));
-$sel = $con->prepare("SELECT  codigo,	nombre_maquina,	tipo,
-  	operarios,maximo_alto, maximo_ancho, minimo_alto,	minimo_ancho,	cod_mascara,
-    cod_plan_metal,	cod_plan_carton_gde, cod_plan_carton_peq
-   FROM maquina WHERE id = ? ");
+$sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maximo_alto,
+    maximo_ancho, minimo_alto, minimo_ancho, 	cod_plancha_o_mascara FROM maquina WHERE id =? ");
 $sel->bind_param('i', $id);
 $sel->execute();
-$sel->bind_result($codigo,	$nombre_maquina,	$tipo,
-  	$operarios,$maximo_alto, $maximo_ancho, $minimo_alto,	$minimo_ancho,	$cod_mascara,
-    $cod_plan_metal,	$cod_plan_carton_gde, $cod_plan_carton_peq);
+$sel->bind_result($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto,
+    $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
 $sel->fetch();
  ?>
 
@@ -34,7 +31,7 @@ $sel->fetch();
                 <b>Codigo: </b><?php echo $codigo ?>
             </div>
             <div class="col s8">
-                <b>nOMBRE: </b><?php echo $nombre_maquina ?>
+                <b>Nombre: </b><?php echo $nombre_maquina ?>
             </div>
             </div>
             <div class="row">
@@ -70,7 +67,7 @@ $sel->fetch();
             </div>
             <div class="col s6">
               <b>Plancha o Máscara: </b>
-              <?php echo $cod_plan_metal ?>
+              <?php echo $cod_plancha_o_mascara ?>
             </div>
             <div class="col s3">
               <b>Tipo: </b>

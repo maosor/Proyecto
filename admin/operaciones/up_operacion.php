@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $up->close();
   $con->close();
 }else {
-    header('location:../extend/alerta.php?msj=Utiliza el formulario&c=inv&p=in&t=error');
+    header('location:../extend/alerta.php?msj=Utiliza el formulario&c=ope&p=in&t=error');
 }
 
  ?>

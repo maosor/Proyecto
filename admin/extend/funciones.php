@@ -133,5 +133,13 @@ function valor($chequeado)
   }
   return $valor;
 }
-
+function tipo_enum($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $tipo_enum = 'AGENCIA';
+      break;
+  }
+  return $tipo_enum;
+}
  ?>

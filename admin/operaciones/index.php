@@ -57,7 +57,7 @@ $sel = $con->prepare("SELECT id, codigo, descripcion, id_maquina, tipo_operacion
             $subtipo_operacion, $tiempo_parametro, $carga_acumulada, $costoxcentesima, $no_paso_ejecucion,
             $es_resta_automatica);
           while ($sel->fetch()) {?>
-            <tr class="grey lighten-3">
+            <tr class="">
               <td class="borrar"><button data-target="modal1" onclick="enviar(this.value)"
                 value="<?php echo $id ?>" class="btn modal-trigger btn-floating"><i class="material-icons">
               visibility</i></button></td>
