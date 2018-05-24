@@ -43,6 +43,9 @@
       case 'enu':
         $carpeta = '../enumerados/';
         break;
+      case 'cot':
+        $carpeta = '../cotizacion/';
+        break;
       }
     switch ($p) {
       case 'in':

@@ -47,6 +47,10 @@ $sel_compania->fetch();
     <li><a href="../compania"><i class="material-icons">business</i>COMPAÑIA</li></a>
     <li><div class="divider"></div></li>
     <?php } ?>
+    <?php if($_SESSION['nivel'] <= 2){?>
+    <li><a href="../cotizacion"><i class="material-icons">assignment_turned_in</i>COTIZAR</li></a>
+    <li><div class="divider"></div></li>
+  <?php } ?>
     <li><a href="../clientes"><i class="material-icons">contact_phone</i>CLIENTES</li></a>
     <li><div class="divider"></div></li>
     <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>INVENTARIO
@@ -74,5 +78,6 @@ $sel_compania->fetch();
      <li><a href="../operaciones/index.php">OPERACIONES</a></li>
      <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">TIPOS DE TINTA</a></li>
      <li><a href="../enumerados/index.php?tipo=1">AGENCIAS</a></li>
+     <li><a href="../enumerados/index.php?tipo=2">TRABAJOS</a></li>
 
     </ul>

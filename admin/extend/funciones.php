@@ -79,6 +79,36 @@ function maq($id_maquina)
     return '';
   }
 }
+function nombre_cliente($id_cliente)
+{
+  include '../conexion/conexion.php';
+  $compania = $_SESSION ['compania'];
+  $sel = $con->prepare("SELECT nombre FROM clientes WHERE id = ? AND id_compania = ? ");
+  $sel->bind_param('ii', $id_cliente, $compania);
+  $sel->execute();
+  $sel->bind_result($nombre);
+  if($sel->fetch()){
+    return $nombre;
+  }
+  else {
+    return '';
+  }
+}
+function enum_description($id_enum)
+{
+  include '../conexion/conexion.php';
+  $compania = $_SESSION ['compania'];
+  $sel = $con->prepare("SELECT descripcion FROM enumerado WHERE id = ? AND id_compania = ? ");
+  $sel->bind_param('ii', $id_enum, $compania);
+  $sel->execute();
+  $sel->bind_result($nombre);
+  if($sel->fetch()){
+    return $nombre;
+  }
+  else {
+    return '';
+  }
+}
 function tipo_ope($tipo)
 {
   switch ($tipo) {
@@ -138,6 +168,9 @@ function tipo_enum($tipo)
   switch ($tipo) {
     case '1':
       $tipo_enum = 'AGENCIA';
+      break;
+    case '2':
+      $tipo_enum = 'TRABAJO';
       break;
   }
   return $tipo_enum;
