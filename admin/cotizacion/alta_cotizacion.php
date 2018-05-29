@@ -18,7 +18,7 @@ negativo, plancha, recurso, libros_articulos, hojas, copias, inicio, final FROM 
 }
 else {
   $orden_trabajo= ''; $cotizacion= ''; $orden_compra= ''; $fecha_pedido= ''; $fecha_aprobado= ''; $fecha_ofrecido= '';
-  $fecha_facturado= ''; $fecha_liquidado= ''; $estado= ''; $id_cliente= ''; $referencia= ''; $id_trabajo= ''; $recibido= ''; $sobre_tecnico= '';
+  $fecha_facturado= ''; $fecha_liquidado= ''; $estado= null; $id_cliente= ''; $referencia= ''; $id_trabajo= ''; $recibido= ''; $sobre_tecnico= '';
   $negativo= ''; $plancha= ''; $recurso= ''; $libros_articulos= ''; $hojas= ''; $copias= ''; $inicio= ''; $final= '';
   $accion = 'Insertar';
 }
@@ -49,7 +49,7 @@ $sel->bind_result($id_cli, $nombre);
   <div class="col s12">
     <div class="card">
       <div class="card-content">
-        <h5 align="center"><b>DATOS Cotización</b></h5>
+        <h5 align="center"><b>DATOS COTIZACIÓN</b></h5>
         <?php if ($accion == 'Actualizar'): ?>
           <form  action="up_cotizacion.php" method="post" autocomplete="off">
             <input type="hidden" name="id" value="<?php echo $id ?>">
@@ -59,19 +59,19 @@ $sel->bind_result($id_cli, $nombre);
           <div class="row">
             <div class="col s2">
               <div class = "input-field">
-                <input type="text" name="cotizacion" id="cotizacion" value="<?php echo $cotizacion ?>">
+                <input type="number" name="cotizacion" id="cotizacion" value="<?php echo $cotizacion ?>"readonly>
                 <label for="cotizacion">Cotización</label>
               </div>
             </div>
             <div class="col s2">
               <div class = "input-field">
-                <input type="text" name="orden_trabajo" id="orden_trabajo" value="<?php echo $orden_trabajo ?>">
+                <input type="number" name="orden_trabajo" id="orden_trabajo" value="<?php echo $orden_trabajo ?>"readonly>
                 <label for="orden_trabajo">Orden Trabajo</label>
               </div>
             </div>
             <div class="col s2">
               <div class = "input-field">
-                <input type="text" name="referencia" id="referencia" value="<?php echo $referencia ?>">
+                <input type="text" name="referencia" id="referencia" value="<?php echo $referencia ?>"autofocus>
                 <label for="referencia">Referencia</label>
               </div>
             </div>
@@ -82,9 +82,19 @@ $sel->bind_result($id_cli, $nombre);
               </div>
             </div>
             <div class="col s3">
-              <div class = "input-field">
-                <input type="text" name="estado" id="estado" value="<?php echo $estado ?>">
-                <label for="estado">Estado</label>
+              <div class="col s6">
+                <div class = "input-field">
+                  <input type="text" name="estado" id="estado" value="<?php echo estado_cotizacion($estado)?>"readonly>
+                  <label for="estado">Estado</label>
+                </div>
+              </div>
+              <div class="col s6">
+                <?php   $log->info($estado);
+                if ($estado == 0 && $cotizacion ==0): ?>
+                  <a class="btn" href="#"name="cambia_estado" id="cambia_estado" disabled>Ofrecer</a>
+                <?php else: ?>
+                  <a class="btn" href="up_estado.php?id=<?php echo $id?>&est=<?php echo $estado+1?>"name="cambia_estado" id="cambia_estado"><?php echo btn_estado_cotizacion($estado+1)?></a>
+                <?php endif; ?>
               </div>
             </div>
             <div class="row">
@@ -181,32 +191,32 @@ $sel->bind_result($id_cli, $nombre);
             <div class="col s2">
               <div class = "input-field">
                 <input type="text" name="final" id="final" value="<?php echo $final ?>">
-                <label for="final">Numero final</label>
+                <label for="final">Numero Final</label>
               </div>
             </div>
           </div>
           <div class="row">
              <div class="col s3">
                <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_aprobado" id="fecha_aprobado" value="<?php echo $fecha_aprobado ?>">
+                 <input type="date" class="datepicker" name="fecha_aprobado" id="fecha_aprobado" value="<?php echo $fecha_aprobado ?>"disabled>
                  <label for="fecha_aprobado">Fecha Aprobado</label>
                </div>
              </div>
              <div class="col s3">
                <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_ofrecido" id="fecha_ofrecido" value="<?php echo $fecha_ofrecido ?>">
+                 <input type="date" class="datepicker" name="fecha_ofrecido" id="fecha_ofrecido" value="<?php echo $fecha_ofrecido ?>"disabled>
                  <label for="fecha_ofrecido">Fecha Ofrecido</label>
                </div>
              </div>
              <div class="col s3">
                <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_facturado" id="fecha_facturado" value="<?php echo $fecha_facturado ?>">
+                 <input type="date" class="datepicker" name="fecha_facturado" id="fecha_facturado" value="<?php echo $fecha_facturado ?>"disabled>
                  <label for="fecha_facturado">Fecha Facturado</label>
                </div>
              </div>
              <div class="col s3">
                <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_liquidado" id="fecha_liquidado" value="<?php echo $fecha_liquidado ?>">
+                 <input type="date" class="datepicker" name="fecha_liquidado" id="fecha_liquidado" value="<?php echo $fecha_liquidado ?>"disabled>
                  <label for="fecha_liquidado">Fecha Liquidado</label>
                </div>
              </div>

@@ -3,13 +3,16 @@ include '../conexion/conexion.php';
 include '../extend/funciones.php';
 
 $id = $con->real_escape_string(htmlentities($_GET['id']));
-$sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maximo_alto,
-    maximo_ancho, minimo_alto, minimo_ancho, 	cod_plancha_o_mascara FROM maquina WHERE id =? ");
-$sel->bind_param('i', $id);
-$sel->execute();
-$sel->bind_result($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto,
-    $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
-$sel->fetch();
+$sel_cot = $con->prepare("SELECT id, orden_trabajo, cotizacion, orden_compra,fecha_pedido, fecha_aprobado, fecha_ofrecido,
+fecha_facturado, fecha_liquidado, estado, id_cliente, referencia, id_trabajo, recibido, sobre_tecnico,
+negativo, plancha, recurso, libros_articulos, hojas, copias, inicio, final FROM cotizacion WHERE id = ? ");
+$sel_cot->bind_param('i', $id);
+$sel_cot->execute();
+$sel_cot->bind_result( $id, $orden_trabajo, $cotizacion, $orden_compra, $fecha_pedido, $fecha_aprobado, $fecha_ofrecido,
+$fecha_facturado, $fecha_liquidado, $estado, $id_cliente, $referencia, $id_trabajo, $recibido, $sobre_tecnico,
+$negativo, $plancha, $recurso, $libros_articulos, $hojas, $copias, $inicio, $final);
+$sel_cot->fetch();
+$sel_cot -> close();
  ?>
 
  <!DOCTYPE html>
@@ -25,53 +28,75 @@ $sel->fetch();
   <div class="col s12">
     <div class="card">
       <div class="card-content">
-        <h5 align="center"><b>DATOS MAQUINA</b></h5>
+        <h5 align="center"><b>DATOS COTIZACIÓN</b></h5>
           <div class="row">
-            <div class="col s4">
-                <b>Codigo: </b><?php echo $codigo ?>
+            <div class="col s2">
+                <b>Cotización: </b><?php echo $cotizacion ?>
             </div>
-            <div class="col s8">
-                <b>Nombre: </b><?php echo $nombre_maquina ?>
+            <div class="col s2">
+                <b>O.T.: </b><?php echo $orden_trabajo ?>
             </div>
+            <div class="col s2">
+                <b>Ref.: </b><?php echo $referencia ?>
             </div>
-            <div class="row">
-              <div class="col s6">
-                <h6 align="center"><b>Minimo Alto X Ancho</b></h6>
-              </div>
-              <div class="col s6">
-                <h6 align="center"><b>Maximo Alto X Ancho</b></h6>
-              </div>
+            <div class="col s3">
+                <b>Pedido: </b><?php echo date_format(date_create($fecha_pedido), 'd/m/Y') ?>
             </div>
+            <div class="col s3">
+                <b>Estado: </b><?php echo estado_cotizacion($estado) ?>
+            </div>
+          </div>
           <div class="row">
-            <div class="col s3">
-              <b>Alto: </b>
-              <?php echo $minimo_alto ?>
+            <div class="col s5">
+              <b>Cliente: </b>
+              <?php echo nombre_cliente($id_cliente) ?>
             </div>
-            <div class="col s3">
-              <b>Ancho: </b>
-              <?php echo $minimo_ancho ?>
-              </div>
-            <div class="col s3">
-              <b>Alto: </b>
-              <?php echo $maximo_alto ?>
+            <div class="col s5">
+              <b>Trabajo: </b>
+              <?php echo enum_description($id_trabajo) ?>
             </div>
-            <div class="col s3">
-              <b>Ancho: </b>
-              <?php echo $maximo_ancho ?>
+            <div class="col s2">
+                <b>O. Compra: </b><?php $orden_compra ?>
             </div>
           </div>
           <div class="row">
             <div class="col s3">
-              <b>Operarios: </b>
-              <?php echo $operarios ?>
-            </div>
-            <div class="col s6">
-              <b>Plancha o Máscara: </b>
-              <?php echo $cod_plancha_o_mascara ?>
+              <b>S. Técnico: </b>
+              <?php echo $sobre_tecnico ?>
             </div>
             <div class="col s3">
-              <b>Tipo: </b>
-                <?php echo tipo_maq($tipo) ?>
+              <b>Negativo: </b>
+              <?php echo $negativo ?>
+            </div>
+            <div class="col s3">
+              <b>Plancha: </b>
+                <?php echo $plancha ?>
+            </div>
+            <div class="col s3">
+              <b>Recurso: </b>
+                <?php echo $recurso ?>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s3">
+              <b>Lib./Art.: </b>
+              <?php echo $libros_articulos ?>
+            </div>
+            <div class="col s3">
+              <b>Hojas: </b>
+              <?php echo $hojas ?>
+            </div>
+            <div class="col s2">
+              <b>Copias: </b>
+                <?php echo $copias ?>
+            </div>
+            <div class="col s2">
+              <b>Inicio: </b>
+                <?php echo $inicio ?>
+            </div>
+            <div class="col s2">
+              <b>Final: </b>
+                <?php echo $final ?>
             </div>
           </div>
         </div>

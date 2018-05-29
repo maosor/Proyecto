@@ -36,7 +36,7 @@ $sel = $con->prepare("SELECT c.id, orden_trabajo, cotizacion, referencia, fecha_
           <thead>
             <tr class="cabecera">
               <th class="borrar">Vista</th>
-              <th>Orden T.</th>
+              <th>O.T.</th>
               <th>Cot.</th>
               <th>Ref.</th>
               <th>Fecha</th>
@@ -62,7 +62,7 @@ $sel = $con->prepare("SELECT c.id, orden_trabajo, cotizacion, referencia, fecha_
               <td><?php echo $fecha_pedido?></td>
               <td><?php echo $nombre?></td>
               <td><?php echo $descripcion?></td>
-              <td><?php echo $estado?></td>
+              <td><?php echo  estado_cotizacion($estado)?></td>
               <td class="borrar"><a href="alta_cotizacion.php?id=<?php echo $id?>" class="btn-floating blue"><i
                 class="material-icons">edit</i></a></td>
               <td class="borrar"><a href="#" class="btn-floating red" onclick="swal({title: '¿Esta seguro que desea eliminar la cotización?',

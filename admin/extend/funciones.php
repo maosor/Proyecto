@@ -175,4 +175,49 @@ function tipo_enum($tipo)
   }
   return $tipo_enum;
 }
+function estado_cotizacion($estado)
+{
+  switch ($estado) {
+    case '0':
+      $estado_cotizacion = 'Pedido';
+      break;
+    case '1':
+      $estado_cotizacion = 'Ofrecido';
+      break;
+    case '2':
+      $estado_cotizacion = 'Aprobado';
+      break;
+    case '3':
+      $estado_cotizacion = 'Facturado';
+      break;
+    case '4':
+      $estado_cotizacion = 'Liquidado';
+      break;
+    default:
+      $estado_cotizacion = '';
+      break;
+  }
+  return $estado_cotizacion;
+}
+  function btn_estado_cotizacion($estado)
+  {
+    switch ($estado) {
+      case '1':
+        $btn_estado_cotizacion = 'Ofrecer';
+        break;
+      case '2':
+        $btn_estado_cotizacion = 'Aprobar';
+        break;
+      case '3':
+        $btn_estado_cotizacion = 'Facturar';
+        break;
+      case '4':
+        $btn_estado_cotizacion = 'Liquidar';
+        break;
+      default:
+        $btn_estado_cotizacion = '';
+        break;
+    }
+  return $btn_estado_cotizacion;
+}
  ?>
