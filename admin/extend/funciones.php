@@ -220,4 +220,37 @@ function estado_cotizacion($estado)
     }
   return $btn_estado_cotizacion;
 }
+function orden_trabajo($id)
+{
+  include '../conexion/conexion.php';
+  try {
+    $resultado= false;
+    $con-> begin_transaction();
+    $sel = $con->prepare("SELECT valor FROM compania_parametro WHERE llave = 'proxima_orden'");
+    $sel -> execute();
+    $sel -> bind_result($valor);
+    if($sel->fetch())
+    {
+      $orden_trabajo = intval($valor);
+    }
+    $sel ->close();
+    $compania = $_SESSION ['compania'];
+    $up = $con->prepare('UPDATE cotizacion SET orden_trabajo=? WHERE id=? AND id_compania=? ');
+    $up->bind_param("iii",$orden_trabajo, $id, $compania );
+    if ($up->execute()) {
+        $up->close();
+        $up = $con->prepare("UPDATE compania_parametro SET valor=? WHERE llave = 'proxima_orden' ");
+        $up -> bind_param('s', strval($orden_trabajo+1));
+        $up -> execute();
+        $up ->close();
+        $resultado = true;
+    }
+  }catch (Exception $e) {
+    $resultado = false;
+    $log -> Error($e);
+  }
+  $con->commit();
+  $up->close();
+  return $resultado;
+}
  ?>
