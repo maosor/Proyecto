@@ -1,6 +1,7 @@
 <?php
 include '../conexion/conexion.php';
 if ($_SERVER['REQUEST_METHOD']== 'POST'){
+  $codigo = htmlentities($_POST['codigo']);
   $nombre = htmlentities($_POST['nombre']);
   $direccion = htmlentities($_POST['direccion']);
   $telefono = htmlentities($_POST['telefono']);
@@ -8,8 +9,8 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   $id = htmlentities($_POST['id']);
   $contacto = htmlentities($_POST['contacto']);
 
-  $up = $con->prepare("UPDATE clientes SET nombre=?, direccion = ?, telefono =?, correo =?, contacto=?  WHERE id=? ");
-  $up->bind_param('sssssi', $nombre, $direccion, $telefono, $correo,$contacto, $id);
+  $up = $con->prepare("UPDATE clientes SET  codigo=?, nombre=?, direccion = ?, telefono =?, correo =?, contacto=?  WHERE id=? ");
+  $up->bind_param('ssssssi', $codigo, $nombre, $direccion, $telefono, $correo,$contacto, $id);
 
     if ($up -> execute()) {
     header('location:../extend/alerta.php?msj=Cliente actualizado&c=cli&p=in&t=success');

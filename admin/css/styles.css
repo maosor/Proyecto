@@ -1,0 +1,9 @@
+.card-content{
+/*  min-height: 300px;*/
+}
+.card .x-large{
+  height: 600px;
+}
+.card .xx-large{
+  height: 800px;
+}

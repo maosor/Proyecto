@@ -39,32 +39,25 @@ $sel_compania->fetch();
     </li>
     <li><a href="../inicio"><i class="material-icons">home</i>INICIO</li></a>
     <li><div class="divider"></div></li>
-    <?php if($_SESSION['nivel'] <= 1){?>
-    <li><a href="../usuario"><i class="material-icons">contacts</i>USUARIOS</li></a>
+    <li><a href="../clientes"><i class="material-icons">contact_phone</i>CLIENTES</li></a>
     <li><div class="divider"></div></li>
-  <?php } ?>
-    <?php if($_SESSION['nivel'] == 0){?>
-    <li><a href="../compania"><i class="material-icons">business</i>COMPAÑIA</li></a>
-    <li><div class="divider"></div></li>
-    <?php } ?>
     <?php if($_SESSION['nivel'] <= 2){?>
     <li><a href="../cotizacion"><i class="material-icons">assignment_turned_in</i>COTIZAR</li></a>
     <li><div class="divider"></div></li>
   <?php } ?>
-    <li><a href="../clientes"><i class="material-icons">contact_phone</i>CLIENTES</li></a>
-    <li><div class="divider"></div></li>
-    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>INVENTARIO
-    <i class="material-icons right">arrow_drop_down</i></a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="dropdown-button" href="#!" data-activates="ddprint"><i class="material-icons">settings</i>PARAMETROS
-    <i class="material-icons right">arrow_drop_down</i></a></li>
-    <li><div class="divider"></div></li>
-    <!-- <li><a href="../inicio/slider.php"><i class="material-icons">web</i>SLIDER</li></a>
-    <li><div class="divider"></div></li> -->
+  <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>INVENTARIO
+  <i class="material-icons right">arrow_drop_down</i></a></li>
+  <li><div class="divider"></div></li>
+  <li><a class="dropdown-button" href="#!" data-activates="ddprint"><i class="material-icons">settings</i>PARAMETROS
+  <i class="material-icons right">arrow_drop_down</i></a></li>
+  <li><div class="divider"></div></li>
     <li><a href="../login/salir.php"><i class="material-icons">power_setting_new</i>SALIR</li></a>
     <li><div class="divider"></div></li>
   </ul>
+  <ul id="ddcatalogos" class="dropdown-content">
 
+
+   </ul>
   <ul id="dropdown1" class="dropdown-content">
     <li><a href="../inventario/index.php">GENERALES</a></li>
     <li><a href="../inventario/index.php?tip=1">PAPELES</a></li>
@@ -79,5 +72,11 @@ $sel_compania->fetch();
      <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">TIPOS DE TINTA</a></li>
      <li><a href="../enumerados/index.php?tipo=1">AGENCIAS</a></li>
      <li><a href="../enumerados/index.php?tipo=2">TRABAJOS</a></li>
+     <?php if($_SESSION['nivel'] <= 1){?>
+     <li><a href="../usuario">USUARIOS</li></a>
+    <?php } ?>
+     <?php if($_SESSION['nivel'] == 0){?>
+     <li><a href="../compania">COMPAÑIA</li></a>
+     <?php } ?>
 
     </ul>

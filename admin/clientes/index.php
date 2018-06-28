@@ -7,6 +7,10 @@
         <span class="card-title">Mantenimiento de clientes</span>
         <form class="form" action="ins_clientes.php" method="post" autocomplete=off>
           <div class="input-field">
+            <input type="text" name="codigo" title="Solo letras" pattern="[\p{Latin}/s ]+"  id="codigo" onblur="may(this.value, this.id)"  >
+            <label for="codigo">codigo</label>
+          </div>
+          <div class="input-field">
             <input type="hidden" name="compania" value="<?php echo $_SESSION['compania']?>">
             <input type="text" name="nombre"  title="Solo letras" pattern="[\p{Latin}/s]"  id="nombre" onblur="may(this.value, this.id)">
             <label for="nombre">Nombre</label>
@@ -50,10 +54,10 @@
 
 <?php
   $compania = $_SESSION['compania'];
-  $sel= $con->prepare("SELECT id, nombre, direccion, telefono FROM clientes WHERE id_compania = ? ");
+  $sel= $con->prepare("SELECT id, codigo, nombre, direccion, telefono FROM clientes WHERE id_compania = ? ");
   $sel->bind_param('i', $compania);
   $sel -> execute();
-  $sel ->bind_result($id, $nombre, $direccion, $telefono);
+  $sel ->bind_result($id, $codigo, $nombre, $direccion, $telefono);
   $sel -> store_result();
   $row = $sel->num_rows;
  ?>
@@ -65,6 +69,7 @@
          <table>
            <thead>
              <tr class="cabecera">
+               <th>codigo</th>
                <th>Nombre</th>
                <th>Dirección</th>
                <th>Telefono</th>
@@ -75,6 +80,7 @@
            </thead>
            <?php while ($sel->fetch()) { ?>
             <tr>
+              <td><?php echo $codigo?></td>
               <td><?php echo $nombre?></td>
               <td><?php echo $direccion?></td>
               <td><?php echo $telefono?></td>

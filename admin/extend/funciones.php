@@ -94,6 +94,21 @@ function nombre_cliente($id_cliente)
     return '';
   }
 }
+function cod_cliente($id_cliente)
+{
+  include '../conexion/conexion.php';
+  $compania = $_SESSION ['compania'];
+  $sel = $con->prepare("SELECT codigo FROM clientes WHERE id = ? AND id_compania = ? ");
+  $sel->bind_param('ii', $id_cliente, $compania);
+  $sel->execute();
+  $sel->bind_result($codigo);
+  if($sel->fetch()){
+    return $codigo;
+  }
+  else {
+    return '';
+  }
+}
 function enum_description($id_enum)
 {
   include '../conexion/conexion.php';
@@ -179,19 +194,16 @@ function estado_cotizacion($estado)
 {
   switch ($estado) {
     case '0':
-      $estado_cotizacion = 'Pedido';
+      $estado_cotizacion = 'COTIZADO';
       break;
     case '1':
-      $estado_cotizacion = 'Ofrecido';
+      $estado_cotizacion = 'APROBADO';
       break;
     case '2':
-      $estado_cotizacion = 'Aprobado';
+      $estado_cotizacion = 'LIQUIDADO';
       break;
-    case '3':
-      $estado_cotizacion = 'Facturado';
-      break;
-    case '4':
-      $estado_cotizacion = 'Liquidado';
+    case '50':
+      $estado_cotizacion = 'ANULADO';
       break;
     default:
       $estado_cotizacion = '';
@@ -203,16 +215,10 @@ function estado_cotizacion($estado)
   {
     switch ($estado) {
       case '1':
-        $btn_estado_cotizacion = 'Ofrecer';
+        $btn_estado_cotizacion = 'APROBAR';
         break;
       case '2':
-        $btn_estado_cotizacion = 'Aprobar';
-        break;
-      case '3':
-        $btn_estado_cotizacion = 'Facturar';
-        break;
-      case '4':
-        $btn_estado_cotizacion = 'Liquidar';
+        $btn_estado_cotizacion = 'LIQUIDAR';
         break;
       default:
         $btn_estado_cotizacion = '';

@@ -1,9 +1,9 @@
   <?php include '../extend/header.php';
 $id = htmlentities($_GET['id']);
-$sel = $con->prepare("SELECT id, nombre, direccion, telefono, correo, contacto FROM clientes WHERE id = ?");
+$sel = $con->prepare("SELECT id, codigo, nombre, direccion, telefono, correo, contacto FROM clientes WHERE id = ?");
 $sel -> bind_param('i', $id);
 $sel -> execute();
-$sel ->bind_result($id, $nombre, $direccion, $telefono, $correo,$contacto);
+$sel ->bind_result($id, $codigo, $nombre, $direccion, $telefono, $correo,$contacto);
 if ($sel->fetch()) {
 
 }
@@ -15,6 +15,10 @@ if ($sel->fetch()) {
           <span class="card-title">Editar de clientes</span>
           <form class="form" action="up_clientes.php" method="post" autocomplete=off>
             <input type="hidden" name="id" value="<?php echo $id?>">
+            <div class="input-field">
+              <input type="text" name="codigo" value="<?php echo $codigo?>" title="Solo letras" pattern="[\p{Latin}/s ]+"  id="codigo" onblur="may(this.value, this.id)"  >
+              <label for="codigo">codigo</label>
+            </div>
             <div class="input-field">
               <input type="text" name="nombre" value="<?php echo $nombre?>" title="Solo letras" pattern="[\p{Latin}/s ]+"  id="nombre" onblur="may(this.value, this.id)"  >
               <label for="nombre">Nombre</label>

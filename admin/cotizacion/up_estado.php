@@ -6,7 +6,7 @@ try {
     $compania = $_SESSION ['compania'];
     $id = htmlentities($_GET['id']);
     $estado = htmlentities($_GET['est']);
-    if ($estado == 2)
+    if ($estado == 1)
     {
       orden_trabajo($id,$estado);
     }
