@@ -46,6 +46,9 @@
       case 'cot':
         $carpeta = '../cotizacion/';
         break;
+      case 'tin':
+        $carpeta = '../tintas/';
+        break;
       }
     switch ($p) {
       case 'in':

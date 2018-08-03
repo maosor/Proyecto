@@ -7,3 +7,7 @@
 .card .xx-large{
   height: 800px;
 }
+
+.collection.small{
+  min-height: 220px !important;
+}

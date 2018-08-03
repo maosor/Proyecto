@@ -1,6 +1,10 @@
 <?php include '../extend/header.php';
 include '../conexion/conexion.php';
 include '../extend/funciones.php';
+include '../logic/tinta_controlador.php';
+include '../logic/inventario_controlador.php';
+include '../logic/maquina_controlador.php';
+//include '../entidades/tinta.php';
 if (isset($_GET['id']))
 {
   $id = $con->real_escape_string(htmlentities($_GET['id']));
@@ -15,15 +19,69 @@ negativo, plancha, recurso, libros_articulos, hojas, copias, inicio, final FROM 
   $sel_cot->fetch();
   $accion = 'Actualizar';
   $sel_cot -> close();
+
+  //Detalle
+  $sel_cot_det = $con->prepare("SELECT tamano_trabajo, forma_trabajo, lados_imprimir, modo_retiro, molde_alto, molde_ancho, area_levantado_ancho, area_levantado_alto, observacion_retiro, num_troquel, estado_inicial,	estado_final, medio_corte, tamano_troquel_alto, tamano_troquel_ancho, negativo_frente, negativo_reverso,
+    arte_frente, arte_reverso, tamano_montaje, lado_montaje, complejidad_montaje, detalles, tintas_prep,tipo_tinta, gramos_tinta, donde_imprimir, numero_hojas, numero_moldes, numero_tintas, numero_tamanos,	numero_pliegos, numero_grupos, numero_cort_grupo, numero_refiles, perforas_c, perforas_p, perforas_i,	perforas_d, huecos_c, huecos_p, huecos_i, huecos_d, papeles_numero_copias, papeles_numero_hojas,
+    numero_tintas_montajes,numero_tintas_lavados, papeles_numero_moldes, numero_mascaras, numero_planchas,numero_quemados, numero_med_cortes, numero_tiros_impresos, numero_tiros_troquel, cobra_planchas, troquelado, impresion, cantidad_negativos, tipo_negativo, tamano_negativo_alto, tamano_negativo_ancho, 	cobra_negativo, material_extra, cantidad_x_paquete, tipo_caja, cantidad_material, numero_copias,
+    numero_cajas, numero_dobleces, numero_encolados, numero_fajillas, numero_grapas_huecos, numero_grapas_libro,numero_huecos, numero_paquetes, numero_remaches, est_m_obra, est_o_materiales, est_tintas, est_indirectos, 	est_servicios_terceros, est_costo_subtotal, est_papeles, est_costo_total, est_p_util_costo, est_util_costo,	est_p_util_papel, est_util_papel, est_p_util_publicidad, est_util_publicidad, est_precio_cliente, real_m_obra,
+    real_o_materiales, real_tintas, real_indirectos, real_servicios_terceros, real_costo_subtotal, real_papeles,real_costo_total, real_p_util_costo, real_util_costo, real_p_util_papel, real_util_papel, real_p_util_publicidad, real_util_publicidad, real_precio_cliente,control_calidad,tipo_safado FROM cotizacion_detalle WHERE cotizacion = ? ");
+  $sel_cot_det->bind_param('i', $cotizacion);
+  $sel_cot_det->execute();
+  $log->info('Va consultar'.$cotizacion);
+  $sel_cot_det->bind_result( $tamano_trabajo, $forma_trabajo, $lados_imprimir, $modo_retiro, $molde_alto,
+  $molde_ancho, $area_levantado_ancho, $area_levantado_alto, $observacion_retiro, $num_troquel, $estado_inicial,
+  $estado_final, $medio_corte, $tamano_troquel_alto, $tamano_troquel_ancho, $negativo_frente, $negativo_reverso,
+  $arte_frente, $arte_reverso, $tamano_montaje, $lado_montaje, $complejidad_montaje, $detalles, $tintas_prep,
+  $tipo_tinta, $gramos_tinta, $donde_imprimir, $numero_hojas, $numero_moldes, $numero_tintas, $numero_tamanos,
+  $numero_pliegos, $numero_grupos, $numero_cort_grupo, $numero_refiles, $perforas_c, $perforas_p, $perforas_i,
+  $perforas_d, $huecos_c, $huecos_p, $huecos_i, $huecos_d, $papeles_numero_copias, $papeles_numero_hojas,
+  $numero_tintas_montajes,$numero_tintas_lavados, $papeles_numero_moldes, $numero_mascaras, $numero_planchas,
+  $numero_quemados, $numero_med_cortes, $numero_tiros_impresos, $numero_tiros_troquel, $cobra_planchas,
+  $troquelado, $impresion, $cantidad_negativos, $tipo_negativo, $tamano_negativo_alto, $tamano_negativo_ancho,
+  $cobra_negativo, $material_extra, $cantidad_x_paquete, $tipo_caja, $cantidad_material, $numero_copias,
+  $numero_cajas, $numero_dobleces, $numero_encolados, $numero_fajillas, $numero_grapas_huecos, $numero_grapas_libro,
+  $numero_huecos, $numero_paquetes, $numero_remaches, $est_m_obra, $est_o_materiales, $est_tintas, $est_indirectos,
+  $est_servicios_terceros, $est_costo_subtotal, $est_papeles, $est_costo_total, $est_p_util_costo, $est_util_costo,
+  $est_p_util_papel, $est_util_papel, $est_p_util_publicidad, $est_util_publicidad, $est_precio_cliente, $real_m_obra,
+  $real_o_materiales, $real_tintas, $real_indirectos, $real_servicios_terceros, $real_costo_subtotal, $real_papeles,
+  $real_costo_total, $real_p_util_costo, $real_util_costo, $real_p_util_papel, $real_util_papel, $real_p_util_publicidad,
+  $real_util_publicidad, $real_precio_cliente, $control_calidad, $tipo_safado);
+  $sel_cot_det->fetch();
+  $accion = 'Actualizar';
+  $log->info('valor del $molde_ancho '.$molde_ancho);
+
+
+  $sel_cot_det -> close();
+
+
 }
 else {
   $orden_trabajo= ''; $cotizacion= ''; $orden_compra= ''; $fecha_pedido= ''; $fecha_aprobado= ''; $fecha_ofrecido= '';
   $fecha_facturado= ''; $fecha_liquidado= ''; $estado= null; $id_cliente= ''; $referencia= ''; $id_trabajo= ''; $recibido= ''; $sobre_tecnico= '';
   $negativo= ''; $plancha= ''; $recurso= ''; $libros_articulos= ''; $hojas= ''; $copias= ''; $inicio= ''; $final= '';
   $accion = 'Insertar';
+
+  //Detalles
+  $tamano_trabajo=''; $forma_trabajo=''; $lados_imprimir=''; $modo_retiro=''; $molde_alto='';
+    $molde_ancho=''; $area_levantado_ancho=''; $area_levantado_alto=''; $observacion_retiro=''; $num_troquel=''; $estado_inicial='';
+    $estado_final=''; $medio_corte=''; $tamano_troquel_alto=''; $tamano_troquel_ancho=''; $negativo_frente=''; $negativo_reverso='';
+    $arte_frente=''; $arte_reverso=''; $tamano_montaje=''; $lado_montaje=''; $complejidad_montaje=''; $detalles=''; $tintas_prep='';
+    $tipo_tinta=''; $gramos_tinta=''; $donde_imprimir=''; $numero_hojas=''; $numero_moldes=''; $numero_tintas=''; $numero_tamanos='';
+    $numero_pliegos=''; $numero_grupos=''; $numero_cort_grupo=''; $numero_refiles=''; $perforas_c=''; $perforas_p=''; $perforas_i='';
+    $perforas_d=''; $huecos_c=''; $huecos_p=''; $huecos_i=''; $huecos_d=''; $papeles_numero_copias=''; $papeles_numero_hojas='';
+    $numero_tintas_montajes='';$numero_tintas_lavados=''; $papeles_numero_moldes=''; $numero_mascaras=''; $numero_planchas='';
+    $numero_quemados=''; $numero_med_cortes=''; $numero_tiros_impresos=''; $numero_tiros_troquel=''; $cobra_planchas='';
+    $troquelado=''; $impresion=''; $cantidad_negativos=''; $tipo_negativo=''; $tamano_negativo_alto=''; $tamano_negativo_ancho='';
+    $cobra_negativo=''; $material_extra=''; $cantidad_x_paquete=''; $tipo_caja=''; $cantidad_material=''; $numero_copias='';
+    $numero_cajas=''; $numero_dobleces=''; $numero_encolados=''; $numero_fajillas=''; $numero_grapas_huecos=''; $numero_grapas_libro='';
+    $numero_huecos=''; $numero_paquetes=''; $numero_remaches=''; $est_m_obra=''; $est_o_materiales=''; $est_tintas=''; $est_indirectos='';
+    $est_servicios_terceros=''; $est_costo_subtotal=''; $est_papeles=''; $est_costo_total=''; $est_p_util_costo=''; $est_util_costo='';
+    $est_p_util_papel=''; $est_util_papel=''; $est_p_util_publicidad=''; $est_util_publicidad=''; $est_precio_cliente=''; $real_m_obra='';
+    $real_o_materiales=''; $real_tintas=''; $real_indirectos=''; $real_servicios_terceros=''; $real_costo_subtotal=''; $real_papeles='';
+    $real_costo_total=''; $real_p_util_costo=''; $real_util_costo=''; $real_p_util_papel=''; $real_util_papel=''; $real_p_util_publicidad='';
+    $real_util_publicidad=''; $real_precio_cliente='';$control_calidad='';$tipo_safado='';
 }
-
-
 $compania= $_SESSION['compania'];
 $sel = $con->prepare("SELECT id, nombre FROM clientes WHERE id_compania = ? ");
 $sel->bind_param('i', $compania);
@@ -39,12 +97,10 @@ $sel->bind_result($id_cli, $nombre);
           <?php else: ?>
           <span class="card-title">Ingreso de Cotización</span>
         <?php endif; ?>
-
       </div>
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col s12">
     <div class="card">
@@ -56,7 +112,7 @@ $sel->bind_result($id_cli, $nombre);
         <?php else: ?>
           <form  action="ins_cotizacion.php" method="post" autocomplete="off">
          <?php endif; ?>
-          <div class="row">
+         <div class="row">
             <div class="col s2">
               <div class = "input-field">
                 <input type="number" name="cotizacion" id="cotizacion" value="<?php echo $cotizacion ?>"readonly>
@@ -169,7 +225,7 @@ $sel->bind_result($id_cli, $nombre);
               </div>
             </div>
           </div>
-          <div class="row">
+         <div class="row">
             <div class="col s3">
               <div class = "input-field">
                 <input type="text" name="libros_articulos" id="libros_articulos" value="<?php echo $libros_articulos ?>">
@@ -201,34 +257,34 @@ $sel->bind_result($id_cli, $nombre);
               </div>
             </div>
           </div>
-          <div class="row">
-             <div class="col s3">
-               <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_aprobado" id="fecha_aprobado" value="<?php echo $fecha_aprobado ?>"disabled>
-                 <label for="fecha_aprobado">Fecha Aprobado</label>
-               </div>
-             </div>
-             <div class="col s3">
-               <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_ofrecido" id="fecha_ofrecido" value="<?php echo $fecha_ofrecido ?>"disabled>
-                 <label for="fecha_ofrecido">Fecha Ofrecido</label>
-               </div>
-             </div>
-             <div class="col s3">
-               <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_facturado" id="fecha_facturado" value="<?php echo $fecha_facturado ?>"disabled>
-                 <label for="fecha_facturado">Fecha Facturado</label>
-               </div>
-             </div>
-             <div class="col s3">
-               <div class = "input-field">
-                 <input type="date" class="datepicker" name="fecha_liquidado" id="fecha_liquidado" value="<?php echo $fecha_liquidado ?>"disabled>
-                 <label for="fecha_liquidado">Fecha Liquidado</label>
-               </div>
+         <div class="row">
+           <div class="col s3">
+             <div class = "input-field">
+               <input type="date" class="datepicker" name="fecha_aprobado" id="fecha_aprobado" value="<?php echo $fecha_aprobado ?>"disabled>
+               <label for="fecha_aprobado">Fecha Aprobado</label>
              </div>
            </div>
+           <div class="col s3">
+             <div class = "input-field">
+               <input type="date" class="datepicker" name="fecha_ofrecido" id="fecha_ofrecido" value="<?php echo $fecha_ofrecido ?>"disabled>
+               <label for="fecha_ofrecido">Fecha Ofrecido</label>
+             </div>
+           </div>
+           <div class="col s3">
+             <div class = "input-field">
+               <input type="date" class="datepicker" name="fecha_facturado" id="fecha_facturado" value="<?php echo $fecha_facturado ?>"disabled>
+               <label for="fecha_facturado">Fecha Facturado</label>
+             </div>
+           </div>
+           <div class="col s3">
+             <div class = "input-field">
+               <input type="date" class="datepicker" name="fecha_liquidado" id="fecha_liquidado" value="<?php echo $fecha_liquidado ?>"disabled>
+               <label for="fecha_liquidado">Fecha Liquidado</label>
+             </div>
+           </div>
+         </div>
            <!-- Inicia div expandible  -->
-           <div class="row">
+         <div class="row">
              <ul class="collapsible expandable"data-collapsible="expandable">
                 <li>
                   <div class="collapsible-header"><i class="material-icons">vertical_split</i>Varios</div>
@@ -242,18 +298,18 @@ $sel->bind_result($id_cli, $nombre);
                               <h6><center><b>tamaño del trabajo</b></center></h6>
                               <br>
                               <br>
-                              <input type="radio" class="with-gap" name="tamaño_trabajo"
-                              id="peq" />
+                              <input type="radio" class="with-gap" name="tamano_trabajo"
+                              id="peq" <?php $accion == 'Actualizar'? $tamano_trabajo == '1'? print 'checked':'' : print 'checked'; ?> value = '1'>
                               <label for="peq">PEQUEÑO</label>
                               <br>
                               <br>
-                              <input type="radio" class="with-gap" name="tamaño_trabajo"
-                              id="med" />
+                              <input type="radio" class="with-gap" name="tamano_trabajo"
+                              id="med" <?php $tamano_trabajo == '2'? print 'checked':''; ?> value = '2'>
                               <label for="med">MEDIANO</label>
                               <br>
                               <br>
-                              <input type="radio" class="with-gap" name="tamaño_trabajo"
-                              id="gra" />
+                              <input type="radio" class="with-gap" name="tamano_trabajo"
+                              id="gra" <?php $tamano_trabajo == '3'? print 'checked':''; ?> value = '3'>
                               <label for="gra">GRANDE</label>
                             </div>
                             <div class="col s12">
@@ -261,12 +317,12 @@ $sel->bind_result($id_cli, $nombre);
                               <br>
                               <br>
                               <input type="radio" class="with-gap" name="forma_trabajo"
-                              id="rec" />
+                              id="rec" <?php $accion == 'Actualizar'? $forma_trabajo == '1'? print 'checked':'' : print 'checked'; ?> value = '1'/>
                               <label for="rec">RECTANGULAR </label>
                               <br>
                               <br>
                               <input type="radio" class="with-gap" name="forma_trabajo"
-                              id="esp" />
+                              id="esp" <?php $forma_trabajo == '2'? print 'checked':''; ?> value = '2' />
                               <label for="esp">ESPECIAL </label>
                             </div>
                           </div>
@@ -279,17 +335,25 @@ $sel->bind_result($id_cli, $nombre);
                             <span class="card-title">Impresión</span>
                             <div class="col s12">
                               <select id="lados_imprimir" name="lados_imprimir">
-                                <option value="" selected disabled>SELECIONE LADOS A IMPRIMIR</option>
-                                <option value="1">UN LADO</option>
-                                <option value="2">FRENTE Y REVERSO</option>
-                                <option value="3">TIRO Y RETIRO</option>
+                                <?php if ($accion == 'Actualizar'): ?>
+                                  <option value="<?php echo $lados_imprimir ?>" selected ><?php echo lados_imprimir($lados_imprimir) ?></option>
+                                <?php else: ?>
+                                  <option value="" selected disabled>SELECIONE LADOS A IMPRIMIR</option>
+                                <?php endif; ?>
+                                  <option value="1">UN LADO</option>
+                                  <option value="2">FRENTE Y REVERSO</option>
+                                  <option value="3">TIRO Y RETIRO</option>
                               </select>
                             </div>
                             <div class="col s12">
                               <select id="modo_retiro" name="modo_retiro">
-                                <option value="" selected disabled>SELECIONE MODO DE RETIRO</option>
-                                <option value="1">CABEZA CON CABEZA</option>
-                                <option value="2">CABEZA CON PIE</option>
+                                <?php if ($accion == 'Actualizar'): ?>
+                                  <option value="<?php echo $modo_retiro ?>" selected ><?php echo modo_retiro($modo_retiro) ?></option>
+                                <?php else: ?>
+                                  <option value="" selected disabled>SELECIONE MODO DE RETIRO</option>
+                                <?php endif; ?>
+                                  <option value="1">CABEZA CON CABEZA</option>
+                                  <option value="2">CABEZA CON PIE</option>
                               </select>
                             </div>
                             <div class="col s12">
@@ -297,14 +361,14 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="molde_ancho" id="molde_ancho" value=""readonly>
+                                <input type="number" name="molde_ancho" id="molde_ancho" value="<?php echo $molde_ancho ?>">
                                 <label for="molde_ancho">Ancho</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="molde_ancho" id="molde_ancho" value=""readonly>
-                                <label for="molde_ancho">Alto</label>
+                                <input type="number" name="molde_alto" id="molde_alto" value="<?php echo $molde_alto?>">
+                                <label for="molde_alto">Alto</label>
                               </div>
                             </div>
                             <div class="col s12">
@@ -312,20 +376,20 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="area_levantado_ancho" id="area_levantado_ancho" value=""readonly>
+                                <input type="number" name="area_levantado_ancho" id="area_levantado_ancho" value="<?php echo $area_levantado_ancho ?>">
                                 <label for="area_levantado_ancho">Ancho</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="area_levantado_alto" id="area_levantado_alto" value=""readonly>
+                                <input type="number" name="area_levantado_alto" id="area_levantado_alto" value="<?php echo $area_levantado_alto ?>">
                                 <label for="area_levantado_alto">Alto</label>
                               </div>
                             </div>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="text" name="Observacion_retiro" id="Observacion_retiro" value=""readonly>
-                                <label for="Observacion_retiro">Observación Modo de Retiro</label>
+                                <input type="text" name="observacion_retiro" id="observacion_retiro" value="<?php echo $observacion_retiro ?>">
+                                <label for="observacion_retiro">Observación Modo de Retiro</label>
                               </div>
                             </div>
                           </div>
@@ -338,13 +402,17 @@ $sel->bind_result($id_cli, $nombre);
                             <span class="card-title">Troquel</span>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="number" name="num_troquel" id="num_troquel" value=""readonly>
+                                <input type="number" name="num_troquel" id="num_troquel" value="<?php echo $num_troquel ?>">
                                 <label for="num_troquel">Numero Troquel</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <select id="estado_inicial" name="estado_inicial">
+                              <?php if ($accion == 'Actualizar'): ?>
+                                <option value="<?php echo $estado_inicial ?>" selected ><?php echo estado($estado_inicial) ?></option>
+                              <?php else: ?>
                                 <option value="" selected disabled>ESTADO INICIAL</option>
+                              <?php endif; ?>
                                 <option value="1">BUENO</option>
                                 <option value="2">REGULAR</option>
                                 <option value="3">MALO</option>
@@ -352,7 +420,11 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s12 m6">
                               <select id="estado_final" name="estado_final">
+                              <?php if ($accion == 'Actualizar'): ?>
+                                <option value="<?php echo $estado_final ?>" selected ><?php echo estado($estado_final) ?></option>
+                              <?php else: ?>
                                 <option value="" selected disabled>ESTADO FINAL</option>
+                              <?php endif; ?>
                                 <option value="1">BUENO</option>
                                 <option value="2">REGULAR</option>
                                 <option value="3">MALO</option>
@@ -360,7 +432,11 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s12">
                               <select id="medio_corte" name="medio_corte">
+                              <?php if ($accion == 'Actualizar'): ?>
+                                <option value="<?php echo $medio_corte ?>" selected ><?php echo medio_corte($medio_corte) ?></option>
+                              <?php else: ?>
                                 <option value="" selected disabled>SELECIONE MEDIO CORTE</option>
+                              <?php endif; ?>
                                 <option value="1">FRENTE</option>
                                 <option value="2">REVERSO</option>
                               </select>
@@ -370,13 +446,13 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s6 ">
                               <div class = "input-field">
-                                <input type="number" name="tamano_troquel_ancho" id="tamano_troquel_ancho" value=""readonly>
+                                <input type="number" name="tamano_troquel_ancho" id="tamano_troquel_ancho" value="<?php echo $tamano_troquel_ancho ?>">
                                 <label for="tamano_troquel_ancho">Ancho</label>
                               </div>
                             </div>
                             <div class="col s6 ">
                               <div class = "input-field">
-                                <input type="number" name="tamano_troquel_alto" id="tamano_troquel_alto" value=""readonly>
+                                <input type="number" name="tamano_troquel_alto" id="tamano_troquel_alto" value="<?php echo $tamano_troquel_alto ?>">
                                 <label for="tamano_troquel_alto">Alto</label>
                               </div>
                             </div>
@@ -393,43 +469,43 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="negativo_frente" id="negativo_frente" value=""readonly>
+                                <input type="number" name="negativo_frente" id="negativo_frente" value="<?php echo $negativo_frente ?>">
                                 <label for="negativo_frente">Negativo Frente</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="negativo_reverso" id="negativo_reverso" value=""readonly>
+                                <input type="number" name="negativo_reverso" id="negativo_reverso" value="<?php echo $negativo_reverso ?>">
                                 <label for="negativo_reverso">Negativo Reverso</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="arte_frente" id="arte_frente" value=""readonly>
+                                <input type="number" name="arte_frente" id="arte_frente" value="<?php echo $arte_frente ?>">
                                 <label for="arte_frente">Arte Frente</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="arte_reverso" id="arte_reverso" value=""readonly>
+                                <input type="number" name="arte_reverso" id="arte_reverso" value="<?php echo $arte_reverso ?>">
                                 <label for="arte_reverso">Arte Reverso</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="tamano_montaje" id="tamano_montaje" value=""readonly>
+                                <input type="number" name="tamano_montaje" id="tamano_montaje" value="<?php echo $tamano_montaje ?>">
                                 <label for="tamano_montaje">Tamaño de Montaje</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
-                                <input type="number" name="lado_montaje" id="lado_montaje" value=""readonly>
+                                <input type="text" name="lado_montaje" id="lado_montaje" value="<?php echo $tamano_montaje ?>">
                                 <label for="lado_montaje">Lado del Montaje</label>
                               </div>
                             </div>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="number" name="complejidad_montaje" id="complejidad_montaje" value=""readonly>
+                                <input type="text" name="complejidad_montaje" id="complejidad_montaje" value="<?php echo $complejidad_montaje ?>">
                                 <label for="complejidad_montaje">Nivel Complejidad del Montaje</label>
                               </div>
                             </div>
@@ -456,23 +532,32 @@ $sel->bind_result($id_cli, $nombre);
                         <div class="card small blue-grey lighten-5">
                           <div class="card-content">
                         <?php
-                              $sel_lstck = $con->prepare('SELECT id, codigo, descripcion FROM lista_check WHERE id_compania=1 AND grupo =6');
+                          $sel_lstck = $con->prepare('SELECT codigo FROM cotizacion_lista_check WHERE id_compania= ? AND cotizacion= ? ');
+                          $sel_lstck -> bind_param('si', $compania, $cotizacion);
+                          $sel_lstck -> execute();
+                          $sel_lstck -> bind_result($codigo);
+
+                          $array = array();
+                          while ($sel_lstck-> fetch()){
+                            $array[]= $codigo;
+                          }
+                          $sel_lstck ->close();
+                              $sel_lstck = $con->prepare('SELECT id, codigo, descripcion FROM lista_check WHERE id_compania= ? AND grupo =6');
+                              $sel_lstck -> bind_param('s', $compania);
                               $sel_lstck -> execute();
                               $sel_lstck -> bind_result($id, $codigo, $descripcion);
-                               ?>
 
+                               ?>
                               <span class="card-title">M.S.C.</span>
                               <?php while ($sel_lstck-> fetch()): ?>
                                 <div class="col s12 m6">
                                   <input type="checkbox" class="filled-in" name="<?php echo $codigo?>"
-                                  id="<?php echo $codigo?>" />
+                                  id="<?php echo $codigo?>" value = "<?php echo $codigo?>" <?php  in_array($codigo, $array)? print 'checked':''?>/>
                                   <label for="<?php echo $codigo?>"><?php echo $descripcion?> </label>
                                 </div>
                               <?php endwhile;
                               $sel_lstck ->close();
                               ?>
-
-
                             </div>
                           </div>
                       </div>
@@ -493,46 +578,79 @@ $sel->bind_result($id_cli, $nombre);
                                 <label for="color">Color</label>
                               </div>
                               <div class = "input-field">
-                                <input type="text" name="tintas_prep" id="tintas_prep" value="">
-                                <label for="tintas_prep">Tinta a Preparar</label>
+                                <input type="number" name="tintas_prep" id="tintas_prep" value="<?php echo $tintas_prep ?>">
+                                <label for="tintas_prep">Tintas a Preparar</label>
+                                <div class = "input-field">
+                                  <input type="number" name="num_tirajes" id="num_tirajes" value="<?php echo $num_tirajes ?>">
+                                  <label for="num_tirajes">Numero de tirajes</label>
+                                </div>
                               </div>
                             </div>
                             <div class="col m1 s2">
                               <br>
                               <br>
                               <br>
-                              <a class="" href="#"><i class="material-icons">add </i></a>
+                              <a class="" href="#" onclick="add_item()"><i class="material-icons">add </i></a>
                             </div>
-
-                            <div class="col s12 m4">
+                            <div id="lstcolores" class="col s12 m4">
                               <h6><center><b>Colores Pantones</b></center></h6>
-                              <ul class="collection small">
-                                <li class="collection-item"><div>Cyan<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Magenta<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Amarillo<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Negro<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Barniz<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                              <ul  class="collection small">
+                                <?php $tinta = new TintaControlador();
+                                if ($accion == 'Actualizar'){
+                                  $activo = 'active';
+                                  foreach ($tinta->getLista_Tintas_Cotizacion($con, $compania, $cotizacion) as $key => $value){
+                                   ?>
+
+                                  <li id="color_<?php echo $value->id?>" class="listacolores collection-item <?php echo $activo?>"><div><?php echo $value->color?><a id= "<?php echo $value->color?>" class="eliminar_color secondary-content" ><i class="material-icons red-text">remove</i></a></div> </li>
+                                <?php $activo = '';
+                              } ?>
+                              <input type="hidden" id ="arrcolores" name="arrcolores" value ="<?php echo $tinta->getListaColores()?>">
+                              <?php
+                              } ?>
                               </ul>
                             </div>
                             <div class="col s6 m4">
-                              <select id="lados_imprimir" name="lados_imprimir">
+                              <select id="tipo_tinta" name="tipo_tinta">
+                              <?php
+
+                               if ($accion == 'Actualizar'): ?>
+                                <option value="<?php echo $tipo_tinta ?>" selected ><?php echo $tinta->getTipo_Tinta($con,$tipo_tinta) ?></option>
+                              <?php else: ?>
                                 <option value="" selected disabled>SELECIONE TIPO TINTA</option>
-                                <option value="1">UN LADO</option>
-                                <option value="2">FRENTE Y REVERSO</option>
-                                <option value="3">TIRO Y RETIRO</option>
+                              <?php endif; ?>
+                              <?php
+                              foreach ($tinta->getLista_Tintas($con, $compania) as $valor) {
+                              ?>
+                                <option value="<?php echo $valor[0]?>"><?php echo $valor[1]?></option>
+                              <?php
+                             }
+                             ?>
                               </select>
                               <div class="col s12">
-                                <input type="radio" class="with-gap" name="donde_imprimir"
-                                id="frente" />
-                                <label for="frente">FRENTE</label>
-                                <input type="radio" class="with-gap" name="donde_imprimir"
-                                id="revez" />
-                                <label for="revez">REVEZ</label>
+                              <h6><center><b>¿Donde Imprimir?</b></center></h6>
+                              <input type="radio" class="with-gap" name="donde_imprimir"
+                              id="frente" <?php $accion == 'Actualizar'? $donde_imprimir == '1'? print 'checked':'' : print 'checked'; ?> value="1"/>
+                              <label for="frente">FRENTE</label>
+                              <input type="radio" class="with-gap" name="donde_imprimir"
+                              id="revez" <?php $donde_imprimir == '2'? print 'checked':''; ?> value="2"/>
+                              <label for="revez">REVEZ</label>
+                              <div class = "input-field">
+                              <input type="number" name="gramos_tinta" id="gramos_tinta" value="<?php echo $gramos_tinta ?>">
+                              <label for="gramos_tinta">Gramos Tinta</label>
+
+                            </div>
+                              <div class="col s6">
                                 <div class = "input-field">
-                                <input type="text" name="gramos_tinta" id="gramos_tinta" value="">
-                                <label for="gramos_tinta">Gramos Tinta</label>
+                                <input type="number" name="tinta_alto" id="tinta_alto" value="<?php echo $tinta_alto ?>">
+                                <label for="tinta_alto">Alto</label>
                               </div>
                             </div>
+                            <div class="col s6">
+                              <div class = "input-field">
+                              <input type="number" name="tinta_ancho" id="tinta_ancho" value="<?php echo $tinta_ancho ?>">
+                              <label for="tinta_ancho">Ancho</label>
+                            </div>
+                          </div>
                           </div>
                         </div>
                       </div>
@@ -547,13 +665,12 @@ $sel->bind_result($id_cli, $nombre);
                         <div class="card x-large blue-grey lighten-5">
                           <div class="card-content">
                             <div class="col s12 m4">
-                              <h6><center><b>Operaciones</b></center></h6>
+                              <h6><center><b>Papeles</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>Cyan<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>Magenta<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>Amarillo<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>Negro<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>Barniz<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
+                                <?php $inventario = new InventarioControlador();
+                                 foreach ($inventario->getLista_Inventario($con, $compania, 1) as $inv){?>
+                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $inv[2]?><a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
+                                <?php } ?>
                               </ul>
                               <div class="col s10">
                                 <div class = "input-field">
@@ -565,62 +682,58 @@ $sel->bind_result($id_cli, $nombre);
                               <h6><center><b>Perforas</b></center></h6>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="perforas_c" id="perforas_c" value="">
+                                  <input type="text" name="perforas_c" id="perforas_c" value="<?php echo $perforas_c ?>">
                                   <label for="perforas_c" style="padding-left: 45%;">C</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="perforas_p" id="perforas_p" value="">
+                                  <input type="text" name="perforas_p" id="perforas_p" value="<?php echo $perforas_p ?>">
                                   <label for="perforas_p" style="padding-left: 45%;">P</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="perforas_i" id="perforas_i" value="">
+                                  <input type="text" name="perforas_i" id="perforas_i" value="<?php echo $perforas_i ?>">
                                   <label for="perforas_i" style="padding-left: 45%;">I</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="perforas_d" id="perforas_d" value="">
+                                  <input type="text" name="perforas_d" id="perforas_d" value="<?php echo $perforas_d ?>">
                                   <label for="perforas_d" style="padding-left: 45%;">D</label>
                                 </div>
                               </div>
                               <h6><center><b>Huecos</b></center></h6>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="huecos_c" id="huecos_c" value="">
+                                  <input type="text" name="huecos_c" id="huecos_c" value="<?php echo $huecos_c ?>">
                                   <label for="huecos_c" style="padding-left: 45%;">C</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="huecos_p" id="huecos_p" value="">
+                                  <input type="text" name="huecos_p" id="huecos_p" value="<?php echo $huecos_p ?>">
                                   <label for="huecos_p" style="padding-left: 45%;">P</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="huecos_i" id="huecos_i" value="">
+                                  <input type="text" name="huecos_i" id="huecos_i" value="<?php echo $huecos_i ?>">
                                   <label for="huecos_i" style="padding-left: 45%;">I</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="huecos_d" id="huecos_d" value="">
+                                  <input type="text" name="huecos_d" id="huecos_d" value="<?php echo $huecos_d ?>">
                                   <label for="huecos_d" style="padding-left: 45%;">D</label>
                                 </div>
                               </div>
                             </div>
                             <div class="col s12 m4">
-                              <h6><center><b>Operaciones Extras Asignadas</b></center></h6>
+                              <h6><center><b>Papeles seleccionados</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>Cyan<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Magenta<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Amarillo<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Negro<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Barniz<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                                <li class="collection-item"><div>Etiqueta 38X25.90 g. HC<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
                               </ul>
                               <h6><center><b>Distribuición de Copias</b></center></h6>
                               <ul class="collection small">
@@ -634,55 +747,55 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m4">
                               <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_hojas" id="numero_hojas" value="">
+                                  <input type="number" name="numero_hojas" id="numero_hojas" value="<?php echo $numero_hojas ?>">
                                   <label for="numero_hojas">N° Hojas</label>
                                 </div>
                             </div>
                             <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_moldes" id="numero_moldes" value="">
+                                  <input type="number" name="numero_moldes" id="numero_moldes" value="<?php echo $numero_moldes ?>">
                                   <label for="numero_moldes">N° Moldes</label>
                                 </div>
                             </div>
                             <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_tintas" id="numero_tintas" value="">
+                                  <input type="number" name="numero_tintas" id="numero_tintas" value="<?php echo $numero_tintas ?>">
                                   <label for="numero_tintas">N° tintas</label>
                                 </div>
                             </div>
                             <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_tamanos" id="numero_tamanos" value="">
+                                  <input type="number" name="numero_tamanos" id="numero_tamanos" value="<?php echo $numero_tamanos ?>">
                                   <label for="numero_tamanos">N° Tamanos</label>
                                 </div>
                             </div>
                             <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_pliegos" id="numero_pliegos" value="">
+                                  <input type="number" name="numero_pliegos" id="numero_pliegos" value="<?php echo $numero_pliegos ?>">
                                   <label for="numero_pliegos">N° pliegos</label>
                                 </div>
                             </div>
                             <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_grupos" id="numero_grupos" value="">
+                                  <input type="number" name="numero_grupos" id="numero_grupos" value="<?php echo $numero_grupos ?>">
                                   <label for="numero_grupos">N° Grupos</label>
                                 </div>
                             </div>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="text" name="numero_cort_grupo" id="numero_cort_grupo" value="">
+                                <input type="text" name="numero_cort_grupo" id="numero_cort_grupo" value="<?php echo $numero_cort_grupo ?>">
                                 <label for="numero_cort_grupo">N° Corte x Grupos</label>
                               </div>
                             </div>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="text" name="numero_refiles" id="numero_refiles" value="">
+                                <input type="number" name="numero_refiles" id="numero_refiles" value="<?php echo $numero_refiles ?>">
                                 <label for="numero_refiles">N° Refiles</label>
                               </div>
                             </div>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="text" name="numero_grupos" id="numero_grupos" value="">
+                                <input type="number" name="numero_grupos" id="numero_grupos" value="<?php echo $numero_grupos ?>">
                                 <label for="numero_grupos">N° Grupo Refiles</label>
                               </div>
                             </div>
@@ -703,57 +816,52 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m4">
                               <h6><center><b>Máquinas</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>XXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
+                                <?php $maquina = new MaquinaControlador();
+                                 foreach ($maquina->getLista_Maquina($con, $compania) as $maq){?>
+                                   <li id="<?php echo $maq[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $maq[2]?><a href="#" class="agregar-maquina secondary-content" id = "<?php echo $maq[2] ?>"><i class="material-icons">add</i></a></div> </li>
+                                   <li></li>
+                                <?php } ?>
                               </ul>
                             </div>
-                            <div class="col s12 m4">
+                            <div id ="lstmaquinas" class="col s12 m4">
                               <h6><center><b>Máquinas seleccionadas</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>xxxxxxxx<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>xxxxxxxx<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>xxxxxxxx<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>xxxxxxxx<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>xxxxxxxx<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
                               </ul>
                             </div>
                             <div class="col s12 m4">
                               <div class="col m6 s12">
                                 <div class = "input-field">
-                                  <input type="text" name="papeles_numero_hojas" id="papeles_numero_hojas" value="">
+                                  <input type="number" name="papeles_numero_hojas" id="papeles_numero_hojas" value="<?php echo $numero_grupos ?>">
                                   <label for="papeles_numero_hojas">N° Hojas</label>
                                 </div>
                               </div>
                               <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="text" name="papeles_numero_copias" id="papeles_numero_copias" value="">
+                                    <input type="number" name="papeles_numero_copias" id="papeles_numero_copias" value="<?php echo $papeles_numero_copias ?>">
                                     <label for="papeles_numero_copias">N° Copias</label>
                                   </div>
                               </div>
                               <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="text" name="numero_tintas_montajes" id="numero_tintas_montajes" value="">
+                                    <input type="number" name="numero_tintas_montajes" id="numero_tintas_montajes" value="<?php echo $numero_tintas_montajes ?>">
                                     <label for="numero_tintas_montajes">N° Montajes</label>
                                   </div>
                               </div>
                               <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="text" name="numero_tintas_lavados" id="numero_tintas_lavados" value="">
+                                    <input type="number" name="numero_tintas_lavados" id="numero_tintas_lavados" value="<?php echo $numero_tintas_lavados ?>">
                                     <label for="numero_tintas_lavados">N° Lavados</label>
                                   </div>
                               </div>
                               <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="text" name="numero_moldes" id="numero_moldes" value="">
-                                    <label for="numero_moldes">N° Moldes</label>
+                                    <input type="number" name="papeles_numero_moldes" id="papeles_numero_moldes" value="<?php echo $papeles_numero_moldes ?>">
+                                    <label for="papeles_numero_moldes">N° Moldes</label>
                                   </div>
                               </div>
                               <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="text" name="numero_mascaras" id="numero_mascaras" value="">
+                                    <input type="number" name="numero_mascaras" id="numero_mascaras" value="<?php echo $numero_mascaras ?>">
                                     <label for="numero_mascsras">N° Mascaras</label>
                                   </div>
                               </div>
@@ -761,47 +869,47 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m12">
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_planchas" id="numero_planchas" value="">
+                                  <input type="number" name="numero_planchas" id="numero_planchas" value="<?php echo $numero_planchas ?>">
                                   <label for="numero_planchas">N° Planchas</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_quemados" id="numero_quemados" value="">
+                                  <input type="number" name="numero_quemados" id="numero_quemados" value="<?php echo $numero_quemados ?>">
                                   <label for="numero_quemados">N° Quemados</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_med_cortes" id="numero_med_cortes" value="">
+                                  <input type="number" name="numero_med_cortes" id="numero_med_cortes" value="<?php echo $numero_med_cortes ?>">
                                   <label for="numero_med_cortes">N° 1/2 Cortes</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_tiros_impresos" id="numero_tiros_impresos" value="">
+                                  <input type="number" name="numero_tiros_impresos" id="numero_tiros_impresos" value="<?php echo $numero_tiros_impresos ?>">
                                   <label for="numero_tiros_impresos">N° Tiros Impresos</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <div class = "input-field">
-                                  <input type="text" name="numero_tiros_troquel" id="numero_tiros_troquel" value="">
+                                  <input type="number" name="numero_tiros_troquel" id="numero_tiros_troquel" value="<?php echo $numero_tiros_troquel ?>">
                                   <label for="numero_tiros_troquel">N° Tiros Troquel</label>
                                 </div>
                               </div>
                               <div class="col m3 s6">
                                 <input type="checkbox" class="filled-in" name="cobra_planchas"
-                                id="cobra_planchas" />
+                                id="cobra_planchas"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                                 <label for="cobra_planchas">¿Cobra Planchas? </label>
                               </div>
                               <div class="col m3 s6">
                                 <input type="checkbox" class="filled-in" name="troquelado"
-                                id="troquelado" />
+                                id="troquelado"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                                 <label for="troquelado">Troquelado </label>
                               </div>
                               <div class="col m3 s6">
                                 <input type="checkbox" class="filled-in" name="impresion"
-                                id="impresion" />
+                                id="impresion"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                                 <label for="impresion">Impresión </label>
                               </div>
                             </div>
@@ -822,94 +930,94 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col m2 s6">
                               <h6><center><b>Arte y Diseño</b></center></h6>
                               <input type="checkbox" class="filled-in" name="boceto"
-                              id="boceto" />
+                              id="boceto"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="boceto">Boceto </label>
-                              <input type="checkbox" class="filled-in" name="arte_final"
-                              id="arte_final" />
-                              <label for="arte_final">Arte Final</label>
+                              <input type="checkbox" class="filled-in" name="ser_arte_final"
+                              id="ser_arte_final"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
+                              <label for="ser_arte_final">Arte Final</label>
                               <input type="checkbox" class="filled-in" name="seleccion"
-                              id="seleccion" />
+                              id="seleccion"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="seleccion">Selección</label>
                               <input type="checkbox" class="filled-in" name="clises"
-                              id="clises" />
+                              id="clises"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="clises">Clises</label>
                               <div class = "input-field">
-                                <input type="text" name="numero_copias" id="numero_copias" value="">
+                                <input type="text" name="numero_copias" id="numero_copias" value="<?php echo $numero_copias ?>">
                                 <label for="numero_copias">N° Copias Laser</label>
                               </div>
                             </div>
                             <div class="col m2 s6">
                               <h6><center><b>Pruebas</b></center></h6>
                               <input type="checkbox" class="filled-in" name="prueba_laser"
-                              id="prueba_laser" />
+                              id="prueba_laser"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="prueba_laser">Laser </label>
                               <br><br>
                               <input type="checkbox" class="filled-in" name="prueba_impresora"
-                              id="prueba_impresora" />
+                              id="prueba_impresora"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="prueba_impresora">Impresora</label>
                             </div>
                             <div class="col m2 s6">
                               <h6><center><b>Encolado</b></center></h6>
                               <input type="checkbox" class="filled-in" name="cabeza"
-                              id="cabeza" />
+                              id="cabeza"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="cabeza">Cabeza </label>
                               <input type="checkbox" class="filled-in" name="pie"
-                              id="pie" />
+                              id="pie"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="pie">Pie</label>
                               <input type="checkbox" class="filled-in" name="izquierdo"
-                              id="izquierdo" />
+                              id="izquierdo"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="izquierdo">L. Izquierdo</label>
                               <input type="checkbox" class="filled-in" name="derecho"
-                              id="derecho" />
+                              id="derecho"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="derecho">L. Derecho</label>
                               <div class = "input-field">
-                                <input type="text" name="numero_encolados" id="numero_encolados" value="">
+                                <input type="text" name="numero_encolados" id="numero_encolados" value="<?php echo $numero_encolados ?>">
                                 <label for="numero_encolados">N° Encolados</label>
                               </div>
                             </div>
                             <div class="col m3 s6">
                               <h6><center><b>Acabados</b></center></h6>
                               <input type="checkbox" class="filled-in" name="carbon_intercalado"
-                              id="carbon_intercalado" />
+                              id="carbon_intercalado"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="carbon_intercalado">Carbón Intercalado </label>
                               <input type="checkbox" class="filled-in" name="coleccionado"
-                              id="coleccionado" />
+                              id="coleccionado"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="coleccionado">Coleccionado</label>
                               <input type="checkbox" class="filled-in" name="abrir_sobres"
-                              id="abrir_sobres" />
+                              id="abrir_sobres"  <?php  in_array($codigo, $array)? print 'checked':''?> <?php  in_array($codigo, $array)? print 'checked':''?>/>
                               <label for="abrir_sobres">AbrirSobres</label>
                               <div class = "input-field">
-                                <input type="text" name="numero_dobleces" id="numero_dobleces" value="">
+                                <input type="text" name="numero_dobleces" id="numero_dobleces" value="<?php echo $numero_dobleces ?>">
                                 <label for="numero_dobleces">N° Dobleces</label>
                               </div>
                             </div>
                             <div class="col m3 s6">
                                 <h6><center><b>Tipo Safado</b></center></h6>
                                 <input type="radio" class="with-gap" name="tipo_safado"
-                                id="libros" />
+                                id="libros" <?php $accion == 'Actualizar'? $tipo_safado == '1'? print 'checked':'' : print 'checked'; ?> value="1"/>
                                 <label for="libros">Por Libros</label>
                                 <input type="radio" class="with-gap" name="tipo_safado"
-                                id="juegos" />
+                                id="juegos" <?php $tipo_safado == '2'? print 'checked':''; ?> value="2"/>
                                 <label for="juegos">Por Juegos</label>
                                 <h6><center><b>Control Calidad</b></center></h6>
                                 <input type="radio" class="with-gap" name="control_calidad"
-                                id="militar" />
+                                id="militar" <?php $accion == 'Actualizar'? $control_calidad == '1'? print 'checked':'' : print 'checked'; ?> value="1"/>
                                 <label for="militar">Militar</label>
                                 <input type="radio" class="with-gap" name="control_calidad"
-                                id="individual" />
+                                id="individual" <?php $control_calidad == '4'? print 'checked':''; ?> value="2"/>
                                 <label for="individual">Individual</label>
                                 <div class = "input-field">
-                                  <input type="text" name="numero_grupos" id="numero_grupos" value="">
+                                  <input type="text" name="numero_grupos" id="numero_grupos" value="<?php echo $numero_grupos ?>">
                                   <label for="numero_grupos">N° grupos</label>
                                 </div>
                             </div>
                             <div class="col m2 s2">
                                 <h6><center><b>Pegado de Cajas</b></center></h6>
                                 <input type="checkbox" class="filled-in" name="pegar_cajas"
-                                id="pegar_cajas" />
+                                id="pegar_cajas"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                                 <label for="pegar_cajas">Pegar?</label>
                                 <div class = "input-field">
-                                  <input type="text" name="tipo_caja" id="tipo_caja" value="">
+                                  <input type="text" name="tipo_caja" id="tipo_caja" value="<?php echo $tipo_caja ?>">
                                   <label for="tipo_caja">Tipo Caja</label>
                                 </div>
                             </div>
@@ -918,25 +1026,25 @@ $sel->bind_result($id_cli, $nombre);
                                 <div class="row">
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_remaches" id="numero_remaches" value="">
+                                      <input type="text" name="numero_remaches" id="numero_remaches" value="<?php echo $numero_remaches ?>">
                                       <label for="numero_remaches">N° Remaches</label>
                                     </div>
                                   </div>
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_grapas_libro" id="numero_grapas_libro" value="">
+                                      <input type="text" name="numero_grapas_libro" id="numero_grapas_libro" value="<?php echo $numero_grapas_libro ?>">
                                       <label for="numero_grapas_libro">N° Grapas Libro</label>
                                     </div>
                                   </div>
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_grapas_huecos" id="numero_grapas_huecos" value="">
+                                      <input type="text" name="numero_grapas_huecos" id="numero_grapas_huecos" value="<?php echo $numero_grapas_huecos ?>">
                                       <label for="numero_grapas_huecos">N° Grapas Huecos</label>
                                     </div>
                                   </div>
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_huecos" id="numero_huecos" value="">
+                                      <input type="text" name="numero_huecos" id="numero_huecos" value="<?php echo $numero_huecos ?>">
                                       <label for="numero_huecos">N° Huecos</label>
                                     </div>
                                   </div>
@@ -947,25 +1055,25 @@ $sel->bind_result($id_cli, $nombre);
                                 <div class="row">
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_fajillas" id="numero_fajillas" value="">
+                                      <input type="text" name="numero_fajillas" id="numero_fajillas" value="<?php echo $numero_fajillas ?>">
                                       <label for="numero_fajillas">N° Fajillas</label>
                                     </div>
                                   </div>
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_cajas" id="numero_cajas" value="">
+                                      <input type="text" name="numero_cajas" id="numero_cajas" value="<?php echo $numero_cajas ?>">
                                       <label for="numero_cajas">N° Cajas</label>
                                     </div>
                                   </div>
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="numero_paquetes" id="numero_paquetes" value="">
+                                      <input type="text" name="numero_paquetes" id="numero_paquetes" value="<?php echo $numero_paquetes ?>">
                                       <label for="numero_paquetes">N° Paquetes</label>
                                     </div>
                                   </div>
                                   <div class="col m6 s12">
                                     <div class = "input-field">
-                                      <input type="text" name="cantidad_x_paquete" id="cantidad_x_paquete" value="">
+                                      <input type="text" name="cantidad_x_paquete" id="cantidad_x_paquete" value="<?php echo $cantidad_x_paquete ?>">
                                       <label for="cantidad_x_paquete">Cantidad X Paquete</label>
                                     </div>
                                   </div>
@@ -980,13 +1088,17 @@ $sel->bind_result($id_cli, $nombre);
                             <span class="card-title">Negativos</span>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="cantidad_negativos" id="cantidad_negativos" value=""readonly>
+                                <input type="number" name="cantidad_negativos" id="cantidad_negativos" value="<?php echo $cantidad_negativos ?>">
                                 <label for="cantidad_negativos">Cantidad</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <select id="tipo_negativo" name="tipo_negativo">
+                              <?php if ($accion == 'Actualizar'): ?>
+                                <option value="<?php echo $tipo_negativo ?>" selected ><?php echo tipo_negativo($tipo_negativo) ?></option>
+                              <?php else: ?>
                                 <option value="" selected disabled>TIPO NEGATIVO</option>
+                              <?php endif; ?>
                                 <option value="1">NEGATIVO</option>
                                 <option value="2">ACETATO LECHOSO</option>
                                 <option value="3">ACETATO TRANPARENTE</option>
@@ -998,21 +1110,21 @@ $sel->bind_result($id_cli, $nombre);
                           </div>
                           <div class="col s12 m4">
                             <div class = "input-field">
-                              <input type="number" name="tamano_negativo_ancho" id="tamano_negativo_ancho" value=""readonly>
+                              <input type="number" name="tamano_negativo_ancho" id="tamano_negativo_ancho" value="<?php echo $tamano_negativo_ancho ?>">
                               <label for="tamano_negativo_ancho">Ancho</label>
                             </div>
                           </div>
                           <div class="col s12 m4">
                             <div class = "input-field">
-                              <input type="number" name="tamano_negativo_alto" id="tamano_negativo_alto" value=""readonly>
+                              <input type="number" name="tamano_negativo_alto" id="tamano_negativo_alto" value="<?php echo $tamano_negativo_alto ?>">
                               <label for="tamano_negativo_alto">Alto</label>
                             </div>
                           </div>
                           <div class="col s12 m4">
                             <br>
                             <input type="checkbox" class="filled-in" name="cobra_negativo"
-                            id="cobra_negativo" />
-                            <label for="cobra_negativo">Cobra? </label>
+                            id="cobra_negativo"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
+                            <label for="cobra_negativo">¿Cobra?</label>
                           </div>
                           </div>
                         </div>
@@ -1053,11 +1165,11 @@ $sel->bind_result($id_cli, $nombre);
                             <span class="card-title">Material Extra</span>
                             <div class="col m3 s12">
                               <div class = "input-field">
-                                <input type="text" name="material_extra" id="material_extra" value="">
+                                <input type="text" name="material_extra" id="material_extra" value="<?php echo $material_extra ?>">
                                 <label for="material_extra">Material</label>
                               </div>
                               <div class = "input-field">
-                                <input type="text" name="cantidad_material" id="cantidad_material" value="">
+                                <input type="text" name="cantidad_material" id="cantidad_material" value="<?php echo $cantidad_material ?>">
                                 <label for="cantidad_material">cantidad</label>
                               </div>
                             </div>
@@ -1069,10 +1181,10 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m8">
                               <h6><center><b>Materiales</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
                               </ul>
                             </div>
                           </div>
@@ -1116,49 +1228,49 @@ $sel->bind_result($id_cli, $nombre);
                             <span class="card-title">Costos Estimados</span>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_m_obra" id="est_m_obra" value=""readonly>
+                                <input type="number" name="est_m_obra" id="est_m_obra" value="<?php echo $est_m_obra ?>">
                                 <label for="est_m_obra">Mano de Obra</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_o_materiales" id="est_o_materiales" value=""readonly>
+                                <input type="number" name="est_o_materiales" id="est_o_materiales" value="<?php echo $est_o_materiales ?>">
                                 <label for="est_o_materiales">Otros Materiales</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_tintas" id="est_tintas" value=""readonly>
+                                <input type="number" name="est_tintas" id="est_tintas" value="<?php echo $est_tintas ?>">
                                 <label for="est_tintas">Tintas</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_indirectos" id="est_indirectos" value=""readonly>
+                                <input type="number" name="est_indirectos" id="est_indirectos" value="<?php echo $est_indirectos ?>">
                                 <label for="est_indirectos">Indirectos</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_servicios_terceros" id="est_servicios_terceros" value=""readonly>
+                                <input type="number" name="est_servicios_terceros" id="est_servicios_terceros" value="<?php echo $est_servicios_terceros ?>">
                                 <label for="est_servicios_terceros">Servicios Terceros</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_costo_subtotal" id="est_costo_subtotal" value=""readonly>
+                                <input type="number" name="est_costo_subtotal" id="est_costo_subtotal" value="<?php echo $est_costo_subtotal ?>">
                                 <label for="est_costo_subtotal">Costo Subtotal</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_papeles" id="est_papeles" value=""readonly>
+                                <input type="number" name="est_papeles" id="est_papeles" value="<?php echo $est_papeles ?>">
                                 <label for="est_papeles">Papeles</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_costo_total" id="est_costo_total" value=""readonly>
+                                <input type="number" name="est_costo_total" id="est_costo_total" value="<?php echo $est_costo_total ?>">
                                 <label for="est_costo_total">Costo Total</label>
                               </div>
                             </div>
@@ -1167,44 +1279,44 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_p_util_costo" id="est_p_util_costo" value=""readonly>
+                                <input type="number" name="est_p_util_costo" id="est_p_util_costo" value="<?php echo $est_p_util_costo ?>">
                                 <label for="est_p_util_costo">Porcentaje</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_util_costo" id="est_util_costo" value=""readonly>
+                                <input type="number" name="est_util_costo" id="est_util_costo" value="<?php echo $est_util_costo ?>">
                                 <label for="est_util_costo">Costo</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_p_util_papel" id="est_p_util_papel" value=""readonly>
+                                <input type="number" name="est_p_util_papel" id="est_p_util_papel" value="<?php echo $est_p_util_papel ?>">
                                 <label for="est_p_util_papel">Porcentaje</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_util_papel" id="est_util_papel" value=""readonly>
+                                <input type="number" name="est_util_papel" id="est_util_papel" value="<?php echo $est_util_papel ?>">
                                 <label for="est_util_papel">Papel</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_p_util_publicidad" id="est_p_util_publicidad" value=""readonly>
+                                <input type="number" name="est_p_util_publicidad" id="est_p_util_publicidad" value="<?php echo $est_p_util_publicidad ?>">
                                 <label for="est_p_util_publicidad">Porcentaje</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="est_util_publicidad" id="est_util_publicidad" value=""readonly>
+                                <input type="number" name="est_util_publicidad" id="est_util_publicidad" value="<?php echo $est_util_publicidad ?>">
                                 <label for="est_util_publicidad">Publicidad</label>
                               </div>
                             </div>
                             <div class="col s12">
                               <div class = "input-field">
-                                <input type="number" name="precio_cliente" id="precio_cliente" value=""readonly>
-                                <label for="precio_cliente">Precio al Cliente</label>
+                                <input type="number" name="est_precio_cliente" id="est_precio_cliente" value="<?php echo $est_precio_cliente ?>">
+                                <label for="est_precio_cliente">Precio al Cliente</label>
                               </div>
                             </div>
                         </div>
@@ -1212,53 +1324,54 @@ $sel->bind_result($id_cli, $nombre);
                     </div>
                       <div class="col m6 s12">
                         <div class="card xx-large blue-grey lighten-5">
-                          <div class="card-content">
+                          <div class="
+                          card-content">
                             <span class="card-title">Costos Reales</span>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="real_m_obra" id="real_m_obra" value=""readonly>
+                                <input type="number" name="real_m_obra" id="real_m_obra" value="<?php echo $real_m_obra ?>">
                                 <label for="real_m_obra">Mano de Obra</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="real_o_materiales" id="real_o_materiales" value=""readonly>
+                                <input type="number" name="real_o_materiales" id="real_o_materiales" value="<?php echo $real_o_materiales ?>">
                                 <label for="real_o_materiales">Otros Materiales</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="real_tintas" id="real_tintas" value=""readonly>
+                                <input type="number" name="real_tintas" id="real_tintas" value="<?php echo $real_tintas ?>">
                                 <label for="real_tintas">Tintas</label>
                               </div>
                             </div>
                             <div class="col s12 m6">
                               <div class = "input-field">
-                                <input type="number" name="real_indirectos" id="real_indirectos" value=""readonly>
+                                <input type="number" name="real_indirectos" id="real_indirectos" value="<?php echo $real_indirectos ?>">
                                 <label for="real_indirectos">Indirectos</label>
                               </div>
                           </div>
                           <div class="col s12 m6">
                             <div class = "input-field">
-                              <input type="number" name="real_servicios_terceros" id="real_servicios_terceros" value=""readonly>
+                              <input type="number" name="real_servicios_terceros" id="real_servicios_terceros" value="<?php echo $real_servicios_terceros ?>">
                               <label for="real_servicios_terceros">Servicios Terceros</label>
                             </div>
                           </div>
                           <div class="col s12 m6">
                             <div class = "input-field">
-                              <input type="number" name="real_costo_subtotal" id="real_costo_subtotal" value=""readonly>
+                              <input type="number" name="real_costo_subtotal" id="real_costo_subtotal" value="<?php echo $real_costo_subtotal ?>">
                               <label for="real_costo_subtotal">Costo Subtotal</label>
                             </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_papeles" id="real_papeles" value=""readonly>
+                            <input type="number" name="real_papeles" id="real_papeles" value="<?php echo $real_papeles ?>">
                             <label for="real_papeles">Papeles</label>
                           </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_costo_total" id="real_costo_total" value=""readonly>
+                            <input type="number" name="real_costo_total" id="real_costo_total" value="<?php echo $real_costo_total ?>">
                             <label for="real_costo_total">Costo Total</label>
                           </div>
                         </div>
@@ -1267,44 +1380,44 @@ $sel->bind_result($id_cli, $nombre);
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_p_util_costo" id="real_p_util_costo" value=""readonly>
+                            <input type="number" name="real_p_util_costo" id="real_p_util_costo" value="<?php echo $real_p_util_costo ?>">
                             <label for="real_p_util_costo">Porcentaje</label>
                           </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_util_costo" id="real_util_costo" value=""readonly>
+                            <input type="number" name="real_util_costo" id="real_util_costo" value="<?php echo $real_util_costo ?>">
                             <label for="real_util_costo">Costo</label>
                           </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_p_util_papel" id="real_p_util_papel" value=""readonly>
+                            <input type="number" name="real_p_util_papel" id="real_p_util_papel" value="<?php echo $real_p_util_papel ?>">
                             <label for="real_p_util_papel">Porcentaje</label>
                           </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_util_papel" id="real_util_papel" value=""readonly>
+                            <input type="number" name="real_util_papel" id="real_util_papel" value="<?php echo $real_util_papel ?>">
                             <label for="real_util_papel">Papel</label>
                           </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_p_util_publicidad" id="real_p_util_publicidad" value=""readonly>
+                            <input type="number" name="real_p_util_publicidad" id="real_p_util_publicidad" value="<?php echo $real_p_util_publicidad ?>">
                             <label for="real_p_util_publicidad">Porcentaje</label>
                           </div>
                         </div>
                         <div class="col s12 m6">
                           <div class = "input-field">
-                            <input type="number" name="real_util_publicidad" id="real_util_publicidad" value=""readonly>
+                            <input type="number" name="real_util_publicidad" id="real_util_publicidad" value="<?php echo $real_util_publicidad ?>">
                             <label for="real_util_publicidad">Publicidad</label>
                           </div>
                         </div>
                         <div class="col s12">
                           <div class = "input-field">
-                            <input type="number" name="precio_cliente" id="precio_cliente" value=""readonly>
-                            <label for="precio_cliente">Precio al Cliente</label>
+                            <input type="number" name="real_precio_cliente" id="real_precio_cliente" value="<?php echo $real_precio_cliente ?>">
+                            <label for="real_precio_cliente">Precio al Cliente</label>
                           </div>
                         </div>
                         </div>
@@ -1323,8 +1436,8 @@ $sel->bind_result($id_cli, $nombre);
                 <button type="submit" class="btn">Guardar nueva</button>
               <?php endif; ?>
               <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
+            </div>
             </center>
-          </div>
 
         </form>
       </div>
@@ -1340,6 +1453,12 @@ $sel->bind_result($id_cli, $nombre);
     console.log(cod_cliente(cli));
     $('#codigo').val('<?php echo cod_cliente(5)?>');
   })
+  $('.agregar-maquina').click(function(){
+  $('#lstmaquinas ul').append('<li class="lstmaquinas collection-item"><div>'+$(this).parent().parent().text()+'<a id="'+$(this).attr('id')+'" class="eliminar_color secondary-content" ><i class="material-icons red-text">remove</i></a></div> </li>');
+
+  })
+</script>
+<script src="../js/tintas.js"></script>
 
 </script>
 </body>

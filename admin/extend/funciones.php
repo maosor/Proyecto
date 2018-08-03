@@ -154,7 +154,7 @@ function subtipo_ope($tipo)
     case '2':
       $subtipo_ope = 'IMPRODUCTIVA EVITABLE';
       break;
-    case '2':
+    case '3':
       $subtipo_ope = 'IMPRODUCTIVA NO EVITABLE';
       break;
   }
@@ -259,4 +259,90 @@ function orden_trabajo($id)
   $up->close();
   return $resultado;
 }
+//Funciones combos
+function lados_imprimir($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $lados_imprimir = 'UN LADO';
+      break;
+    case '2':
+      $lados_imprimir = 'FRENTE Y REVERSO';
+      break;
+    case '3':
+      $lados_imprimir = 'TIRO Y RETIRO';
+      break;
+  }
+  return $lados_imprimir;
+}
+function modo_retiro($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $modo_retiro = 'CABEZA CON CABEZA';
+      break;
+    case '2':
+      $modo_retiro = 'CABEZA CON PIE';
+      break;
+  }
+  return $modo_retiro;
+}
+function estado($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $estado = 'BUENO';
+      break;
+    case '2':
+      $estado = 'REGULAR';
+      break;
+    case '3':
+      $estado = 'MALO';
+      break;
+  }
+  return $estado;
+}
+function medio_corte($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $medio_corte = 'FRENTE';
+      break;
+    case '2':
+      $medio_corte = 'REVERSO';
+      break;
+  }
+  return $medio_corte;
+}
+function tipo_tinta($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $tipo_tinta = 'UN LADO';
+      break;
+    case '2':
+      $tipo_tinta = 'FRENTE Y REVERSO';
+      break;
+    case '3':
+      $tipo_tinta = 'TIRO Y RETIRO';
+      break;
+  }
+  return $tipo_tinta;
+}
+function tipo_negativo($tipo)
+{
+  switch ($tipo) {
+    case '1':
+      $tipo_negativo = 'NEGATIVO';
+      break;
+    case '2':
+      $tipo_negativo= 'ACETATO LECHOSO';
+      break;
+    case '3':
+      $tipo_negativo= 'ACETATO TRANPARENTE';
+      break;
+  }
+  return $tipo_tinta;
+}
+
  ?>
