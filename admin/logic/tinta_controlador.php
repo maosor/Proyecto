@@ -59,8 +59,12 @@ class TintaControlador {
         {
           $inserto= true;
         }
+        if ($ins_cot_desc->error!=''){
+          $this->error= $ins_cot_desc->error;
+        }
         $ins_cot_desc ->close();
       }
+
       return $inserto;
     } catch (\Exception $e) {
         throw new \Exception("Error Processing Request".$e, 1);

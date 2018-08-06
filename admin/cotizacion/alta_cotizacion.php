@@ -816,6 +816,7 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m4">
                               <h6><center><b>Máquinas</b></center></h6>
                               <ul class="collection small">
+                                <input type="hidden" name="arrmaquina" id="arrmaquina" value="">
                                 <?php $maquina = new MaquinaControlador();
                                  foreach ($maquina->getLista_Maquina($con, $compania) as $maq){?>
                                    <li id="<?php echo $maq[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $maq[2]?><a href="#" class="agregar-maquina secondary-content" id = "<?php echo $maq[2] ?>"><i class="material-icons">add</i></a></div> </li>
@@ -1454,8 +1455,25 @@ $sel->bind_result($id_cli, $nombre);
     $('#codigo').val('<?php echo cod_cliente(5)?>');
   })
   $('.agregar-maquina').click(function(){
-  $('#lstmaquinas ul').append('<li class="lstmaquinas collection-item"><div>'+$(this).parent().parent().text()+'<a id="'+$(this).attr('id')+'" class="eliminar_color secondary-content" ><i class="material-icons red-text">remove</i></a></div> </li>');
-
+    var maq = $(this).parent().parent().text();
+    maq = maq.substr(0, maq.length-4);
+  $('#lstmaquinas ul').append('<li class="lstmaquinas collection-item"><div>'+maq+'<a id="'+$(this).attr('id')+'" class="eliminar_color secondary-content" ><i class="material-icons red-text">remove</i></a></div> </li>');
+  $('#arrmaquina').val(
+    ($('#arrmaquina').val()!= ""?
+    $('#arrmaquina').val()+"*;*"+$(this).attr('id'):$(this).attr('id'))+
+    "*,*"+$('#papeles_numero_hojas').val()+
+    "*,*"+$('#papeles_numero_copias').val()+
+    "*,*"+$('#numero_tintas_montajes').val()+
+    "*,*"+$('#numero_tintas_lavados').val()+
+    "*,*"+$('#papeles_numero_moldes').val()+
+    "*,*"+$('#numero_mascaras').val()+
+    "*,*"+$('#numero_planchas').val()+
+    "*,*"+$('#numero_quemados').val()+
+    "*,*"+$('#numero_med_cortes').val()+
+    "*,*"+$('#numero_tiros_troquel').val()+
+    "*,*"+$("input[name='cobra_planchas']:checked").val()+
+    "*,*"+$("input[name='troquelado']:checked").val()+
+    "*,*"+$("input[name='impresion']:checked").val()+"*,*"+0);
   })
 </script>
 <script src="../js/tintas.js"></script>

@@ -1,6 +1,7 @@
 <?php
 include '../conexion/conexion.php';
 include '../logic/tinta_controlador.php';
+include '../logic/maquina_controlador.php';
 use \Exception as Exception;
 //if ($_SERVER['REQUEST_METHOD']== 'POST'){
   foreach ($_POST as $campo => $valor) {
@@ -85,6 +86,8 @@ use \Exception as Exception;
           }
           $tintas = new TintaControlador();
           $tintas->insTinta_Cotizacion($con, $arrcolores, $compania, $cotizacion);
+          $maquinas = new MaquinaControlador();
+          $maquinas->insMaquina_Cotizacion($con, $arrmaquina, $compania, $cotizacion);
         header('location:../extend/alerta.php?msj=Guardó cotización&c=cot&p=in&t=success');
         }else {
           $log->error('Error guardando detalle cotización: '.$ins_det->error);

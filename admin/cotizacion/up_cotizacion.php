@@ -1,6 +1,7 @@
 <?php
 include '../conexion/conexion.php';
 include '../logic/tinta_controlador.php';
+include '../logic/maquina_controlador.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   foreach ($_POST as $campo => $valor) {
     $variable = "$" . $campo. "='" . htmlentities($valor). "';";
@@ -105,6 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            $log->info('Agregó colores de #'.$cotizacion);
          }else {
             $log->error('No se agregó colores de #'.$cotizacion.'\n'.$tintas->getError());
+         }
+         $maquinas = new MaquinaControlador();
+         if($maquinas->insMaquina_Cotizacion($con, $arrmaquina, $compania, $cotizacion)){
+           $log->info('Agregó maquinas de #'.$cotizacion);
+         }else {
+            $log->error('No se agregó maquinas de #'.$cotizacion.'\n'.$maquinas->getError().$arrmaquina);
          }
         header('location:../extend/alerta.php?msj=Guardó cotización&c=cot&p=in&t=success');
       }else {
