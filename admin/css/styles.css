@@ -10,4 +10,6 @@
 
 .collection.small{
   min-height: 220px !important;
+  max-height: 220px !important;
+  overflow: auto;
 }

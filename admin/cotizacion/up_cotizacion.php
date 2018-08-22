@@ -108,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $log->error('No se agregó colores de #'.$cotizacion.'\n'.$tintas->getError());
          }
          $maquinas = new MaquinaControlador();
+         $log->info('Prueba de obtener codigo'.$maquinas->getCodigoMaquina($con, $compania, 'fklsajfajsdfjls'));
          if($maquinas->insMaquina_Cotizacion($con, $arrmaquina, $compania, $cotizacion)){
            $log->info('Agregó maquinas de #'.$cotizacion);
          }else {

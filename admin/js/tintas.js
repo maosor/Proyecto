@@ -8,19 +8,27 @@ function add_item() {
     "*,*"+$('#tinta_alto').val()+
     "*,*"+$('#tinta_ancho').val()+
     "*,*"+$('#num_tirajes').val());
-    //$(document).scrollTop($('#lstcolores').top); // no funciona revisar luego
+    $(".listacolores").off('click');
+    $(".listacolores").on('click', function(){
+      var item = $('#arrcolores').val().split('*;*')[$(this).index()].split('*,*')
+      $('#color').val(item[0]);
+      $('input[name=donde_imprimir][value='+item[1]+']').attr('checked',true);
+      $('#tipo_tinta').val(item[2]);
+      $('#tipo_tinta').material_select();
+      $('#tinta_alto').val(item[3]);
+      $('#tinta_ancho').val(item[4]);
+      $('#num_tirajes').val(item[5]);
+      $('.listacolores').removeClass('active');
+      $(this).addClass('active');
+    });
 }
+
 $('.listacolores').click(function(){
-  //var items = $('#arrcolores').val().split('*;*')[$(this).index()].split('*,*')[1];
   var item = $('#arrcolores').val().split('*;*')[$(this).index()].split('*,*')
   $('#color').val(item[0]);
   $('input[name=donde_imprimir][value='+item[1]+']').attr('checked',true);
-  //$('#donde_imprimir').material_select();
   $('#tipo_tinta').val(item[2]);
   $('#tipo_tinta').material_select();
-  // Select the option with a value of '1'
-  //$('#tipo_tinta').trigger('change');
-  //$('#tipo_tinta option[value="4"]').attr('selected', 'selected');
   $('#tinta_alto').val(item[3]);
   $('#tinta_ancho').val(item[4]);
   $('#num_tirajes').val(item[5]);

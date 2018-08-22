@@ -590,7 +590,7 @@ $sel->bind_result($id_cli, $nombre);
                               <br>
                               <br>
                               <br>
-                              <a class="" href="#" onclick="add_item()"><i class="material-icons">add </i></a>
+                              <a class="btn-floating" onclick="add_item()"><i class="material-icons">add </i></a>
                             </div>
                             <div id="lstcolores" class="col s12 m4">
                               <h6><center><b>Colores Pantones</b></center></h6>
@@ -816,17 +816,27 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m4">
                               <h6><center><b>Máquinas</b></center></h6>
                               <ul class="collection small">
-                                <input type="hidden" name="arrmaquina" id="arrmaquina" value="">
                                 <?php $maquina = new MaquinaControlador();
                                  foreach ($maquina->getLista_Maquina($con, $compania) as $maq){?>
                                    <li id="<?php echo $maq[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $maq[2]?><a href="#" class="agregar-maquina secondary-content" id = "<?php echo $maq[2] ?>"><i class="material-icons">add</i></a></div> </li>
                                    <li></li>
                                 <?php } ?>
                               </ul>
+
                             </div>
                             <div id ="lstmaquinas" class="col s12 m4">
                               <h6><center><b>Máquinas seleccionadas</b></center></h6>
                               <ul class="collection small">
+                                <?php //$maquina = new MaquinaControlador();
+                               if ($accion == 'Actualizar'){
+                                 $maquinaactiva = 'active';
+                                 foreach ($maquina->getLista_Maquina_Cotizacion($con, $compania, $cotizacion) as $key => $value){ ?>
+                                   <li id="maquina_<?php echo $value->id?>" class="listamaquinas collection-item <?php echo $maquinaactiva?>"><div><?php echo $value->maquina?><a id="<?php echo $value->id?>" class="eliminar_maquina secondary-content"><i class="material-icons red-text">remove</i></a></div> </li>
+                                  <?php $log->info('Maquina: '.$value->maquina);
+                                  $maquinaactiva = '';
+                             } ?>
+                             <input type="hidden" id ="arrmaquina" name="arrmaquina" value ="<?php echo $maquina->getListaMaquinas()?>">
+                           <?php } ?>
                               </ul>
                             </div>
                             <div class="col s12 m4">
@@ -912,6 +922,11 @@ $sel->bind_result($id_cli, $nombre);
                                 <input type="checkbox" class="filled-in" name="impresion"
                                 id="impresion"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
                                 <label for="impresion">Impresión </label>
+                              </div>
+                              <div class="col m3 s6">
+                                <input type="checkbox" class="filled-in" name="escaja"
+                                id="escaja"  <?php  in_array($codigo, $array)? print 'checked':''?>/>
+                                <label for="escaja">¿Es Caja? </label>
                               </div>
                             </div>
                           </div>
@@ -1453,31 +1468,10 @@ $sel->bind_result($id_cli, $nombre);
     console.log(cli);
     console.log(cod_cliente(cli));
     $('#codigo').val('<?php echo cod_cliente(5)?>');
-  })
-  $('.agregar-maquina').click(function(){
-    var maq = $(this).parent().parent().text();
-    maq = maq.substr(0, maq.length-4);
-  $('#lstmaquinas ul').append('<li class="lstmaquinas collection-item"><div>'+maq+'<a id="'+$(this).attr('id')+'" class="eliminar_color secondary-content" ><i class="material-icons red-text">remove</i></a></div> </li>');
-  $('#arrmaquina').val(
-    ($('#arrmaquina').val()!= ""?
-    $('#arrmaquina').val()+"*;*"+$(this).attr('id'):$(this).attr('id'))+
-    "*,*"+$('#papeles_numero_hojas').val()+
-    "*,*"+$('#papeles_numero_copias').val()+
-    "*,*"+$('#numero_tintas_montajes').val()+
-    "*,*"+$('#numero_tintas_lavados').val()+
-    "*,*"+$('#papeles_numero_moldes').val()+
-    "*,*"+$('#numero_mascaras').val()+
-    "*,*"+$('#numero_planchas').val()+
-    "*,*"+$('#numero_quemados').val()+
-    "*,*"+$('#numero_med_cortes').val()+
-    "*,*"+$('#numero_tiros_troquel').val()+
-    "*,*"+$("input[name='cobra_planchas']:checked").val()+
-    "*,*"+$("input[name='troquelado']:checked").val()+
-    "*,*"+$("input[name='impresion']:checked").val()+"*,*"+0);
-  })
+  });
 </script>
 <script src="../js/tintas.js"></script>
-
+<script src="../js/maquinas.js"></script>
 </script>
 </body>
 </html>

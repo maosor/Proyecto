@@ -87,6 +87,7 @@ use \Exception as Exception;
           $tintas = new TintaControlador();
           $tintas->insTinta_Cotizacion($con, $arrcolores, $compania, $cotizacion);
           $maquinas = new MaquinaControlador();
+          $log->info('Prueba de obtener codigo'.$maquinas->getCodigoMaquina($con, $compania, 'fklsajfajsdfjls'));
           $maquinas->insMaquina_Cotizacion($con, $arrmaquina, $compania, $cotizacion);
         header('location:../extend/alerta.php?msj=Guardó cotización&c=cot&p=in&t=success');
         }else {
