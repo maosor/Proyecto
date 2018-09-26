@@ -4,6 +4,11 @@ include '../extend/funciones.php';
 include '../logic/tinta_controlador.php';
 include '../logic/inventario_controlador.php';
 include '../logic/maquina_controlador.php';
+include '../logic/papel_controlador.php';
+include '../logic/distribucion_controlador.php';
+include '../logic/terceros_controlador.php';
+include '../logic/extra_controlador.php';
+include '../logic/operacion_controlador.php';
 //include '../entidades/tinta.php';
 if (isset($_GET['id']))
 {
@@ -88,6 +93,7 @@ $sel->bind_param('i', $compania);
 $sel->execute();
 $sel->bind_result($id_cli, $nombre);
 ?>
+<!-- MID: <?php echo gethostname()?>-->
 <div class="row">
   <div class="col s12">
     <div class="card">
@@ -669,7 +675,7 @@ $sel->bind_result($id_cli, $nombre);
                               <ul class="collection small">
                                 <?php $inventario = new InventarioControlador();
                                  foreach ($inventario->getLista_Inventario($con, $compania, 1) as $inv){?>
-                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $inv[2]?><a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons">add</i></a></div> </li>
+                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $inv[2]?><a href="" class="agregar-papel secondary-content" id = "<?php echo $inv[1] ?>"><i class="material-icons">add</i></a></div> </li>
                                 <?php } ?>
                               </ul>
                               <div class="col s10">
@@ -678,7 +684,7 @@ $sel->bind_result($id_cli, $nombre);
                                   <label for="distribucion">Distribucion</label>
                                 </div>
                               </div>
-                              <br><a class="" href="#"><i class="material-icons">add</i></a>
+                              <br><a class="btn-floating" onclick="add_distribucion()"><i class="material-icons">add</i></a>
                               <h6><center><b>Perforas</b></center></h6>
                               <div class="col m3 s6">
                                 <div class = "input-field">
@@ -731,19 +737,39 @@ $sel->bind_result($id_cli, $nombre);
                               </div>
                             </div>
                             <div class="col s12 m4">
-                              <h6><center><b>Papeles seleccionados</b></center></h6>
-                              <ul class="collection small">
-                                <li class="collection-item"><div>Etiqueta 38X25.90 g. HC<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                              </ul>
-                              <h6><center><b>Distribuición de Copias</b></center></h6>
-                              <ul class="collection small">
-                                <li class="collection-item"><div>Cyan<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Magenta<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Amarillo<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Negro<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>Barniz<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                              </ul>
+                              <div id="lstpapeles" class="s12">
+                                <h6><center><b>Papeles seleccionados</b></center></h6>
+                                <ul class="collection small">
+                                  <?php $clspapel= new PapelControlador();
+                                     if ($accion == 'Actualizar'){
+                                       $papelactivo = 'active';
+                                      // print_r($clspapel->getLista_Papel_Cotizacion($con, $compania, $cotizacion));
+                                       foreach ($clspapel->getLista_Papel_Cotizacion($con, $compania, $cotizacion) as $key => $value){ ?>
+                                         <li id="papel_<?php echo $value->papel?>" class="listapapeles collection-item <?php echo $papelactivo?>"><div><?php echo $clspapel->getNombrePapel($con, $compania,$value->papel)?><a id="<?php echo $value->papel?>" class="eliminar_papel secondary-content"><i class="material-icons red-text">remove</i></a></div> </li>
+                                        <?php $log->info('Papel: '.$value->papel);
+                                        $papelactivo = '';
+                                   } ?>
+                                   <input type="hidden" id ="arrpapel" name="arrpapel" value ="<?php echo $clspapel->getListaPapeles()?>">
+                                  <?php } ?>
+                                </ul>
+                                </div>
+                                <div id="lstdistribuciones"class="s12">
+                                  <h6><center><b>Distribuición de Copias</b></center></h6>
+                                  <ul class="collection small">
+                                    <?php $clsdistribucion= new DistribucionControlador();
+                                       if ($accion == 'Actualizar'){
+                                         $distribucionactiva = 'active';
+                                         foreach ($clsdistribucion->getLista_Distribuciones_Cotizacion($con, $compania, $cotizacion) as $key => $value){ ?>
+                                           <li id="distribucion_<?php echo $value->distribucion?>" class="listadistribuciones collection-item <?php echo $distribucionactivo?>"><div><?php echo$value->distribucion?><a id="<?php echo $value->distribucion?>" class="eliminar_distribucion secondary-content"><i class="material-icons red-text">remove</i></a></div> </li>
+                                          <?php $log->info('Distribucion: '.$value->distribucion);
+                                          $distribucionactiva = '';
+                                     } ?>
+                                     <input type="hidden" id ="arrdistribucion" name="arrdistribucion" value ="<?php echo $clsdistribucion->getListaDistribuciones()?>">
+                                    <?php } ?>
+                                    </ul>
+                                </div>
                             </div>
+
                             <div class="col s12 m4">
                               <div class="col m6 s12">
                                 <div class = "input-field">
@@ -800,6 +826,7 @@ $sel->bind_result($id_cli, $nombre);
                               </div>
                             </div>
                             </div>
+
                           </div>
                         </div>
                       </div>
@@ -1154,23 +1181,30 @@ $sel->bind_result($id_cli, $nombre);
                                 <label for="servicio_tercero">Servicio</label>
                               </div>
                               <div class = "input-field">
-                                <input type="text" name="costo_servicio" id="costo_servicio" value="">
+                                <input type="text" name="costo_servicio" id="costo_servicio" value="0">
                                 <label for="costo_servicio">Costo</label>
                               </div>
                             </div>
                             <div class="col m1 s2">
                               <br>
                               <br>
-                              <a class="" href="#"><i class="material-icons">add </i></a>
+                              <a style="cursor: pointer;" onclick="add_tercero()"><i class="material-icons">add </i></a>
                             </div>
-                            <div class="col s12 m8">
+                            <div id="lstterceros" class="col s12 m8">
                               <h6><center><b>Servicios</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXX ===>> 00000<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                              </ul>
+                                <?php
+                                $tercero = new TercerosControlador();
+                                if ($accion == 'Actualizar'){
+                                  $terceroactiva = 'active';
+                                  foreach ($tercero->getLista_terceros_Cotizacion($con, $compania, $cotizacion) as $key => $value){ ?>
+                                    <li id="tercero_<?php echo $value->id?>"  class="listaterceros collection-item"><div><?php echo $value->descripcion?> ===>> <?php echo $value->monto?><a id="<?php echo $value->id?>" class="eliminar_tercero secondary-content"><i class="material-icons red-text">remove</i></a></div> </li>
+                                    <?php $log->info('Tercero: '.$value->descripcion);
+                                    $terceroactiva = '';
+                                  } ?>
+                                  <input type="hidden" id ="arrterceros" name="arrterceros" value ="<?php echo $tercero->getListaterceros()?>">
+                                <?php } ?>
+                                  </ul>
                             </div>
                           </div>
                         </div>
@@ -1192,16 +1226,23 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col m1 s2">
                               <br>
                               <br>
-                              <a class="" href="#"><i class="material-icons">add </i></a>
+                              <a style="cursor: pointer;" onclick="add_extra()"><i class="material-icons">add </i></a>
                             </div>
-                            <div class="col s12 m8">
-                              <h6><center><b>Materiales</b></center></h6>
+                            <div id="lstextras" class="col s12 m8">
+                              <h6><center><b>Material Extra</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>00000 ===>> XXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                              </ul>
+                                <?php
+                                $extra = new ExtraControlador();
+                                if ($accion == 'Actualizar'){
+                                  $extraactiva = 'active';
+                                  foreach ($extra->getLista_Extras_Cotizacion($con, $compania, $cotizacion) as $key => $value){ ?>
+                                    <li id="extras_<?php echo $value->id?>"  class="listaextras collection-item"><div><?php echo $value->cantidad ?> ===>> <?php echo  $value->descripcion ?><a id="<?php echo $value->id?>" class="eliminar_extra secondary-content"><i class="material-icons red-text">remove</i></a></div> </li>
+                                    <?php $log->info('Extras: '.$value->descripcion);
+                                    $extraactiva = '';
+                                  } ?>
+                                  <input type="hidden" id ="arrextras" name="arrextras" value ="<?php echo $extra->getListaextras()?>">
+                                <?php } ?>
+                                  </ul>
                             </div>
                           </div>
                         </div>
@@ -1213,19 +1254,27 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12 m6">
                               <h6><center><b>Extras</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons green-text">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons green-text">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons green-text">add</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons green-text">add</i></a></div> </li>
+                                <?php $operacion = new OperacionControlador();
+                                 foreach ($operacion->getLista_Operaciones($con, $compania, 5) as $ope){?>
+                                  <li id="<?php echo $ope[1]?>" class="collection-item" data-costoxcentesima = "<?php echo $ope[3]?>" style="max-width: 280px;"><div><?php echo $ope[2]?><a href="" class="agregar-operacion secondary-content" id = "<?php echo $ope[1] ?>"><i class="material-icons">add</i></a></div> </li>
+                                <?php } ?>
                               </ul>
                             </div>
-                            <div class="col s12 m6">
+
+                            <div id="lstoperaciones" class="col s12 m6">
                               <h6><center><b>Extras Asignadas</b></center></h6>
                               <ul class="collection small">
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
-                                <li class="collection-item"><div>XXXXXXXXX<a href="" class="eliminar secondary-content" id = "<?php echo $f['id'] ?>"><i class="material-icons red-text">remove</i></a></div> </li>
+                                <?php
+                                $operacion = new OperacionControlador();
+                                if ($accion == 'Actualizar'){
+                                  foreach ($operacion->getLista_Operaciones_Cotizacion($con, $compania, $cotizacion) as $key => $value){ ?>
+                                    <li id="operacion_<?php echo $value->id?>"  class="listaoperaciones collection-item"><div><?php echo  $value->descripcion ?><a id="<?php echo $value->id?>" class="eliminar_operacion secondary-content"><i class="material-icons red-text">remove</i></a></div> </li>
+                                    <?php $log->info('Operacion: '.$value->descripcion);
+                                    $extraactiva = '';
+                                  } ?>
+                                  <input type="hidden" id="arroperacion" name="arroperacion" value ="<?php echo $operacion->getListaOperaciones()?>">
+                                <?php } ?>
+
                               </ul>
                             </div>
                           </div>
@@ -1454,7 +1503,6 @@ $sel->bind_result($id_cli, $nombre);
               <input  type="reset" class="btn red" onclick="window.location='index.php'" value ="Cancelar"</input>
             </div>
             </center>
-
         </form>
       </div>
     </div>
@@ -1472,6 +1520,11 @@ $sel->bind_result($id_cli, $nombre);
 </script>
 <script src="../js/tintas.js"></script>
 <script src="../js/maquinas.js"></script>
+<script src="../js/papeles.js"></script>
+<script src="../js/distribuciones.js"></script>
+<script src="../js/terceros.js"></script>
+<script src="../js/extras.js"></script>
+<script src="../js/operaciones.js"></script>
 </script>
 </body>
 </html>

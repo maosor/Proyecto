@@ -13,3 +13,6 @@
   max-height: 220px !important;
   overflow: auto;
 }
+a[class^=eliminar]{
+  cursor: pointer;
+}

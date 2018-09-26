@@ -1,9 +1,15 @@
 <?php
-/**
- ***********************************************************
- *AUTOR: Mauricio.
- *Fecha Creación: 2018-08-01
- */
+/**********************************************************************
+* Project           : SAIL
+* Class Name        : PapelCotizacion
+* Author            : Mauricio
+* Date created      : 2018-08-01
+* Purpose           : Manipular los datos de las maquinas por cotización
+                      entre la vista y la DB
+* Revision History  :
+* Date        Author      Ref    Revision (Date in YYYY-MM-DD format)
+* yyyy-MM-dd    xxxx      1      ...
+***********************************************************************/
 include '../entidades/maquinacotizacion.php';
 class MaquinaControlador{
   public $error = '';

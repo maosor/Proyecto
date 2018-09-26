@@ -84,11 +84,50 @@ use \Exception as Exception;
               $log->info('Editó lista check #'.$cotizacion);
               }
           }
-          $tintas = new TintaControlador();
-          $tintas->insTinta_Cotizacion($con, $arrcolores, $compania, $cotizacion);
-          $maquinas = new MaquinaControlador();
-          $log->info('Prueba de obtener codigo'.$maquinas->getCodigoMaquina($con, $compania, 'fklsajfajsdfjls'));
-          $maquinas->insMaquina_Cotizacion($con, $arrmaquina, $compania, $cotizacion);
+          $papel = new PapelControlador();
+          if($papel->insPapel_Cotizacion($con, $arrpapel, $compania, $cotizacion)){
+            $log->info('Agregó colores de #'.$cotizacion);
+          }else {
+             $log->error('No se agregó colores de #'.$cotizacion.'\n'.$papel->getError());
+          }
+          $distribucion = new DistribucionControlador();
+          if($distribucion->insdistribucion_Cotizacion($con, $arrdistribucion, $compania, $cotizacion)){
+            $log->info('Agregó distribucion de #'.$cotizacion);
+          }else {
+             $log->error('No se agregó distribucion de #'.$cotizacion.'\n'.$distribucion->getError());
+          }
+         $tintas = new TintaControlador();
+         if($tintas->insTinta_Cotizacion($con, $arrcolores, $compania, $cotizacion)){
+           $log->info('Agregó colores de #'.$cotizacion);
+         }else {
+            $log->error('No se agregó colores de #'.$cotizacion.'\n'.$tintas->getError());
+         }
+         $maquinas = new MaquinaControlador();
+         if($maquinas->insMaquina_Cotizacion($con, $arrmaquina, $compania, $cotizacion)){
+           $log->info('Agregó maquinas de #'.$cotizacion);
+         }else {
+            $log->error('No se agregó maquinas de #'.$cotizacion.'\n'.$maquinas->getError().$arrmaquina);
+         }
+         $terceros = new TercerosControlador();
+         if($terceros->insTercero_Cotizacion($con, $arrterceros, $compania, $cotizacion)){
+           $log->info('Agregó terceros de #'.$cotizacion);
+         }else {
+            $log->error('No se agregó terceros de #'.$cotizacion.'\n'.$terceros->getError().$arrterceros);
+         }
+         $extras = new ExtraControlador();
+         if($extras->insExtra_Cotizacion($con, $arrextras, $compania, $cotizacion)){
+           $log->info('Agregó extras de #'.$cotizacion);
+         }else {
+            $log->error('No se agregó extras de #'.$cotizacion.'\n'.$extras->getError().$arrextras);
+         }
+         $operaciones = new OperacionControlador();
+         if($operaciones->insOperacion_Cotizacion($con, $arroperacion, $compania, $cotizacion)){
+           $log->info('Agregó operacion de #'.$cotizacion);
+         }else {
+            $log->error('No se agregó operacion de #'.$cotizacion.'\n'.$operaciones->getError().$arroperacion);
+         }
+
+
         header('location:../extend/alerta.php?msj=Guardó cotización&c=cot&p=in&t=success');
         }else {
           $log->error('Error guardando detalle cotización: '.$ins_det->error);

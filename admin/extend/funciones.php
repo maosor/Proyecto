@@ -342,7 +342,7 @@ function tipo_negativo($tipo)
       $tipo_negativo= 'ACETATO TRANPARENTE';
       break;
   }
-  return $tipo_tinta;
+  return $tipo_negativo;
 }
 
  ?>
