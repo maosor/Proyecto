@@ -675,7 +675,7 @@ $sel->bind_result($id_cli, $nombre);
                               <ul class="collection small">
                                 <?php $inventario = new InventarioControlador();
                                  foreach ($inventario->getLista_Inventario($con, $compania, 1) as $inv){?>
-                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;"><div><?php echo $inv[2]?><a href="" class="agregar-papel secondary-content" id = "<?php echo $inv[1] ?>"><i class="material-icons">add</i></a></div> </li>
+                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;" data-alto = "<?php echo $inv[3]?>" data-ancho="<?php echo $inv[4]?>"><div><?php echo $inv[2]?><a href="" class="agregar-papel secondary-content" id = "<?php echo $inv[1] ?>"><i class="material-icons">add</i></a></div> </li>
                                 <?php } ?>
                               </ul>
                               <div class="col s10">
@@ -769,60 +769,110 @@ $sel->bind_result($id_cli, $nombre);
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="col s12 m4">
-                              <div class="col m6 s12">
+                              <div class="col blue-grey lighten-4">
+                                <center>
+                                  Tamaño pliego
+                                </center>
+                                <div class="col m6 s12">
+                                  <div class = "input-field">
+                                    <input type="number" name="ancho_tamano_pliego" id="ancho_tamano_pliego" value="<?php echo $ancho_tamano_pliego ?>">
+                                    <label for="ancho_tamano_pliego">Ancho</label>
+                                  </div>
+                                </div>
+                                <div class="col m6 s12">
+                                  <div class = "input-field">
+                                    <input type="number" name="alto_tamano_pliego" id="alto_tamano_pliego" value="<?php echo $alto_tamano_pliego ?>">
+                                    <label for="alto_tamano_pliego">Alto</label>
+                                  </div>
+                                </div>
+                                <center>
+                                  Tamaño Corte
+                                </center>
+                                <div class="col m6 s12">
+                                  <div class = "input-field">
+                                    <input type="number" name="ancho_tamano_corte" id="ancho_tamano_corte" value="<?php echo $ancho_tamano_corte ?>">
+                                    <label for="ancho_tamano_corte">Ancho</label>
+                                  </div>
+                                </div>
+                                <div class="col m6 s12">
+                                  <div class = "input-field">
+                                    <input type="number" name="alto_tamano_corte" id="alto_tamano_corte" value="<?php echo $alto_tamano_corte ?>">
+                                    <label for="alto_tamano_corte">Alto</label>
+                                  </div>
+                                </div>
+                                <center>
+                                  Corte final
+                                </center>
+                                <div class="col m6 s12">
+                                  <div class = "input-field">
+                                    <input type="number" name="ancho_corte_final" id="ancho_corte_final" value="<?php echo $ancho_corte_final ?>">
+                                    <label for="ancho_corte_final">Ancho</label>
+                                  </div>
+                                </div>
+                                <div class="col m6 s12">
+                                  <div class = "input-field">
+                                    <input type="number" name="alto_corte_final" id="alto_corte_final" value="<?php echo $alto_corte_final ?>">
+                                    <label for="alto_corte_final">Alto</label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <center>
+                                Numero o cantidad
+                              </center>
+                              <div class="col m4 s12">
                                 <div class = "input-field">
                                   <input type="number" name="numero_hojas" id="numero_hojas" value="<?php echo $numero_hojas ?>">
-                                  <label for="numero_hojas">N° Hojas</label>
+                                  <label for="numero_hojas">Hojas</label>
                                 </div>
                             </div>
-                            <div class="col m6 s12">
+                            <div class="col m4 s12">
                                 <div class = "input-field">
                                   <input type="number" name="numero_moldes" id="numero_moldes" value="<?php echo $numero_moldes ?>">
-                                  <label for="numero_moldes">N° Moldes</label>
+                                  <label for="numero_moldes">Moldes</label>
                                 </div>
                             </div>
-                            <div class="col m6 s12">
+                            <div class="col m4 s12">
                                 <div class = "input-field">
                                   <input type="number" name="numero_tintas" id="numero_tintas" value="<?php echo $numero_tintas ?>">
-                                  <label for="numero_tintas">N° tintas</label>
+                                  <label for="numero_tintas">Tintas</label>
                                 </div>
                             </div>
-                            <div class="col m6 s12">
+                            <div class="col m4 s12">
                                 <div class = "input-field">
                                   <input type="number" name="numero_tamanos" id="numero_tamanos" value="<?php echo $numero_tamanos ?>">
-                                  <label for="numero_tamanos">N° Tamanos</label>
+                                  <label for="numero_tamanos">Tamaños</label>
                                 </div>
                             </div>
-                            <div class="col m6 s12">
+                            <div class="col m4 s12">
                                 <div class = "input-field">
                                   <input type="number" name="numero_pliegos" id="numero_pliegos" value="<?php echo $numero_pliegos ?>">
-                                  <label for="numero_pliegos">N° pliegos</label>
+                                  <label for="numero_pliegos">Pliegos</label>
                                 </div>
                             </div>
-                            <div class="col m6 s12">
+                            <div class="col m4 s12">
                                 <div class = "input-field">
                                   <input type="number" name="numero_grupos" id="numero_grupos" value="<?php echo $numero_grupos ?>">
-                                  <label for="numero_grupos">N° Grupos</label>
+                                  <label for="numero_grupos">Grupos</label>
                                 </div>
                             </div>
-                            <div class="col s12">
+                            <div class="col m4 s12">
                               <div class = "input-field">
                                 <input type="text" name="numero_cort_grupo" id="numero_cort_grupo" value="<?php echo $numero_cort_grupo ?>">
-                                <label for="numero_cort_grupo">N° Corte x Grupos</label>
+                                <label for="numero_cort_grupo">Cortes x Grupos</label>
                               </div>
                             </div>
-                            <div class="col s12">
+                            <div class="col m4 s12">
                               <div class = "input-field">
                                 <input type="number" name="numero_refiles" id="numero_refiles" value="<?php echo $numero_refiles ?>">
-                                <label for="numero_refiles">N° Refiles</label>
+                                <label for="numero_refiles">Refiles</label>
                               </div>
                             </div>
-                            <div class="col s12">
+                            <div class="col m4 s12">
                               <div class = "input-field">
                                 <input type="number" name="numero_grupos" id="numero_grupos" value="<?php echo $numero_grupos ?>">
-                                <label for="numero_grupos">N° Grupo Refiles</label>
+                                <label for="numero_grupos">Grupo Refiles</label>
                               </div>
                             </div>
                             </div>
@@ -1125,7 +1175,7 @@ $sel->bind_result($id_cli, $nombre);
                           </div>
                         </div>
                       </div>
-                      <div class="col s6">
+                      <div class="dvnegativos col s6">
                         <div class="card small blue-grey lighten-5">
                           <div class="card-content">
                             <span class="card-title">Negativos</span>
@@ -1247,7 +1297,7 @@ $sel->bind_result($id_cli, $nombre);
                           </div>
                         </div>
                       </div>
-                      <div class="col s6">
+                      <div class="col s12"><!--S12 Porque se ocultó negativos-->
                         <div class="card small blue-grey lighten-5">
                           <div class="card-content">
                             <span class="card-title">Operaciones Extras</span>
@@ -1256,7 +1306,7 @@ $sel->bind_result($id_cli, $nombre);
                               <ul class="collection small">
                                 <?php $operacion = new OperacionControlador();
                                  foreach ($operacion->getLista_Operaciones($con, $compania, 5) as $ope){?>
-                                  <li id="<?php echo $ope[1]?>" class="collection-item" data-costoxcentesima = "<?php echo $ope[3]?>" style="max-width: 280px;"><div><?php echo $ope[2]?><a href="" class="agregar-operacion secondary-content" id = "<?php echo $ope[1] ?>"><i class="material-icons">add</i></a></div> </li>
+                                  <li id="<?php echo $ope[1]?>" class="collection-item" data-costoxcentesima = "<?php echo $ope[3]?>" ><div><?php echo $ope[2]?> <a class="agregar-operacion secondary-content" id = "<?php echo $ope[1]?>"><i class="material-icons">add</i></a></div> </li>
                                 <?php } ?>
                               </ul>
                             </div>
@@ -1520,6 +1570,7 @@ $sel->bind_result($id_cli, $nombre);
 </script>
 <script src="../js/tintas.js"></script>
 <script src="../js/maquinas.js"></script>
+<script src="../js/papeles_calcular.js"></script>
 <script src="../js/papeles.js"></script>
 <script src="../js/distribuciones.js"></script>
 <script src="../js/terceros.js"></script>

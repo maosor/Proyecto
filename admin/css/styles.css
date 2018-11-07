@@ -16,3 +16,6 @@
 a[class^=eliminar]{
   cursor: pointer;
 }
+.dvnegativos{
+  display: none;
+}

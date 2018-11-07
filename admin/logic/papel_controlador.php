@@ -79,9 +79,11 @@ class PapelControlador{
           }
 
         $ins_cot_pap = $con->prepare("INSERT INTO cotizacion_papel(id_compania, id_cotizacion, papel,numero_hojas,
-          numero_moldes, numero_tintas, numero_tamanos, numero_pliegos, numero_grupos, numero_cort_grupo)
-            VALUES (?,?,?,?,?,?,?,?,?,?)");
-        $ins_cot_pap -> bind_param('sisiiiiiii', $variable[0], $variable[1], $variable[2], $variable[3], $variable[4], $variable[5], $variable[6], $variable[7], $variable[8], $variable[9]);
+          numero_moldes, numero_tintas, numero_tamanos, numero_pliegos, numero_grupos, numero_cort_grupo,
+        ancho_tamano_pliego, alto_tamano_pliego, ancho_tamano_corte, alto_tamano_corte, ancho_corte_final, alto_corte_final)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $ins_cot_pap -> bind_param('sisiiiiiiiiiiiii', $variable[0], $variable[1], $variable[2], $variable[3], $variable[4], $variable[5],
+         $variable[6], $variable[7], $variable[8], $variable[9], $variable[10], $variable[11], $variable[12], $variable[13], $variable[14], $variable[15]);
         if($ins_cot_pap -> execute())
         {
           $inserto= true;
@@ -99,23 +101,27 @@ class PapelControlador{
   }
   public function getLista_Papel_Cotizacion($con, $compania, $cotizacion){
     $sel = $con->prepare(" SELECT cp.id, p.descripcion, papel, numero_hojas, numero_moldes, numero_tintas,
-      numero_tamanos, numero_pliegos, numero_grupos, numero_cort_grupo FROM cotizacion_papel cp
-      INNER join inventario p on (p.codigo=cp.papel)
-                             WHERE cp.id_compania =? AND cp.id_cotizacion = ? AND p.tipo = 1 ");
+      numero_tamanos, numero_pliegos, numero_grupos, numero_cort_grupo, ancho_tamano_pliego, alto_tamano_pliego,
+      ancho_tamano_corte, alto_tamano_corte, ancho_corte_final, alto_corte_final FROM cotizacion_papel cp
+      INNER JOIN inventario p ON (p.codigo=cp.papel) WHERE cp.id_compania =? AND cp.id_cotizacion = ? AND p.tipo = 1 ");
     $sel->bind_param("si", $compania, $cotizacion);
     $sel->execute();
     $sel->bind_result($id, $descripcion, $papel, $numero_hojas,  $numero_moldes, $numero_tintas,
-      $numero_tamanos, $numero_pliegos, $numero_grupos, $numero_cort_grupo);
+      $numero_tamanos, $numero_pliegos, $numero_grupos, $numero_cort_grupo, $ancho_tamano_pliego,
+      $alto_tamano_pliego, $ancho_tamano_corte, $alto_tamano_corte, $ancho_corte_final, $alto_corte_final);
     $arrpapeles_cotizacion = array();
     while ($sel->fetch()) {
       $papelcotizacion = new PapelCotizacion($cotizacion,$id,
             $papel,$numero_hojas,$numero_moldes,$numero_tintas,$numero_tamanos,
-            $numero_pliegos,$numero_grupos,$numero_cort_grupo);
+            $numero_pliegos,$numero_grupos,$numero_cort_grupo, $ancho_tamano_pliego, $alto_tamano_pliego,
+            $ancho_tamano_corte, $alto_tamano_corte, $ancho_corte_final, $alto_corte_final);
       $arrpapeles_cotizacion[]= $papelcotizacion;
       $this->listapapeles= $this->listapapeles==''?$papel.'*,*'.$numero_hojas.'*,*'.$numero_moldes.'*,*'.$numero_tintas.'*,*'.
-        $numero_tamanos.'*,*'.$numero_pliegos.'*,*'. $numero_grupos.'*,*'.$numero_cort_grupo:
+        $numero_tamanos.'*,*'.$numero_pliegos.'*,*'. $numero_grupos.'*,*'.$numero_cort_grupo.'*,*'.$ancho_tamano_pliego.'*,*'.$alto_tamano_pliego
+        .'*,*'.$ancho_tamano_corte.'*,*'.$alto_tamano_corte.'*,*'.$ancho_corte_final.'*,*'.$alto_corte_final:
       $this->listapapeles.'*;*'.$papel.'*,*'.$numero_hojas.'*,*'.$numero_moldes.'*,*'.$numero_tintas.'*,*'.
-        $numero_tamanos.'*,*'.$numero_pliegos.'*,*'. $numero_grupos.'*,*'.$numero_cort_grupo;
+        $numero_tamanos.'*,*'.$numero_pliegos.'*,*'. $numero_grupos.'*,*'.$numero_cort_grupo.'*,*'.$ancho_tamano_pliego.'*,*'.$alto_tamano_pliego
+        .'*,*'.$ancho_tamano_corte.'*,*'.$alto_tamano_corte.'*,*'.$ancho_corte_final.'*,*'.$alto_corte_final;
     }
     $sel->close();
     return $arrpapeles_cotizacion;
