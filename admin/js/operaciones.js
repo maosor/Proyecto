@@ -8,7 +8,8 @@ $('#arroperacion').val(
   $('#arroperacion').val()+"*;*"+$(this).attr('id'):
   $(this).attr('id'))+
   "*,*"+ope+
-  "*,*"+costoxcentesima);
+  "*,*"+costoxcentesima+
+  "*,*"+id_maquina);
   return false;
 });
 var ult_maq = 0;

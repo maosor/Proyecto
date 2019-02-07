@@ -11,6 +11,7 @@
 * yyyy-MM-dd    xxxx      1      ...
 ***********************************************************************/
 include '../entidades/operacioncotizacion.php';
+include '../entidades/operacion.php';
 class OperacionControlador {
   public $error = '';
   public $listaoperaciones;
@@ -58,16 +59,16 @@ class OperacionControlador {
     }
   }
   public function getLista_Operaciones_Cotizacion($con, $compania, $cotizacion){
-    $sel = $con->prepare("SELECT id, id_cotizacion, codigo, descripcion,costoxcentesima FROM cotizacion_operacion WHERE id_compania =? AND id_cotizacion = ? ");
+    $sel = $con->prepare("SELECT id, id_cotizacion, codigo, descripcion,costoxcentesima,id_maquina FROM cotizacion_operacion WHERE id_compania =? AND id_cotizacion = ? ");
     $sel->bind_param("si", $compania, $cotizacion);
     $sel->execute();
-    $sel->bind_result($id, $id_cotizacion, $codigo, $descripcion,$costoxcentesima);
+    $sel->bind_result($id, $id_cotizacion, $codigo, $descripcion,$costoxcentesima,$id_maquina);
     $arroperaciones_cotizacion = array();
     while ($sel->fetch()) {
-      $operacioncotizacion = new OperacionCotizacion($id, $id_cotizacion, $codigo, $descripcion,$costoxcentesima);
+      $operacioncotizacion = new OperacionCotizacion($id, $id_cotizacion, $codigo, $descripcion,$costoxcentesima,$id_maquina);
       $arroperaciones_cotizacion[]= $operacioncotizacion;
-      $this->listaoperaciones = $this->listaoperaciones==''?$codigo.'*,*'.$descripcion.'*,*'.$costoxcentesima:
-      $this->listaoperaciones.'*;*'.$codigo.'*,*'.$descripcion.'*,*'.$costoxcentesima;
+      $this->listaoperaciones = $this->listaoperaciones==''?$codigo.'*,*'.$descripcion.'*,*'.$costoxcentesima.'*,*'.$id_maquina:
+      $this->listaoperaciones.'*;*'.$codigo.'*,*'.$descripcion.'*,*'.$costoxcentesima.'*,*'.$id_maquina;
     }
     $sel->close();
     return $arroperaciones_cotizacion;
@@ -84,5 +85,57 @@ class OperacionControlador {
     $sel->close();
     return $arroperaciones;
   }
+  public function Buscar_Operacion($con, $cod_ope, $id_maq) {
+    $sel = $con->prepare('SELECT id, codigo, descripcion, id_maquina, tipo_operacion, subtipo_operacion, tiempo_parametro, carga_acumulada,
+      costoxcentesima, no_paso_ejecucion, es_resta_automatica FROM operacion WHERE codigo =? AND id_maquina =?');
+    $sel->bind_param("si", $cod_ope,$id_maq);
+    $sel->execute();
+    $resultado = $sel->store_result();
+    $sel->bind_result($id, $codigo, $descripcion, $id_maquina, $tipo_operacion, $subtipo_operacion, $tiempo_parametro, $carga_acumulada,
+      $costoxcentesima, $no_paso_ejecucion, $es_resta_automatica);
+    $arroperaciones = array();
+    if ($sel->fetch()) {
+      return new Operacion($id, $codigo, $descripcion, $id_maquina, $tipo_operacion, $subtipo_operacion, $tiempo_parametro, $carga_acumulada,
+        $costoxcentesima, $no_paso_ejecucion, $es_resta_automatica) ;
+    }
+    $sel->close();
+    return $sel;
+  }
+  public function delOperacion_Realizar($con, $compania, $id)
+  {
+    $del =$con ->prepare('DELETE FROM cotizacion_operacion_realizar WHERE id_compania =? AND id_cotizacion = ? ');
+    $del -> bind_param('si', $compania, $id);
+    $del -> execute();
+    $del -> close();
+    return $del;
+  }
+
+  public function insOperacion_Realizar($con, $ope_rea, $compania, $id){
+    try {
+      $inserto= false;
+      // $del =$con ->prepare('DELETE FROM cotizacion_operacion_realizar WHERE id_compania =? AND id_cotizacion = ? AND codigo_operacion = ?');
+      // $del -> bind_param('sis', $compania, $id,$ope_rea->codigo_operacion);
+      // $del -> execute();
+      // $del -> close();
+       $ins_ope_rea = $con->prepare("INSERT INTO cotizacion_operacion_realizar(id_compania, id_cotizacion, codigo_operacion,
+       codigo_maquina, cantidad_operaciones, tiempo, costo) VALUES (?,?,?,?,?,?,?)");
+        $ins_ope_rea -> bind_param('sissiii', $compania,$id, $ope_rea->codigo_operacion, $ope_rea->codigo_maquina, $ope_rea->cantidad_operaciones,
+       $ope_rea->tiempo,$ope_rea->costo);
+        if($ins_ope_rea -> execute())
+        {
+          $inserto= true;
+        }
+        if ($ins_ope_rea->error!=''){
+          $this->error= $ins_ope_rea->error;
+          throw new Exception("Error Processing Request: ".$ins_ope_rea->error, 1);
+        }
+        $ins_ope_rea ->close();
+        return $inserto;
+      } catch (\Exception $e) {
+          throw new \Exception("Error Processing Request".$e, 1);
+
+      }
+  }
+
 }
 ?>

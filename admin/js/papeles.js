@@ -80,7 +80,7 @@ $('#alto_tamano_pliego, #ancho_tamano_pliego, #alto_tamano_corte, #ancho_tamano_
 }
   papel_cotizacion.numero_tamanos = papel_cotizacion.CalcularCantidadTamanosPorPliego();
   $('#numero_tamanos').val(papel_cotizacion.numero_tamanos);
-  edita_campo($('#arrpapel'),ult_pap, 4, $(this).val());
+  edita_campo($('#arrpapel'),ult_pap, 4, papel_cotizacion.numero_tamanos);
 
 });
 function edita_campo(obj, fila, campo, valor){
@@ -112,7 +112,7 @@ $('#libros_articulos, #numero_moldes, #numero_hojas, #numero_tintas, #numero_tam
       //papel_cotizacion.numero_pliegos= papel_cotizacion.CalcularPliegos($('#libros_articulos').val(), true,false, 0.30);
       papel_cotizacion.numero_pliegos= papel_cotizacion.CalcularPliegos($('#libros_articulos').val(), false,true, 0.30);
       $('#numero_pliegos').val(papel_cotizacion.numero_pliegos);
-      edita_campo($('#arrpapel'),ult_pap, 5, $(this).val());
+      edita_campo($('#arrpapel'),ult_pap, 5, papel_cotizacion.numero_pliegos);
 
 });
 class Papel{

@@ -12,7 +12,7 @@
 class MaquinaCotizacion{
 	  public $id=0;
 	  public $id_cotizacion=0;
-		public $maquina='';
+		public $maquina=0;
 	  public $papeles_numero_hojas= 0;
 	  public $papeles_numero_copias	=0;
 	  public $numero_tintas_montajes=0;
@@ -44,7 +44,7 @@ class MaquinaCotizacion{
 			$this->numero_quemados=$numero_quemados;
 			$this->numero_med_cortes=$numero_med_cortes;
 			$this->numero_tiros_troquel=$numero_tiros_troquel;
-			$this->numero_tiros_impr=$numero_tiros_impresos;
+			$this->numero_tiros_impresos=$numero_tiros_impresos;
 			$this->cobra_planchas=$cobra_planchas;
 			$this->troquelado=$troquelado;
 			$this->impresion=$impresion;

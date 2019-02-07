@@ -44,6 +44,8 @@ $sel_compania->fetch();
     <?php if($_SESSION['nivel'] <= 2){?>
     <li><a href="../cotizacion"><i class="material-icons">assignment_turned_in</i>COTIZAR</li></a>
     <li><div class="divider"></div></li>
+    <li><a href="../produccion"><i class="material-icons">local_printshop</i>PRODUCCION</li></a>
+    <li><div class="divider"></div></li>
   <?php } ?>
   <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons">work</i>INVENTARIO
   <i class="material-icons right">arrow_drop_down</i></a></li>

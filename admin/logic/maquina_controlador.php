@@ -11,6 +11,7 @@
 * yyyy-MM-dd    xxxx      1      ...
 ***********************************************************************/
 include '../entidades/maquinacotizacion.php';
+include '../entidades/maquina.php';
 class MaquinaControlador{
   public $error = '';
   public $listamaquinas;
@@ -112,6 +113,60 @@ class MaquinaControlador{
     $sel->close();
     return $arrmaquinas_cotizacion;
   }
+  public function ListaMaquinasXCotizacion($con ,$compania, $cotizacion)
+  {
+    $sel = $con->prepare('SELECT id, id_cotizacion, maquina, papeles_numero_hojas,
+       papeles_numero_copias, numero_tintas_montajes, numero_tintas_lavados, papeles_numero_moldes,
+       numero_mascaras, numero_planchas, numero_quemados, numero_med_cortes, numero_tiros_troquel,
+       numero_tiros_impresos, cobra_planchas, troquelado, impresion, es_caja FROM cotizacion_maquina
+       WHERE id_compania =? AND id_cotizacion =?');
+    $sel->bind_param("si",$compania, $cotizacion);
+    $sel->execute();
+    $resultado = $sel->store_result();
+    $sel->bind_result($id, $id_cotizacion,$maquina, $papeles_numero_hojas,
+       $papeles_numero_copias, $numero_tintas_montajes, $numero_tintas_lavados, $papeles_numero_moldes,
+       $numero_mascaras, $numero_planchas, $numero_quemados, $numero_med_cortes, $numero_tiros_troquel,
+       $numero_tiros_impresos, $cobra_planchas, $troquelado, $impresion, $es_caja);
+    $maquinas_cotizacion = array();
+    while ($sel->fetch()) {
+      $maquinas_cotizacion[] = new MaquinaCotizacion($id, $id_cotizacion, $maquina, $papeles_numero_hojas,
+         $papeles_numero_copias, $numero_tintas_montajes, $numero_tintas_lavados, $papeles_numero_moldes,
+         $numero_mascaras, $numero_planchas, $numero_quemados, $numero_med_cortes, $numero_tiros_troquel,
+         $numero_tiros_impresos, $cobra_planchas, $troquelado, $impresion, $es_caja) ;
+    }
+    $sel->close();
+    return $maquinas_cotizacion;
+  }
+  public function Buscar_Maquina($con, $id_maq)
+  {
+    $sel = $con->prepare('SELECT id, codigo, nombre_maquina, tipo, operarios, maximo_alto, maximo_ancho,
+                          minimo_alto, minimo_ancho, cod_plancha_o_mascara FROM maquina WHERE id =?');
+    $sel->bind_param("i", $id_maq);
+    $sel->execute();
+    $sel->store_result();
+    $sel->bind_result($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto, $maximo_ancho,
+                          $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
+    if ($sel->fetch()) {
+      return new Maquina($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto, $maximo_ancho,
+                            $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara) ;
+    }
+    $sel->close();
+    return $sel;
+  }
+  public function getCotizacionCheck($con, $compania, $cotizacion, $codigo){
+    $resultado = false;
+    $sel = $con->prepare('SELECT 1 from cotizacion_lista_check where id_compania = ?
+      AND cotizacion = ? AND codigo = ?');
+      $sel->bind_param("sis",$compania, $cotizacion, $codigo);
+      $sel->execute();
+    if ($sel->fetch())
+    {
+      $resultado = true;
+    }
+      $sel->close();
+      return $resultado;
+  }
+
 }
 
  ?>

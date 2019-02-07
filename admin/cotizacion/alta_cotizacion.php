@@ -436,7 +436,7 @@ $sel->bind_result($id_cli, $nombre);
                                 <option value="3">MALO</option>
                               </select>
                             </div>
-                            <div class="col s12">
+                            <div class="col s6">
                               <select id="medio_corte" name="medio_corte">
                               <?php if ($accion == 'Actualizar'): ?>
                                 <option value="<?php echo $medio_corte ?>" selected ><?php echo medio_corte($medio_corte) ?></option>
@@ -446,6 +446,11 @@ $sel->bind_result($id_cli, $nombre);
                                 <option value="1">FRENTE</option>
                                 <option value="2">REVERSO</option>
                               </select>
+                            </div>
+                            <div class="col m3 s6">
+                              <input type="checkbox" class="filled-in" name="es_troquelado"
+                              id="es_troquelado" />
+                              <label for="es_troquelado">Troquelado </label>
                             </div>
                             <div class="col s12">
                               <h6><center><b>Tamaño del Troquel</b></center></h6>
@@ -735,6 +740,7 @@ $sel->bind_result($id_cli, $nombre);
                                   <label for="huecos_d" style="padding-left: 45%;">D</label>
                                 </div>
                               </div>
+
                             </div>
                             <div class="col s12 m4">
                               <div id="lstpapeles" class="s12">
@@ -1535,9 +1541,10 @@ $sel->bind_result($id_cli, $nombre);
                             <label for="real_precio_cliente">Precio al Cliente</label>
                           </div>
                         </div>
-                        </div>
+                       </div>
                       </div>
-                    </div>
+                      </div>
+                    <center><button type="reset" onclick="window.location='calculos.php'" enabled class="btn green">Calcular</button></center>
                   </div>
                 </div>
                 </li>
