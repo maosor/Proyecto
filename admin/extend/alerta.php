@@ -49,6 +49,9 @@
       case 'tin':
         $carpeta = '../tintas/';
         break;
+      case 'pro':
+        $carpeta = '../produccion/';
+        break;
       }
     switch ($p) {
       case 'in':

@@ -20,8 +20,12 @@ if ($_SERVER['REQUEST_METHOD']== 'POST'){
   if ($user == null && $pass == null) {
     header('location:../extend/alerta.php?msj=El formato no es correcto&c=salir&p=salir&t=error');
   }else {
-    $sel = $con->query("SELECT id, nick, nombre, nivel, correo, foto, pass, id_compania FROM usuario WHERE nick = '$usuario' AND pass = '$pass2'
-       AND bloqueo = 1 ");
+    $sel= $con->query("SELECT id, nick, nombre, nivel, correo, foto, pass, id_compania FROM usuario WHERE nick = '$usuario' AND pass = '$pass2'
+         AND bloqueo = 1");
+       if (!$sel) {
+    $log->error('Error - SQLSTATE: '.$con->error);
+}
+$con->close();
        $row = mysqli_num_rows($sel);
        if ($row == 1) {
          if ($var = $sel->fetch_assoc()) {
