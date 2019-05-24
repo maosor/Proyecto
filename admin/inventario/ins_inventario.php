@@ -6,11 +6,12 @@ $variable = "$".$campo."='".htmlentities($valor)."';";
 eval($variable);
 }
 $id= '';
+$fecha = date('y-m-d');
 $compania = $_SESSION['compania'];
 $existencia = 0.00;
 $ins = $con->prepare("INSERT INTO inventario VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ");
 $ins->bind_param("iissdidddsss", $compania, $id, $codigo, $descripcion, $precio_unitario, $tipo,
-$existencia, $minimo, $maximo, $proveedor, date('y-m-d'), date('y-m-d'));
+$existencia, $minimo, $maximo, $proveedor, $fecha, $fecha);
 
 if ($ins->execute()) {
   header('location:../extend/alerta.php?msj=guardó Artículo&c=inv&p=in&t=success');

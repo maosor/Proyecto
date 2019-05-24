@@ -8,7 +8,7 @@ $sel = $con->prepare("SELECT  id, codigo, nombre_maquina, tipo, operarios, maxim
 $sel->bind_param('i', $id);
 $sel->execute();
 $sel->bind_result($id, $codigo, $nombre_maquina, $tipo, $operarios, $maximo_alto,
-    $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
+    $maximo_ancho, $minimo_alto, $minimo_ancho, $numero_colores);
 $sel->fetch();
  ?>
 
@@ -66,8 +66,8 @@ $sel->fetch();
               <?php echo $operarios ?>
             </div>
             <div class="col s6">
-              <b>Plancha o Máscara: </b>
-              <?php echo $cod_plancha_o_mascara ?>
+              <b>Numero Colores: </b>
+              <?php echo $numero_colores ?>
             </div>
             <div class="col s3">
               <b>Tipo: </b>

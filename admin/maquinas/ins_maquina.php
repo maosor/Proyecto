@@ -8,8 +8,8 @@ eval($variable);
 $id= '';
 $compania = $_SESSION['compania'];
 $ins = $con->prepare("INSERT INTO maquina VALUES(?,?,?,?,?,?,?,?,?,?,?) ");
-$ins->bind_param("iissiidddds", $compania, $id, $codigo, $nombre_maquina, $tipo,
-$operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
+$ins->bind_param("iissiiddddi", $compania, $id, $codigo, $nombre_maquina, $tipo,
+$operarios, $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $numero_colores);
 
 if ($ins->execute()) {
   header('location:../extend/alerta.php?msj=Guardó máquina&c=maq&p=in&t=success');

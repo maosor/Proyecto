@@ -58,7 +58,7 @@ else {
             <div class="col s9">
               <div class = "input-field">
                 <input type="text" name="descripcion" id="descripcion" value="<?php echo $descripcion ?>">
-                <label for="descripcion">Descrición</label>
+                <label for="descripcion">Descripción</label>
               </div>
             </div>
             </div>
@@ -86,7 +86,7 @@ else {
           <div class="row">
             <div class="col s4">
               <div class = "input-field">
-                <input type="number" name="precio_unitario" id="precio_unitario" value="<?php echo $precio_unitario ?>">
+                <input type="number" name="precio_unitario" id="precio_unitario" step="0.01" value="<?php echo $precio_unitario ?>">
                 <label for="precio_unitario">Precio Unitario</label>
               </div>
             </div>

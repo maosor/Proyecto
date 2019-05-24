@@ -5,12 +5,12 @@ if (isset($_GET['id']))
 {
   $id = $con->real_escape_string(htmlentities($_GET['id']));
   $sel_maq = $con->prepare("SELECT id, codigo, nombre_maquina, operarios, tipo,
-   maximo_alto, maximo_ancho, minimo_alto, minimo_ancho, cod_plancha_o_mascara
+   maximo_alto, maximo_ancho, minimo_alto, minimo_ancho, numero_colores
    FROM maquina WHERE id = ? ");
   $sel_maq->bind_param('i', $id);
   $sel_maq->execute();
   $sel_maq->bind_result( $id, $codigo, $nombre_maquina, $operarios, $tipo,
-  $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $cod_plancha_o_mascara);
+  $maximo_alto, $maximo_ancho, $minimo_alto, $minimo_ancho, $numero_colores);
   $sel_maq->fetch();
   $accion = 'Actualizar';
   $sel_maq -> close();
@@ -18,7 +18,7 @@ if (isset($_GET['id']))
 else {
   $codigo = ''; $nombre_maquina = ''; $operarios= '';
   $tipo = ''; $maximo_alto = ''; $maximo_ancho =''; $minimo_alto= '';
-  $minimo_ancho = ''; $cod_plancha_o_mascara= '';
+  $minimo_ancho = ''; $numero_colores= '';
   $accion = 'Insertar';
 }
 
@@ -112,8 +112,8 @@ $sel->bind_result($id_tip, $descripcion);
             </div>
             <div class="col s6">
               <div class = "input-field">
-                <input type="text" name="cod_plancha_o_mascara" id="cod_plancha_o_mascara" value="<?php echo $cod_plancha_o_mascara  ?>">
-                <label for="cod_plancha_o_mascara">Codigo plancha o Mascara</label>
+                <input type="number" name="numero_colores" id="numero_colores" value="<?php echo $numero_colores  ?>">
+                <label for="numero_colores">Numero Colores</label>
               </div>
             </div>
             <div class="col s3">

@@ -344,5 +344,23 @@ function tipo_negativo($tipo)
   }
   return $tipo_negativo;
 }
+function operacion_estado($estado)
+{
+  switch ($estado) {
+    case '0':
+      $operacion_estado = '';
+      break;
+    case '1':
+      $operacion_estado= 'INICIADA';
+      break;
+    case '2':
+      $operacion_estado= 'PAUSADA';
+      break;
+    case '3':
+      $operacion_estado= 'FINALIZADA';
+      break;
+  }
+  return $operacion_estado;
+}
 
  ?>

@@ -363,7 +363,7 @@ $sel->bind_result($id_cli, $nombre);
                               </select>
                             </div>
                             <div class="col s12">
-                              <h6><center><b>Molde y Distribución</b></center></h6>
+                              <h6><center><b>Tamaño Molde y Distribución</b></center></h6>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
@@ -478,13 +478,13 @@ $sel->bind_result($id_cli, $nombre);
                             <div class="col s12">
                               <h6><center><b>Número de Montajes</b></center></h6>
                             </div>
-                            <div class="col s6">
+                            <div class="col s6" style="display: none;">
                               <div class = "input-field">
                                 <input type="number" name="negativo_frente" id="negativo_frente" value="<?php echo $negativo_frente ?>">
                                 <label for="negativo_frente">Negativo Frente</label>
                               </div>
                             </div>
-                            <div class="col s6">
+                            <div class="col s6" style="display: none;">
                               <div class = "input-field">
                                 <input type="number" name="negativo_reverso" id="negativo_reverso" value="<?php echo $negativo_reverso ?>">
                                 <label for="negativo_reverso">Negativo Reverso</label>

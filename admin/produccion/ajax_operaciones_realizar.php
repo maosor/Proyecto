@@ -1,5 +1,6 @@
 <?php
 include '../conexion/conexion.php';
+include '../extend/funciones.php';
 $compania = $_SESSION ['compania'];
 if (isset($_POST['id'])){
 
@@ -8,7 +9,8 @@ if (isset($_POST['id'])){
   $sel = $con->prepare("SELECT cor.id, o.codigo, o.descripcion, m.descripcion,
     cor.tiempo,cor.cantidad_operaciones, cor.costo, cor.estado
     FROM (operacion o INNER JOIN maquina_tipo m ON o.id_maquina = m.id)
-    INNER JOIN cotizacion_operacion_realizar cor ON o.codigo = cor.codigo_operacion
+    INNER JOIN cotizacion_operacion_realizar cor
+    ON (o.codigo = cor.codigo_operacion AND cor.codigo_maquina = o.id_maquina)
     WHERE o.id_compania =? AND cor.id_cotizacion = ?");
     $sel->bind_param("ii", $compania, $id);
   }
@@ -25,6 +27,7 @@ if (isset($_POST['id'])){
               <th class="borrar">Vista</th>
               <th>Código</th>
               <th>Descripción</th>
+              <th>Estado</th>
               <th>Máquina</th>
               <th>Cantidad</th>
               <th>Tiempo</th>
@@ -42,14 +45,15 @@ if (isset($_POST['id'])){
                           href="estado.php?id=<?php echo $id?>&estado=1" class="btn green btn-floating"><i class="material-icons">play_arrow</i></a></td>
             <td><?php echo $codigo ?></td>
             <td><?php echo $descripcion?></td>
+            <td><?php echo operacion_estado($estado)?></td>
             <td><?php echo $maquina?></td>
             <td><?php echo $cantidad?></td>
             <td><?php echo $tiempo?></td>
             <td><?php echo $costo?></td>
-            <td class="borrar"><button <?php echo $estado==1?'':'disabled'?>
-                            value="<?php echo $id ?>" class="btn blue btn-floating"><i class="material-icons">pause</i></button></td>
-            <td class="borrar"><button <?php echo $estado==1||$estado==2?'':'disabled'?>
-                            value="<?php echo $id ?>" class="btn red btn-floating"><i class="material-icons">stop</i></button></td>
+            <td class="borrar"><a <?php echo $estado==1?'':'disabled'?>
+                            href="estado.php?id=<?php echo $id?>&estado=2"class="btn blue btn-floating"><i class="material-icons">pause</i></a></td>
+            <td class="borrar"><a <?php echo $estado==1||$estado==2?'':'disabled'?>
+                            href="estado.php?id=<?php echo $id?>&estado=3" class="btn red btn-floating"><i class="material-icons">stop</i></a></td>
 
             </tr>
         <?php }
