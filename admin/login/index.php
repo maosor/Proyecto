@@ -46,7 +46,13 @@ $con->close();
             $_SESSION ['nivel'] = $nivel;
             $_SESSION ['correo'] = $correo;
             $_SESSION ['foto'] = $foto;
-            header('location:../inicio/index.php');
+            if($nivel == 3){
+              header('location:../produccion/index.php');
+            }
+            else
+              {
+              header('location:../inicio/index.php');
+              }
            }
        }else {
          header('location:../extend/alerta.php?msj=Nombre de usuario o contraseña incorrecto o bloquedo&c=salir&p=salir&t=error');

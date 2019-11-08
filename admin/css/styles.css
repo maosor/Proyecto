@@ -16,6 +16,13 @@
 a[class^=eliminar]{
   cursor: pointer;
 }
+a[class^=agregar]{
+  cursor: pointer;
+}
 .dvnegativos{
   display: none;
+}
+.deshabilitado
+{
+    display: none;
 }

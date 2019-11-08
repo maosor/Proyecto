@@ -114,7 +114,7 @@ $sel->bind_result($id_cli, $nombre);
         <h5 align="center"><b>DATOS COTIZACIÓN</b></h5>
         <?php if ($accion == 'Actualizar'): ?>
           <form  action="up_cotizacion.php" method="post" autocomplete="off">
-            <input type="hidden" name="id" value="<?php echo $id ?>">
+            <input type="hidden" name="id" id="id"value="<?php echo $id ?>">
         <?php else: ?>
           <form  action="ins_cotizacion.php" method="post" autocomplete="off">
          <?php endif; ?>
@@ -583,17 +583,17 @@ $sel->bind_result($id_cli, $nombre);
                         <div class="card small blue-grey lighten-5">
                           <div class="card-content">
                             <div class="col m3 s4">
-                                <a class="btn" href="#">full color</a>
+                                <a class="btn" onclick="add_fullcolor()">full color</a>
                               <div class = "input-field">
                                 <input type="text" name="color" id="color" value="">
-                                <label for="color">Color</label>
+                                <label class ='active' for="color">Color</label>
                               </div>
                               <div class = "input-field">
                                 <input type="number" name="tintas_prep" id="tintas_prep" value="<?php echo $tintas_prep ?>">
-                                <label for="tintas_prep">Tintas a Preparar</label>
+                                <label class ='active' for="tintas_prep">Tintas a Preparar</label>
                                 <div class = "input-field">
                                   <input type="number" name="num_tirajes" id="num_tirajes" value="<?php echo $num_tirajes ?>">
-                                  <label for="num_tirajes">Numero de tirajes</label>
+                                  <label class="active" for="num_tirajes">Numero de tirajes</label>
                                 </div>
                               </div>
                             </div>
@@ -605,7 +605,7 @@ $sel->bind_result($id_cli, $nombre);
                             </div>
                             <div id="lstcolores" class="col s12 m4">
                               <h6><center><b>Colores Pantones</b></center></h6>
-                              <ul  class="collection small">
+                              <ul class="collection small">
                                 <?php $tinta = new TintaControlador();
                                 if ($accion == 'Actualizar'){
                                   $activo = 'active';
@@ -641,25 +641,25 @@ $sel->bind_result($id_cli, $nombre);
                               <h6><center><b>¿Donde Imprimir?</b></center></h6>
                               <input type="radio" class="with-gap" name="donde_imprimir"
                               id="frente" <?php $accion == 'Actualizar'? $donde_imprimir == '1'? print 'checked':'' : print 'checked'; ?> value="1"/>
-                              <label for="frente">FRENTE</label>
+                              <label class ='active' for="frente">FRENTE</label>
                               <input type="radio" class="with-gap" name="donde_imprimir"
                               id="revez" <?php $donde_imprimir == '2'? print 'checked':''; ?> value="2"/>
-                              <label for="revez">REVEZ</label>
+                              <label class ='active'for="revez">REVEZ</label>
                               <div class = "input-field">
                               <input type="number" name="gramos_tinta" id="gramos_tinta" value="<?php echo $gramos_tinta ?>">
-                              <label for="gramos_tinta">Gramos Tinta</label>
+                              <label class ='active' for="gramos_tinta">Gramos Tinta</label>
 
                             </div>
                               <div class="col s6">
                                 <div class = "input-field">
                                 <input type="number" name="tinta_alto" id="tinta_alto" value="<?php echo $tinta_alto ?>">
-                                <label for="tinta_alto">Alto</label>
+                                <label class ='active' for="tinta_alto">Alto</label>
                               </div>
                             </div>
                             <div class="col s6">
                               <div class = "input-field">
                               <input type="number" name="tinta_ancho" id="tinta_ancho" value="<?php echo $tinta_ancho ?>">
-                              <label for="tinta_ancho">Ancho</label>
+                              <label class ='active' for="tinta_ancho">Ancho</label>
                             </div>
                           </div>
                           </div>
@@ -680,7 +680,7 @@ $sel->bind_result($id_cli, $nombre);
                               <ul class="collection small">
                                 <?php $inventario = new InventarioControlador();
                                  foreach ($inventario->getLista_Inventario($con, $compania, 1) as $inv){?>
-                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;" data-alto = "<?php echo $inv[3]?>" data-ancho="<?php echo $inv[4]?>"><div><?php echo $inv[2]?><a href="" class="agregar-papel secondary-content" id = "<?php echo $inv[1] ?>"><i class="material-icons">add</i></a></div> </li>
+                                  <li id="<?php echo $inv[1]?>" class="collection-item" style="max-width: 280px;" data-alto = "<?php echo $inv[3]?>" data-ancho="<?php echo $inv[4]?>"><div><?php echo $inv[2]?><a id ="<?php echo $inv[1]?>" class="agregar-papel secondary-content" ><i class="material-icons">add</i></a></div> </li>
                                 <?php } ?>
                               </ul>
                               <div class="col s10">
@@ -782,13 +782,13 @@ $sel->bind_result($id_cli, $nombre);
                                 </center>
                                 <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="number" name="ancho_tamano_pliego" id="ancho_tamano_pliego" value="<?php echo $ancho_tamano_pliego ?>">
+                                    <input type="number" step="0.01" name="ancho_tamano_pliego" id="ancho_tamano_pliego" value="<?php echo $ancho_tamano_pliego ?>">
                                     <label for="ancho_tamano_pliego">Ancho</label>
                                   </div>
                                 </div>
                                 <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="number" name="alto_tamano_pliego" id="alto_tamano_pliego" value="<?php echo $alto_tamano_pliego ?>">
+                                    <input type="number" step="0.01" name="alto_tamano_pliego" id="alto_tamano_pliego" value="<?php echo $alto_tamano_pliego ?>">
                                     <label for="alto_tamano_pliego">Alto</label>
                                   </div>
                                 </div>
@@ -797,13 +797,13 @@ $sel->bind_result($id_cli, $nombre);
                                 </center>
                                 <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="number" name="ancho_tamano_corte" id="ancho_tamano_corte" value="<?php echo $ancho_tamano_corte ?>">
+                                    <input type="number" step="0.01" name="ancho_tamano_corte" id="ancho_tamano_corte" value="<?php echo $ancho_tamano_corte ?>">
                                     <label for="ancho_tamano_corte">Ancho</label>
                                   </div>
                                 </div>
                                 <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="number" name="alto_tamano_corte" id="alto_tamano_corte" value="<?php echo $alto_tamano_corte ?>">
+                                    <input type="number" step="0.01"name="alto_tamano_corte" id="alto_tamano_corte" value="<?php echo $alto_tamano_corte ?>">
                                     <label for="alto_tamano_corte">Alto</label>
                                   </div>
                                 </div>
@@ -812,13 +812,13 @@ $sel->bind_result($id_cli, $nombre);
                                 </center>
                                 <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="number" name="ancho_corte_final" id="ancho_corte_final" value="<?php echo $ancho_corte_final ?>">
+                                    <input type="number" step="0.01" name="ancho_corte_final" id="ancho_corte_final" value="<?php echo $ancho_corte_final ?>">
                                     <label for="ancho_corte_final">Ancho</label>
                                   </div>
                                 </div>
                                 <div class="col m6 s12">
                                   <div class = "input-field">
-                                    <input type="number" name="alto_corte_final" id="alto_corte_final" value="<?php echo $alto_corte_final ?>">
+                                    <input type="number" step="0.01" name="alto_corte_final" id="alto_corte_final" value="<?php echo $alto_corte_final ?>">
                                     <label for="alto_corte_final">Alto</label>
                                   </div>
                                 </div>
@@ -1579,6 +1579,7 @@ $sel->bind_result($id_cli, $nombre);
 <script src="../js/maquinas.js"></script>
 <script src="../js/papeles_calcular.js"></script>
 <script src="../js/papeles.js"></script>
+<script src="../js/global.js"></script>
 <script src="../js/distribuciones.js"></script>
 <script src="../js/terceros.js"></script>
 <script src="../js/extras.js"></script>

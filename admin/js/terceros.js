@@ -6,8 +6,19 @@ function add_tercero() {
     $('#servicio_tercero').val())+
     "*,*"+$('#costo_servicio').val());
     $(this).addClass('active');
+    post_tinta();
 }
-
+function post_tinta() {
+  $.post('../cotizacion/ajax_terceros.php',{
+    a:$('#arrterceros').val(),
+    c:$('#cotizacion').val(),
+    beforeSend: function () {
+      $('#lstterceros ul').html('Espere un momento por favor');
+     }
+   }, function (respuesta) {
+        $('#lstterceros ul').html(respuesta);
+  });
+}
 $('.listaterceros').click(function(){
   var item = $('#arrterceros').val().split('*;*')[$(this).index()].split('*,*')
   $('#servicio_tercero').val(item[0]);
@@ -20,5 +31,5 @@ var arrtemp = $('#arrterceros').val().split('*;*');
 arrtemp.splice($(this).parent().parent().index(),1);
 $('#'+$(this).parent().parent().attr('id')).remove();
 $('#arrterceros').val(arrtemp.join('*;*'));
-
+post_tinta();
 });

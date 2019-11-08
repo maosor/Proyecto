@@ -2,17 +2,28 @@
 include '../conexion/conexion.php';
 include '../extend/funciones.php';
 $compania = $_SESSION ['compania'];
+$nivel = $_SESSION ['nivel'];
 if (isset($_POST['id'])){
 
   $id = htmlentities($_POST['id']);
   $compania = $_SESSION ['compania'];
+  if($nivel <=2)
+  {
   $sel = $con->prepare("SELECT cor.id, o.codigo, o.descripcion, m.descripcion,
     cor.tiempo,cor.cantidad_operaciones, cor.costo, cor.estado
     FROM (operacion o INNER JOIN maquina_tipo m ON o.id_maquina = m.id)
     INNER JOIN cotizacion_operacion_realizar cor
     ON (o.codigo = cor.codigo_operacion AND cor.codigo_maquina = o.id_maquina)
     WHERE o.id_compania =? AND cor.id_cotizacion = ?");
-    $sel->bind_param("ii", $compania, $id);
+  }else {
+    $sel = $con->prepare("SELECT cor.id, cor.id_cotizacion, o.descripcion, m.nombre_maquina,
+      cor.tiempo,cor.cantidad_operaciones, cor.costo, cor.estado
+      FROM (operacion o INNER JOIN maquina m ON o.id_maquina = m.id)
+      INNER JOIN cotizacion_operacion_realizar cor
+      ON (o.codigo = cor.codigo_operacion AND cor.codigo_maquina = o.id_maquina)
+      WHERE o.id_compania =? AND cor.codigo_operacion = ?");
+  }
+    $sel->bind_param("is", $compania, $id);
   }
   ?>
   <div class="row">
@@ -25,7 +36,7 @@ if (isset($_POST['id'])){
           <thead>
             <tr class="cabecera">
               <th class="borrar">Vista</th>
-              <th>Código</th>
+              <th><?php echo $nivel <=2?'Código':'Contización'?></th>
               <th>Descripción</th>
               <th>Estado</th>
               <th>Máquina</th>

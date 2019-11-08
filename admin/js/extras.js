@@ -6,8 +6,19 @@ function add_extra() {
     $('#material_extra').val())+
     "*,*"+$('#cantidad_material').val());
     $(this).addClass('active');
+    post_extra();
 }
-
+function post_extra() {
+  $.post('../cotizacion/ajax_extra.php',{
+    a:$('#arrextras').val(),
+    c:$('#cotizacion').val(),
+    beforeSend: function () {
+      $('#lstextras ul').html('Espere un momento por favor');
+     }
+   }, function (respuesta) {
+        $('#lstextras ul').html(respuesta);
+  });
+}
 $('.listaextras').click(function(){
   var item = $('#arrextras').val().split('*;*')[$(this).index()].split('*,*')
   $('#material_extra').val(item[0]);
@@ -20,5 +31,5 @@ var arrtemp = $('#arrextras').val().split('*;*');
 arrtemp.splice($(this).parent().parent().index(),1);
 $('#'+$(this).parent().parent().attr('id')).remove();
 $('#arrextras').val(arrtemp.join('*;*'));
-
+post_extra();
 });

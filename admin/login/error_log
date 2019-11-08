@@ -1,0 +1,4 @@
+[08-Feb-2019 04:39:19 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, object given in /home/r0m1nrti5843/public_html/sail/admin/login/index.php on line 30
+[08-Feb-2019 04:40:14 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, object given in /home/r0m1nrti5843/public_html/sail/admin/login/index.php on line 30
+[08-Feb-2019 04:42:13 UTC] PHP Warning:  mysqli_num_rows() expects parameter 1 to be mysqli_result, object given in /home/r0m1nrti5843/public_html/sail/admin/login/index.php on line 29
+[08-Feb-2019 04:45:57 UTC] PHP Parse error:  syntax error, unexpected ')' in /home/r0m1nrti5843/public_html/sail/admin/login/index.php on line 24

@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $sel_lstck = $con->prepare('SELECT id, codigo, descripcion FROM lista_check WHERE id_compania=? AND grupo =6');
           $sel_lstck -> bind_param('s', $compania);
           $sel_lstck -> execute();
-          $sel_lstck -> bind_result($id, $codigo, $descripcion);
+          $sel_lstck -> bind_result($id_lista_check, $codigo, $descripcion);
           $array = array();
           while ($sel_lstck-> fetch()){
             $array[]= $codigo;
@@ -108,9 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           }
           $papel = new PapelControlador();
           if($papel->insPapel_Cotizacion($con, $arrpapel, $compania, $cotizacion)){
-            $log->info('Agregó colores de #'.$cotizacion);
+            $log->info('Agregó papeles de #'.$cotizacion);
           }else {
-             $log->error('No se agregó colores de #'.$cotizacion.'\n'.$papel->getError());
+             $log->error('No se agregó papeles de #'.$cotizacion.'\n'.$papel->getError());
           }
           $distribucion = new DistribucionControlador();
           if($distribucion->insdistribucion_Cotizacion($con, $arrdistribucion, $compania, $cotizacion)){
@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $log->error('No se agregó operacion de #'.$cotizacion.'\n'.$operaciones->getError().$arroperacion);
          }
 
-        header('location:../extend/alerta.php?msj=Guardó cotización&c=cot&p=in&t=success');
+        header('location:../extend/alerta.php?msj=Guardó cotización&c=cot&p=acot&t=success&id='.$id);
       }else {
         $log->error('Error guardando detalle cotización: '.$up_det->error);
         header('location:../extend/alerta.php?msj=Editó cotización&c=cot&p=in&t=success');

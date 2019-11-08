@@ -19,7 +19,7 @@ if (!isset($_SESSION['nick'])){
  <link rel="shortcut icon" href="/favicon.ico" />
  <style media="screen">
  header, main, footer {
-   padding-left: 300px;
+   padding-left: <?php echo ($_SESSION['nivel'] <= 2 )? "300px" : "0"; ?>;
  }
  .button-collapse
  {

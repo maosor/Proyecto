@@ -14,6 +14,9 @@ function tipo_desc($tipo)
     case '4':
       $tipo_desc = 'OTROS';
       break;
+    case '5':
+      $tipo_desc = 'TINTAS';
+      break;
   }
   return $tipo_desc;
 }

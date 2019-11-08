@@ -3,11 +3,11 @@ $compania = $_SESSION ['compania'];
 if (isset($_GET['tip'])) {
   $tipo = $con->real_escape_string(htmlentities($_GET['tip']));
   $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario,
-    proveedor FROM inventario WHERE tipo = ? AND id_compania =? ");
+    proveedor FROM inventario WHERE tipo = ? AND id_compania =? order by descripcion");
   $sel->bind_param("si", $tipo,$compania);
 }else {
   $sel = $con->prepare("SELECT  id, codigo, descripcion, tipo, existencia, precio_unitario,
-    proveedor FROM inventario WHERE id_compania =? ");
+    proveedor FROM inventario WHERE id_compania =? order by descripcion");
     $sel->bind_param("s", $compania);
 }
 ?>
@@ -70,13 +70,16 @@ if (isset($_GET['tip'])) {
                    echo 'Papeles';
                     break;
                   case 2:
-                   echo 'Suminitros';
+                   echo 'Suministros';
                     break;
                   case 3:
                    echo 'Repuestos';
                     break;
                   case 4:
                    echo 'Otros';
+                    break;
+                  case 5:
+                   echo 'Tintas';
                     break;
                }?></td>
               <td><?php echo $existencia?></td>

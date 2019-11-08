@@ -21,8 +21,31 @@ function add_item() {
       $('.listacolores').removeClass('active');
       $(this).addClass('active');
     });
+    post_tinta();
 }
-
+function post_tinta() {
+  $.post('../cotizacion/ajax_tinta.php',{
+    a:$('#arrcolores').val(),
+    c:$('#cotizacion').val(),
+    beforeSend: function () {
+      $('#lstcolores ul').html('Espere un momento por favor');
+     }
+   }, function (respuesta) {
+        $('#lstcolores ul').html(respuesta);
+  });
+}
+function add_fullcolor()
+{
+  $('#color').val('Cian');
+  add_item();
+  $('#color').val('Magenta');
+  add_item();
+  $('#color').val('Amarillo');
+  add_item();
+  $('#color').val('Negro');
+  add_item();
+  $('#color').val('');
+}
 $('.listacolores').click(function(){
   var item = $('#arrcolores').val().split('*;*')[$(this).index()].split('*,*')
   $('#color').val(item[0]);
@@ -40,5 +63,5 @@ var arrtemp = $('#arrcolores').val().split('*;*');
 arrtemp.splice($(this).parent().parent().index(),1);
 $('#'+$(this).parent().parent().attr('id')).remove();
 $('#arrcolores').val(arrtemp.join('*;*'));
-
+post_tinta();
 });

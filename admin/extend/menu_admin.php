@@ -26,7 +26,11 @@ $sel_compania->fetch();
       </select>
     </ul>
   </nav>
-  <ul id="menu" class="side-nav fixed">
+  <?php if ($_SESSION['nivel']==3): ?>
+    <ul id="menu" class="side-nav fixed deshabilitado">
+  <?php else: ?>
+    <ul id="menu" class="side-nav fixed">
+  <?php endif; ?>
     <li>
       <div class="userView">
         <div class="background fixed">
@@ -66,12 +70,14 @@ $sel_compania->fetch();
     <li><a href="../inventario/index.php?tip=2">SUMINISTROS</a></li>
     <li><a href="../inventario/index.php?tip=3">REPUESTOS</a></li>
     <li><a href="../inventario/index.php?tip=4">OTROS</a></li>
+    <li><a href="../inventario/index.php?tip=5">TINTAS</a></li>
    </ul>
    <ul id="ddprint" class="dropdown-content">
      <li><a href="../extend/alerta.php?msj=Página en construcción&c=home&p=in&t=info">GENERAL</a></li>
      <li><a href="../maquinas/index.php">MAQUINAS</a></li>
      <li><a href="../operaciones/index.php">OPERACIONES</a></li>
      <li><a href="../tintas/index.php">TIPOS DE TINTA</a></li>
+    <li><a href="../tamanos/index.php">TAMAÑOS DE PAPEL</a></li>
      <li><a href="../enumerados/index.php?tipo=1">AGENCIAS</a></li>
      <li><a href="../enumerados/index.php?tipo=2">TRABAJOS</a></li>
      <?php if($_SESSION['nivel'] <= 1){?>

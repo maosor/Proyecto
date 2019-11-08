@@ -52,6 +52,9 @@
       case 'pro':
         $carpeta = '../produccion/';
         break;
+      case 'tam':
+        $carpeta = '../tamanos/';
+        break;
       }
     switch ($p) {
       case 'in':
@@ -77,6 +80,9 @@
         break;
       case 'cxu':
           $pagina = 'alta_compania_usuario.php';
+          break;
+      case 'acot':
+          $pagina = 'alta_cotizacion.php';
           break;
       }
     if (isset($_GET['id'])) {
