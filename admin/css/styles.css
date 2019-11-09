@@ -26,3 +26,6 @@ a[class^=agregar]{
 {
     display: none;
 }
+#h_codigo, #h_descripcion{
+  cursor: pointer;
+}

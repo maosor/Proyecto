@@ -1,9 +1,12 @@
 $('.expand').click(function() {
+  $('#h_codigo, #h_descripcion').off("click");
   var bid =  $(this).attr('id');
   if ($('#detalle_'+bid).css("display") == "none")
   {
     $('#detalle_'+bid).show();
     $("#"+bid).html('<i class="material-icons">expand_less</i>');
+    $('#detalle_'+bid +' td').load('../inventario/filtros_detalles.php?id='+bid);
+
   }else {
     $('#detalle_'+bid).hide();
     $("#"+bid).html('<i class="material-icons">expand_more</i>');
